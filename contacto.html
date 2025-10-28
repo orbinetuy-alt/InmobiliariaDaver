@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Contacto - Daver Inmobiliaria</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1 class="brand">Daver Inmobiliaria</h1>
+      <nav class="main-nav" id="mainNav">
+        <a href="index.html">Inicio</a>
+        <a href="listings.html">Propiedades</a>
+        <a href="contacto.html">Contacto</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle">☰</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2>Contacto</h2>
+    <p>Completa el formulario y nos pondremos en contacto contigo.</p>
+
+    <form id="contactForm" class="contact-form" novalidate>
+      <label>Nombre
+        <input type="text" id="name" name="name" required>
+      </label>
+
+      <label>Email
+        <input type="email" id="email" name="email" required>
+      </label>
+
+      <label>Teléfono
+        <input type="tel" id="phone" name="phone">
+      </label>
+
+      <label>Mensaje
+        <textarea id="message" name="message" rows="5" required></textarea>
+      </label>
+
+      <button class="btn" type="submit">Enviar</button>
+      <p id="formMsg" class="form-msg" aria-live="polite"></p>
+    </form>
+
+    <section class="office">
+      <h3>Nuestra oficina</h3>
+      <p>Calle Falsa 123, Ciudad — Lunes a viernes 9:00–18:00</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; <span id="year3"></span> Daver Inmobiliaria</p>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
