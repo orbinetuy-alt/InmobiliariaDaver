@@ -25,12 +25,18 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
 .btn:hover{filter:brightness(.96)}
 
 /* Brand banner inside hero */
-.brand-banner{display:flex;align-items:center;gap:1rem;background:linear-gradient(90deg,rgba(255,106,0,0.06),rgba(0,0,0,0.02));padding:1rem;border-radius:10px}
-.brand-banner .brand-logo{width:72px;height:72px;object-fit:contain;border-radius:8px;background:white;padding:6px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.brand-banner{display:flex;align-items:center;gap:1rem;background:linear-gradient(90deg,rgba(255,106,0,0.06),rgba(0,0,0,0.02));padding:1rem;border-radius:10px;align-items:center}
+.brand-banner .brand-logo{width:88px;height:88px;object-fit:contain;border-radius:12px;background:linear-gradient(180deg,#fff,rgba(255,255,255,0.92));padding:8px;box-shadow:0 6px 20px rgba(0,0,0,.08);flex:0 0 88px}
 .brand-banner .brand-text{flex:1}
-.brand-banner h2{margin:0;font-size:1.25rem;color:var(--muted)}
-.brand-banner p{margin:.25rem 0 0;color:var(--muted-light)}
+.brand-banner h2{margin:0;font-size:1.35rem;color:var(--muted);line-height:1.05}
+.brand-banner p{margin:.25rem 0 0;color:var(--muted-light);font-size:.95rem}
 .brand-banner .btn{margin-left:auto}
+.brand-banner{animation:banner-fade .45s ease both}
+
+@keyframes banner-fade{
+  from{transform:translateY(6px);opacity:0}
+  to{transform:translateY(0);opacity:1}
+}
 
 @media (max-width:700px){
   .brand-banner{flex-direction:column;align-items:flex-start}

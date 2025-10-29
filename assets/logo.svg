@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-label="Daver Inmobiliaria logo">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0%" stop-color="#ff8a33"/>
+      <stop offset="100%" stop-color="#ff6a00"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="24" fill="url(#g)" />
+  <g transform="translate(36,170)">
+    <text x="0" y="0" font-family="Helvetica, Arial, sans-serif" font-size="72" fill="#fff" font-weight="700">D</text>
+    <text x="52" y="0" font-family="Helvetica, Arial, sans-serif" font-size="40" fill="#fff" font-weight="600">aver</text>
+  </g>
+</svg>
