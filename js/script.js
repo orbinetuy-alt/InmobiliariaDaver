@@ -123,52 +123,108 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   }
 
-  // Listings page: read query params and filter cards client-side
-  function applyListingsFilterFromParams(){
-    if(typeof window === 'undefined') return;
-    var params = new URLSearchParams(window.location.search);
-    var type = params.get('type') || '';
-    var zone = (params.get('zone') || '').toLowerCase();
-    var listings = document.getElementById('listings');
-    if(!listings) return;
-    var cards = Array.prototype.slice.call(listings.querySelectorAll('.card'));
-    var visible = 0;
-    cards.forEach(function(card){
-      var ctype = (card.getAttribute('data-type') || '').toLowerCase();
-      var czone = (card.getAttribute('data-zone') || '').toLowerCase();
-      var title = (card.querySelector('h4') ? card.querySelector('h4').textContent : '').toLowerCase();
-      var matchType = !type || (ctype === type.toLowerCase());
-      var matchZone = !zone || czone.indexOf(zone) !== -1 || title.indexOf(zone) !== -1;
-      if(matchType && matchZone){ card.style.display = ''; visible++; } else { card.style.display = 'none'; }
-    });
-    // optional: show a message when none found
-    var noneMsg = document.getElementById('noResultsMsg');
-    if(!noneMsg){
-      noneMsg = document.createElement('p');
-      noneMsg.id = 'noResultsMsg';
-      noneMsg.style.color = 'var(--muted)';
-      noneMsg.style.marginTop = '1rem';
-      listings.parentNode.insertBefore(noneMsg, listings.nextSibling);
-    }
-    noneMsg.textContent = visible ? '' : 'No se encontraron propiedades para esos filtros.';
+  // Listings page: Filter properties by category, zone and search
+  var listings = document.getElementById('listings');
+  var listingTitle = document.getElementById('listingTitle');
+  var resultsCount = document.getElementById('resultsCount');
+  var categorySelect = document.getElementById('category');
+  var zoneSelect = document.getElementById('zone');
+  var searchInput = document.getElementById('search');
+
+  function getListingCards(){
+    return listings ? Array.prototype.slice.call(listings.querySelectorAll('.card')) : [];
   }
 
-  // Wire up listings search input to filter dynamically
-  var listingsSearch = document.getElementById('search');
-  if(listingsSearch){
-    listingsSearch.addEventListener('input', function(e){
-      var q = (e.target.value || '').toLowerCase();
-      var listings = document.getElementById('listings'); if(!listings) return;
-      var cards = Array.prototype.slice.call(listings.querySelectorAll('.card'));
-      cards.forEach(function(card){
-        var text = (card.textContent || '').toLowerCase();
-        card.style.display = text.indexOf(q) !== -1 ? '' : 'none';
-      });
+  function updateResults(cards, filtered){
+    var visible = filtered.filter(function(isVisible){ return isVisible; }).length;
+    if(resultsCount){
+      resultsCount.textContent = 'Mostrando ' + visible + ' propiedade' + (visible === 1 ? '' : 's');
+    }
+
+    // Update title based on filters
+    if(listingTitle){
+      var category = categorySelect ? categorySelect.value : '';
+      var zone = zoneSelect ? zoneSelect.value : '';
+      
+      var title = '';
+      if(category){
+        title += {
+          'casa': 'Casas',
+          'apartamento': 'Apartamentos',
+          'local': 'Locales',
+          'terreno': 'Terrenos',
+          'oficina': 'Oficinas'
+        }[category] || 'Propiedades';
+      } else {
+        title = 'Todas las propiedades';
+      }
+
+      if(zone){
+        title += ' en ' + zone.charAt(0).toUpperCase() + zone.slice(1);
+      }
+
+      listingTitle.textContent = title;
+    }
+
+    // Show/hide cards based on filters
+    cards.forEach(function(card, i){
+      card.style.display = filtered[i] ? '' : 'none';
     });
+  }
+
+  function applyFilters(){
+    var cards = getListingCards();
+    if(!cards.length) return;
+
+    var category = (categorySelect ? categorySelect.value : '').toLowerCase();
+    var zone = (zoneSelect ? zoneSelect.value : '').toLowerCase();
+    var search = (searchInput ? searchInput.value : '').toLowerCase();
+
+    var filtered = cards.map(function(card){
+      var cardType = (card.getAttribute('data-type') || '').toLowerCase();
+      var cardZone = (card.getAttribute('data-zone') || '').toLowerCase();
+      var cardContent = card.textContent.toLowerCase();
+      
+      var matchCategory = !category || cardType === category;
+      var matchZone = !zone || cardZone === zone;
+      var matchSearch = !search || cardContent.indexOf(search) !== -1;
+
+      return matchCategory && matchZone && matchSearch;
+    });
+
+    updateResults(cards, filtered);
+
+    // Update URL without reloading
+    var params = new URLSearchParams();
+    if(category) params.set('type', category);
+    if(zone) params.set('zone', zone);
+    if(search) params.set('q', search);
+    
+    var newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+    window.history.replaceState({}, '', newUrl);
+  }
+
+  // Wire up filter change handlers
+  if(categorySelect) categorySelect.addEventListener('change', applyFilters);
+  if(zoneSelect) zoneSelect.addEventListener('change', applyFilters);
+  if(searchInput) searchInput.addEventListener('input', applyFilters);
+
+  // Apply filters from URL on load
+  function applyFiltersFromUrl(){
+    var params = new URLSearchParams(window.location.search);
+    var type = params.get('type');
+    var zone = params.get('zone');
+    var q = params.get('q');
+
+    if(categorySelect && type) categorySelect.value = type;
+    if(zoneSelect && zone) zoneSelect.value = zone;
+    if(searchInput && q) searchInput.value = q;
+
+    applyFilters();
   }
 
   // Run filter on load for listings page
-  applyListingsFilterFromParams();
+  if(listings) applyFiltersFromUrl();
 
   // Property page: gallery lightbox and contact form
   var galleryGrid = document.querySelector('.gallery-grid');
