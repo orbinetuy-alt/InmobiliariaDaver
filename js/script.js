@@ -107,4 +107,66 @@ document.addEventListener('DOMContentLoaded', function(){
       form.reset();
     });
   }
+
+  // Hero search form: build query and navigate to listings.html
+  var siteSearch = document.getElementById('siteSearchForm');
+  if(siteSearch){
+    siteSearch.addEventListener('submit', function(e){
+      e.preventDefault();
+      var type = document.getElementById('searchType').value || '';
+      var zone = document.getElementById('searchZone').value.trim() || '';
+      var params = new URLSearchParams();
+      if(type) params.set('type', type);
+      if(zone) params.set('zone', zone);
+      var url = 'listings.html' + (params.toString() ? ('?' + params.toString()) : '');
+      window.location.href = url;
+    });
+  }
+
+  // Listings page: read query params and filter cards client-side
+  function applyListingsFilterFromParams(){
+    if(typeof window === 'undefined') return;
+    var params = new URLSearchParams(window.location.search);
+    var type = params.get('type') || '';
+    var zone = (params.get('zone') || '').toLowerCase();
+    var listings = document.getElementById('listings');
+    if(!listings) return;
+    var cards = Array.prototype.slice.call(listings.querySelectorAll('.card'));
+    var visible = 0;
+    cards.forEach(function(card){
+      var ctype = (card.getAttribute('data-type') || '').toLowerCase();
+      var czone = (card.getAttribute('data-zone') || '').toLowerCase();
+      var title = (card.querySelector('h4') ? card.querySelector('h4').textContent : '').toLowerCase();
+      var matchType = !type || (ctype === type.toLowerCase());
+      var matchZone = !zone || czone.indexOf(zone) !== -1 || title.indexOf(zone) !== -1;
+      if(matchType && matchZone){ card.style.display = ''; visible++; } else { card.style.display = 'none'; }
+    });
+    // optional: show a message when none found
+    var noneMsg = document.getElementById('noResultsMsg');
+    if(!noneMsg){
+      noneMsg = document.createElement('p');
+      noneMsg.id = 'noResultsMsg';
+      noneMsg.style.color = 'var(--muted)';
+      noneMsg.style.marginTop = '1rem';
+      listings.parentNode.insertBefore(noneMsg, listings.nextSibling);
+    }
+    noneMsg.textContent = visible ? '' : 'No se encontraron propiedades para esos filtros.';
+  }
+
+  // Wire up listings search input to filter dynamically
+  var listingsSearch = document.getElementById('search');
+  if(listingsSearch){
+    listingsSearch.addEventListener('input', function(e){
+      var q = (e.target.value || '').toLowerCase();
+      var listings = document.getElementById('listings'); if(!listings) return;
+      var cards = Array.prototype.slice.call(listings.querySelectorAll('.card'));
+      cards.forEach(function(card){
+        var text = (card.textContent || '').toLowerCase();
+        card.style.display = text.indexOf(q) !== -1 ? '' : 'none';
+      });
+    });
+  }
+
+  // Run filter on load for listings page
+  applyListingsFilterFromParams();
 });

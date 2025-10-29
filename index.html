@@ -42,6 +42,28 @@
           </div>
           <a class="btn" href="listings.html">Ver propiedades</a>
         </div>
+        
+        <!-- Search form in hero: type + zone -->
+        <form id="siteSearchForm" class="hero-search" role="search" aria-label="Buscar propiedades">
+          <label>
+            <span class="sr-only">Tipo de propiedad</span>
+            <select id="searchType" name="type">
+              <option value="">Todos los tipos</option>
+              <option value="apartamento">Apartamento</option>
+              <option value="casa">Casa</option>
+              <option value="local">Local</option>
+              <option value="terreno">Terreno</option>
+              <option value="cochera">Cochera</option>
+            </select>
+          </label>
+
+          <label>
+            <span class="sr-only">Zona o barrio</span>
+            <input id="searchZone" name="zone" type="search" placeholder="Zona o barrio (ej: Prado)">
+          </label>
+
+          <button class="btn" type="submit">Buscar</button>
+        </form>
       </div>
     </section>
 
