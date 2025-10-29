@@ -169,4 +169,72 @@ document.addEventListener('DOMContentLoaded', function(){
 
   // Run filter on load for listings page
   applyListingsFilterFromParams();
+
+  // Property page: gallery lightbox and contact form
+  var galleryGrid = document.querySelector('.gallery-grid');
+  if(galleryGrid){
+    // Create lightbox elements
+    var lightbox = document.createElement('div');
+    lightbox.className = 'lightbox';
+    lightbox.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:1000;padding:2rem;';
+    
+    var lightboxImg = document.createElement('img');
+    lightboxImg.style.cssText = 'max-width:100%;max-height:100%;object-fit:contain;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);';
+    lightbox.appendChild(lightboxImg);
+    
+    var closeLightbox = document.createElement('button');
+    closeLightbox.innerHTML = '×';
+    closeLightbox.style.cssText = 'position:absolute;top:1rem;right:1rem;background:none;border:none;color:white;font-size:2rem;cursor:pointer;';
+    lightbox.appendChild(closeLightbox);
+    
+    document.body.appendChild(lightbox);
+
+    // Handle gallery clicks
+    galleryGrid.addEventListener('click', function(e){
+      var img = e.target.closest('img');
+      if(!img) return;
+      
+      lightboxImg.src = img.src;
+      lightbox.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    });
+
+    // Close lightbox handlers
+    function closeLightboxFn(){
+      lightbox.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+    
+    closeLightbox.addEventListener('click', closeLightboxFn);
+    lightbox.addEventListener('click', function(e){
+      if(e.target === lightbox) closeLightboxFn();
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && lightbox.style.display === 'block') closeLightboxFn();
+    });
+  }
+
+  // Property contact form
+  var propertyForm = document.getElementById('propertyContactForm');
+  if(propertyForm){
+    propertyForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      var name = this.querySelector('[name="name"]');
+      var email = this.querySelector('[name="email"]');
+      var phone = this.querySelector('[name="phone"]');
+      var message = this.querySelector('[name="message"]');
+      var msg = document.getElementById('formMsg');
+
+      if(!name.value.trim() || !email.value.trim() || !message.value.trim()){
+        msg.textContent = 'Por favor completa los campos obligatorios.';
+        msg.style.color = 'crimson';
+        return;
+      }
+
+      // Simulamos envío exitoso (en producción harías fetch a un endpoint)
+      msg.textContent = 'Gracias — tu consulta ha sido enviada (simulado).';
+      msg.style.color = 'green';
+      this.reset();
+    });
+  }
 });
