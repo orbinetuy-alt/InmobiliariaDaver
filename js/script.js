@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function(){
       listingTitle.textContent = title;
     }
 
-        // Show/hide cards with animación
+    // Show/hide cards with animación
     cards.forEach(function(card, i){
       if (filtered[i]) {
         card.style.opacity = '1';
@@ -182,9 +182,6 @@ document.addEventListener('DOMContentLoaded', function(){
         }, 300);
       }
     });
-  }
-
-  // Wire up filter change handlers
   }
 
   function applyFilters(){
