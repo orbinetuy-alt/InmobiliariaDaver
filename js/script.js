@@ -9,25 +9,49 @@ document.addEventListener('DOMContentLoaded', function(){
   var mainNav = document.getElementById('mainNav');
   if(navToggle && mainNav){
     // Toggle accesible: alternamos la clase 'open' y actualizamos aria-expanded
+    // Además controlamos backdrop y animación del icono
+    var backdrop = document.createElement('div');
+    backdrop.className = 'nav-backdrop';
+    document.body.appendChild(backdrop);
+
+    function closeNav(){
+      mainNav.classList.remove('open');
+      navToggle.classList.remove('open');
+      navToggle.setAttribute('aria-expanded','false');
+      backdrop.classList.remove('show');
+      navToggle.focus();
+    }
+
+    function openNav(){
+      mainNav.classList.add('open');
+      navToggle.classList.add('open');
+      navToggle.setAttribute('aria-expanded','true');
+      backdrop.classList.add('show');
+      // focus al primer enlace para accesibilidad
+      var firstLink = mainNav.querySelector('a'); if(firstLink) firstLink.focus();
+    }
+
     navToggle.addEventListener('click', function(e){
-      var isOpen = mainNav.classList.toggle('open');
-      navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      e.stopPropagation();
+      if(mainNav.classList.contains('open')) closeNav(); else openNav();
     });
 
     // Cerrar con Escape
     document.addEventListener('keydown', function(e){
       if(e.key === 'Escape' && mainNav.classList.contains('open')){
-        mainNav.classList.remove('open');
-        navToggle.setAttribute('aria-expanded','false');
+        closeNav();
       }
     });
 
     // Cerrar al hacer click fuera del nav (mejora UX en móvil)
-    document.addEventListener('click', function(e){
-      var target = e.target;
-      if(mainNav.classList.contains('open') && target !== navToggle && !mainNav.contains(target)){
-        mainNav.classList.remove('open');
-        navToggle.setAttribute('aria-expanded','false');
+    backdrop.addEventListener('click', function(){
+      closeNav();
+    });
+
+    // También cerrar si se hace click en un enlace del nav (usuarios móviles)
+    mainNav.addEventListener('click', function(e){
+      if(e.target && e.target.tagName === 'A'){
+        closeNav();
       }
     });
   }
