@@ -28,3 +28,6 @@ Despliegue rápido:
 Notas y siguientes pasos posibles:
 - Añadir integración backend para enviar mensajes del formulario (ej. Netlify Functions, Firebase o un backend simple en Node/PHP).
 - Conectar a una base de datos para gestionar propiedades y filtros dinámicos.
+
+Cambios recientes:
+- Hice el menú de navegación responsivo y accesible: el botón de menú ahora usa atributos ARIA y el JavaScript alterna la clase `.open`; añadí estilos móviles para desplegar el menú en pantallas pequeñas.

@@ -8,8 +8,27 @@ document.addEventListener('DOMContentLoaded', function(){
   var navToggle = document.getElementById('navToggle');
   var mainNav = document.getElementById('mainNav');
   if(navToggle && mainNav){
-    navToggle.addEventListener('click', function(){
-      if(mainNav.style.display==='block') mainNav.style.display=''; else mainNav.style.display='block';
+    // Toggle accesible: alternamos la clase 'open' y actualizamos aria-expanded
+    navToggle.addEventListener('click', function(e){
+      var isOpen = mainNav.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    // Cerrar con Escape
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && mainNav.classList.contains('open')){
+        mainNav.classList.remove('open');
+        navToggle.setAttribute('aria-expanded','false');
+      }
+    });
+
+    // Cerrar al hacer click fuera del nav (mejora UX en móvil)
+    document.addEventListener('click', function(e){
+      var target = e.target;
+      if(mainNav.classList.contains('open') && target !== navToggle && !mainNav.contains(target)){
+        mainNav.classList.remove('open');
+        navToggle.setAttribute('aria-expanded','false');
+      }
     });
   }
 
