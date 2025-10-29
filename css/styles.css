@@ -23,6 +23,19 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
 .hero h2{margin:0 0 .5rem}
 .btn{display:inline-block;background:var(--accent);color:white;padding:.6rem 1rem;border-radius:6px;text-decoration:none}
 .btn:hover{filter:brightness(.96)}
+
+/* Brand banner inside hero */
+.brand-banner{display:flex;align-items:center;gap:1rem;background:linear-gradient(90deg,rgba(255,106,0,0.06),rgba(0,0,0,0.02));padding:1rem;border-radius:10px}
+.brand-banner .brand-logo{width:72px;height:72px;object-fit:contain;border-radius:8px;background:white;padding:6px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.brand-banner .brand-text{flex:1}
+.brand-banner h2{margin:0;font-size:1.25rem;color:var(--muted)}
+.brand-banner p{margin:.25rem 0 0;color:var(--muted-light)}
+.brand-banner .btn{margin-left:auto}
+
+@media (max-width:700px){
+  .brand-banner{flex-direction:column;align-items:flex-start}
+  .brand-banner .btn{align-self:stretch;text-align:center}
+}
 .featured{padding:2rem 0}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
 .card{background:white;padding:1rem;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
