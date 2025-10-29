@@ -43,6 +43,11 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
   .brand-banner .btn{align-self:stretch;text-align:center}
 }
 .featured{padding:2rem 0}
+.listings{padding:2rem 0}
+.listings h3{margin-bottom:1rem}
+.card h4{margin:.5rem 0}
+.card p{margin:.25rem 0}
+.card .price{margin-top:.5rem}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
 .card{background:white;padding:1rem;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
 .card:hover{transform:translateY(-4px);box-shadow:0 6px 18px rgba(0,0,0,.08)}
