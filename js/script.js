@@ -166,10 +166,25 @@ document.addEventListener('DOMContentLoaded', function(){
       listingTitle.textContent = title;
     }
 
-    // Show/hide cards based on filters
+        // Show/hide cards with animación
     cards.forEach(function(card, i){
-      card.style.display = filtered[i] ? '' : 'none';
+      if (filtered[i]) {
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+        card.style.display = '';
+      } else {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(10px)';
+        setTimeout(function() {
+          if (!filtered[i]) { // verificamos de nuevo por si cambió
+            card.style.display = 'none';
+          }
+        }, 300);
+      }
     });
+  }
+
+  // Wire up filter change handlers
   }
 
   function applyFilters(){
@@ -204,10 +219,48 @@ document.addEventListener('DOMContentLoaded', function(){
     window.history.replaceState({}, '', newUrl);
   }
 
+  // Highlight active filters
+  function updateFilterHighlights() {
+    var filterBar = document.querySelector('.filter-bar');
+    if (!filterBar) return;
+
+    // Primero removemos todas las clases active
+    filterBar.classList.remove('active');
+    filterBar.querySelectorAll('.filter-group').forEach(function(group) {
+      group.classList.remove('active');
+    });
+
+    // Verificamos si algún filtro está activo
+    var hasActiveFilter = false;
+
+    document.querySelectorAll('.filter-select').forEach(function(select) {
+      var group = select.closest('.filter-group');
+      if (select.value) {
+        group.classList.add('active');
+        hasActiveFilter = true;
+      }
+    });
+
+    // Si hay algún filtro activo, destacamos toda la barra
+    if (hasActiveFilter) {
+      filterBar.classList.add('active');
+    }
+  }
+
   // Wire up filter change handlers
-  if(categorySelect) categorySelect.addEventListener('change', applyFilters);
-  if(zoneSelect) zoneSelect.addEventListener('change', applyFilters);
-  if(searchInput) searchInput.addEventListener('input', applyFilters);
+  function handleFilterChange(e) {
+    applyFilters();
+    updateFilterHighlights();
+  }
+
+  if(categorySelect) categorySelect.addEventListener('change', handleFilterChange);
+  if(zoneSelect) zoneSelect.addEventListener('change', handleFilterChange);
+  if(searchInput) searchInput.addEventListener('input', handleFilterChange);
+  
+  // Añadir animación suave al cambiar filtros
+  document.querySelectorAll('.card').forEach(function(card) {
+    card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+  });
 
   // Apply filters from URL on load
   function applyFiltersFromUrl(){

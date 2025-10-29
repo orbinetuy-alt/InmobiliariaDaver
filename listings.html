@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Propiedades - Daver Inmobiliaria</title>
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 </head>
 <body>
   <header class="site-header">
@@ -15,48 +16,209 @@
         <a href="listings.html">Propiedades</a>
         <a href="contacto.html">Contacto</a>
       </nav>
-      <button class="nav-toggle" id="navToggle">☰</button>
+      <button class="nav-toggle" id="navToggle" aria-controls="mainNav" aria-expanded="false" aria-label="Abrir menú">
+        <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path class="line line1" d="M3 6h18" stroke="#222" stroke-width="2" stroke-linecap="round" />
+          <path class="line line2" d="M3 12h18" stroke="#222" stroke-width="2" stroke-linecap="round" />
+          <path class="line line3" d="M3 18h18" stroke="#222" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </button>
     </div>
   </header>
 
+  <div class="listing-header">
+    <div class="container">
+      <div class="listing-meta">
+        <div>
+          <h2 id="listingTitle">Apartamentos</h2>
+          <span id="resultsCount" class="listing-count">70 propiedades</span>
+        </div>
+        <div class="listing-sort">
+          <span>Ordenar por:</span>
+          <select id="sort" class="filter-select">
+            <option value="destacados">Destacados</option>
+            <option value="recientes">Más recientes</option>
+            <option value="precio-asc">Menor precio</option>
+            <option value="precio-desc">Mayor precio</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filter-bar">
+        <div class="filter-group">
+          <label class="filter-label">Tipo de operación</label>
+          <select id="operation" class="filter-select">
+            <option value="">Todos</option>
+            <option value="venta">En venta</option>
+            <option value="alquiler">En alquiler</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label">Zona</label>
+          <select id="zone" class="filter-select">
+            <option value="">Todas las zonas</option>
+            <option value="prado">Prado</option>
+            <option value="pocitos">Pocitos</option>
+            <option value="centro">Centro</option>
+            <option value="ciudad-vieja">Ciudad Vieja</option>
+            <option value="cordon">Cordón</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label">Dormitorios</label>
+          <select id="bedrooms" class="filter-select">
+            <option value="">Cualquiera</option>
+            <option value="1">1 dormitorio</option>
+            <option value="2">2 dormitorios</option>
+            <option value="3">3 dormitorios</option>
+            <option value="4">4 o más</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label">Precio</label>
+          <select id="price" class="filter-select">
+            <option value="">Cualquier precio</option>
+            <option value="0-50000">Hasta USD 50.000</option>
+            <option value="50000-100000">USD 50.000 - 100.000</option>
+            <option value="100000-200000">USD 100.000 - 200.000</option>
+            <option value="200000-plus">Más de USD 200.000</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <main class="container">
-    <h2>Listado de propiedades</h2>
-
-    <section class="filters">
-      <label>Buscar: <input type="search" id="search" placeholder="Ej: barrio, tipo, precio"></label>
-    </section>
-
-    <section class="grid listings" id="listings">
-      <!-- Ejemplos de propiedades -->
-      <article class="card" data-type="apartamento" data-zone="centro">
-        <img src="assets/placeholder.svg" alt="Departamento céntrico">
-        <h4>Departamento céntrico</h4>
-        <p>2 dorm · 1 baño · 70 m²</p>
-        <p class="price">USD 85,000</p>
-        <a class="btn" href="contacto.html">Consultar</a>
+    <div class="grid listings" id="listings">
+      <article class="card" data-type="apartamento" data-zone="prado" data-operation="venta" data-bedrooms="2">
+        <div class="card-img-wrapper">
+          <img src="assets/placeholder.svg" alt="Apartamento en Prado">
+          <span class="card-tag">En venta</span>
+          <span class="card-featured">Destacado</span>
+        </div>
+        <div class="card-content">
+          <h4>Amplio apartamento a estrenar</h4>
+          <address class="card-location">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+              <circle cx="12" cy="9" r="2.5"/>
+            </svg>
+            Prado, Montevideo
+          </address>
+          <div class="card-features">
+            <span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+              </svg>
+              2 dorm
+            </span>
+            <span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 12h-3m3 0v7h-18v-7M21 12V5h-18v7m18 0h-18"/>
+              </svg>
+              2 baños
+            </span>
+            <span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16v16H4z"/>
+              </svg>
+              85 m²
+            </span>
+          </div>
+          <p class="price">USD 135.000</p>
+          <a href="property.html" class="btn">Ver detalle</a>
+          <div class="card-id">ID: 74512</div>
+        </div>
       </article>
 
-      <article class="card" data-type="casa" data-zone="residencial">
-        <img src="assets/placeholder.svg" alt="Casa en barrio">
-        <h4>Casa en barrio residencial</h4>
-        <p>3 dorm · 2 baños · 150 m²</p>
-        <p class="price">USD 220,000</p>
-        <a class="btn" href="contacto.html">Consultar</a>
+      <article class="card" data-type="apartamento" data-zone="pocitos" data-operation="alquiler" data-bedrooms="1">
+        <div class="card-img-wrapper">
+          <img src="assets/placeholder.svg" alt="Apartamento en Pocitos">
+          <span class="card-tag">En alquiler</span>
+        </div>
+        <div class="card-content">
+          <h4>Monoambiente con terraza</h4>
+          <address class="card-location">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+              <circle cx="12" cy="9" r="2.5"/>
+            </svg>
+            Pocitos, Montevideo
+          </address>
+          <div class="card-features">
+            <span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+              </svg>
+              1 dorm
+            </span>
+            <span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 12h-3m3 0v7h-18v-7M21 12V5h-18v7m18 0h-18"/>
+              </svg>
+              1 baño
+            </span>
+            <span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16v16H4z"/>
+              </svg>
+              45 m²
+            </span>
+          </div>
+          <p class="price">$ 25.000</p>
+          <a href="property.html" class="btn">Ver detalle</a>
+          <div class="card-id">ID: 74513</div>
+        </div>
       </article>
 
-      <article class="card" data-type="local" data-zone="comercial">
-        <img src="assets/placeholder.svg" alt="Local comercial">
-        <h4>Local comercial</h4>
-        <p>120 m² · Zona comercial</p>
-        <p class="price">USD 120,000</p>
-        <a class="btn" href="contacto.html">Consultar</a>
+      <article class="card" data-type="apartamento" data-zone="centro" data-operation="venta" data-bedrooms="3">
+        <div class="card-img-wrapper">
+          <img src="assets/placeholder.svg" alt="Apartamento en Centro">
+          <span class="card-tag">En venta</span>
+        </div>
+        <div class="card-content">
+          <h4>Apartamento reciclado a nuevo</h4>
+          <address class="card-location">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+              <circle cx="12" cy="9" r="2.5"/>
+            </svg>
+            Centro, Montevideo
+          </address>
+          <div class="card-features">
+            <span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+              </svg>
+              3 dorm
+            </span>
+            <span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 12h-3m3 0v7h-18v-7M21 12V5h-18v7m18 0h-18"/>
+              </svg>
+              2 baños
+            </span>
+            <span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16v16H4z"/>
+              </svg>
+              120 m²
+            </span>
+          </div>
+          <p class="price">USD 180.000</p>
+          <a href="property.html" class="btn">Ver detalle</a>
+          <div class="card-id">ID: 74514</div>
+        </div>
       </article>
-    </section>
+    </div>
   </main>
 
   <footer class="site-footer">
     <div class="container">
-      <p>&copy; <span id="year2"></span> Daver Inmobiliaria</p>
+      <p>&copy; <span id="year"></span> Daver Inmobiliaria — Todos los derechos reservados.</p>
     </div>
   </footer>
 

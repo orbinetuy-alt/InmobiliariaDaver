@@ -157,26 +157,73 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
   gap: 1rem;
   padding: 1.5rem;
   background: var(--bg);
-  border-radius: 8px;
+  border-radius: 12px;
   margin-bottom: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: all 0.3s ease;
+}
+
+.filter-bar.active {
+  background: white;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
 }
 
 .filter-group {
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+.filter-group::after {
+  content: "▾";
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  color: var(--accent);
+  pointer-events: none;
 }
 
 .filter-label {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--muted);
   margin-bottom: 0.5rem;
+  font-weight: 500;
 }
 
 .filter-select {
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 0.8rem 1rem;
+  border: 2px solid transparent;
+  border-radius: 8px;
   background: white;
+  font-size: 1rem;
+  color: #333;
+  appearance: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+}
+
+.filter-select:hover {
+  border-color: var(--accent);
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(255,106,0,0.1);
+}
+
+.filter-select option {
+  padding: 0.5rem;
+}
+
+.filter-group.active .filter-label {
+  color: var(--accent);
+}
+
+.filter-group.active .filter-select {
+  border-color: var(--accent);
+  background: rgba(255,106,0,0.04);
 }
 
 /* Listing cards */
