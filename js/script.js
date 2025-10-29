@@ -14,21 +14,51 @@ document.addEventListener('DOMContentLoaded', function(){
     backdrop.className = 'nav-backdrop';
     document.body.appendChild(backdrop);
 
+    var _previousFocus = null;
+    var _trapHandler = null;
+
     function closeNav(){
       mainNav.classList.remove('open');
       navToggle.classList.remove('open');
       navToggle.setAttribute('aria-expanded','false');
       backdrop.classList.remove('show');
-      navToggle.focus();
+      // remove focus trap
+      if(_trapHandler) document.removeEventListener('keydown', _trapHandler);
+      _trapHandler = null;
+      // restore previous focus
+      if(_previousFocus && typeof _previousFocus.focus === 'function') _previousFocus.focus(); else navToggle.focus();
+      _previousFocus = null;
     }
 
     function openNav(){
+      // save previous focused element
+      _previousFocus = document.activeElement;
       mainNav.classList.add('open');
       navToggle.classList.add('open');
       navToggle.setAttribute('aria-expanded','true');
       backdrop.classList.add('show');
       // focus al primer enlace para accesibilidad
-      var firstLink = mainNav.querySelector('a'); if(firstLink) firstLink.focus();
+      var focusable = mainNav.querySelectorAll('a, button, [tabindex]:not([tabindex="-1"])');
+      var first = focusable.length ? focusable[0] : null;
+      if(first) first.focus();
+
+      // install simple focus trap (Tab / Shift+Tab)
+      _trapHandler = function(e){
+        if(e.key !== 'Tab') return;
+        var focusableEls = Array.prototype.slice.call(mainNav.querySelectorAll('a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])'))
+          .filter(function(el){ return !el.disabled && el.offsetParent !== null; });
+        if(focusableEls.length === 0) return;
+        var firstEl = focusableEls[0];
+        var lastEl = focusableEls[focusableEls.length - 1];
+        if(!e.shiftKey && document.activeElement === lastEl){
+          e.preventDefault();
+          firstEl.focus();
+        } else if(e.shiftKey && document.activeElement === firstEl){
+          e.preventDefault();
+          lastEl.focus();
+        }
+      };
+      document.addEventListener('keydown', _trapHandler);
     }
 
     navToggle.addEventListener('click', function(e){
