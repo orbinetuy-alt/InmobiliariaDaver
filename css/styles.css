@@ -44,12 +44,76 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
 }
 
 /* Hero search form */
-.hero-search{display:flex;gap:.5rem;align-items:center;margin-top:1rem}
-.hero-search select,.hero-search input{padding:.5rem .6rem;border:1px solid #e6e6e6;border-radius:6px;background:white}
-.hero-search button{padding:.55rem .9rem}
+/* Hero search form */
+.hero-search {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+.hero-search .select-wrapper {
+  position: relative;
+  display: inline-block;
+  min-width: 180px;
+}
+.hero-search select {
+  font-size: 1rem;
+  padding: 0.7em 2.5em 0.7em 1em;
+  border-radius: 0.5em;
+  border: 1.5px solid var(--accent);
+  background: var(--bg);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  appearance: none;
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(255,106,0,0.07);
+}
+.hero-search select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(255,106,0,0.15);
+}
+.hero-search .custom-arrow {
+  position: absolute;
+  right: 1em;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+.hero-search input {
+  font-size: 1rem;
+  padding: 0.7em 1em;
+  border-radius: 0.5em;
+  border: 1px solid var(--muted);
+  background: var(--bg);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.hero-search input:focus {
+  border-color: var(--accent);
+}
+.hero-search button {
+  font-size: 1rem;
+  padding: 0.7em 1.2em;
+  border-radius: 0.5em;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.hero-search button:hover {
+  background: #e65c00;
+}
 @media (max-width:700px){
   .hero-search{flex-direction:column;align-items:stretch}
-  .hero-search select,.hero-search input{width:100%}
+  .hero-search .select-wrapper,
+  .hero-search select,
+  .hero-search input{width:100%}
 }
 .featured{padding:2rem 0}
 .listings{padding:2rem 0}
