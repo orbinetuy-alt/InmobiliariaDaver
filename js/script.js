@@ -123,13 +123,16 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   }
 
-  // Listings page: Filter properties by category, zone and search
+  // Listings page: Filter properties
   var listings = document.getElementById('listings');
   var listingTitle = document.getElementById('listingTitle');
   var resultsCount = document.getElementById('resultsCount');
-  var categorySelect = document.getElementById('category');
+  var propertyTypeSelect = document.getElementById('propertyType');
+  var operationSelect = document.getElementById('operation');
   var zoneSelect = document.getElementById('zone');
-  var searchInput = document.getElementById('search');
+  var bedroomsSelect = document.getElementById('bedrooms');
+  var priceSelect = document.getElementById('price');
+  var sortSelect = document.getElementById('sort');
 
   function getListingCards(){
     return listings ? Array.prototype.slice.call(listings.querySelectorAll('.card')) : [];
@@ -143,20 +146,25 @@ document.addEventListener('DOMContentLoaded', function(){
 
     // Update title based on filters
     if(listingTitle){
-      var category = categorySelect ? categorySelect.value : '';
+      var type = propertyTypeSelect ? propertyTypeSelect.value : '';
       var zone = zoneSelect ? zoneSelect.value : '';
       
       var title = '';
-      if(category){
-        title += {
-          'casa': 'Casas',
-          'apartamento': 'Apartamentos',
-          'local': 'Locales',
-          'terreno': 'Terrenos',
-          'oficina': 'Oficinas'
-        }[category] || 'Propiedades';
+      var operation = operationSelect ? operationSelect.value : '';
+      var bedrooms = bedroomsSelect ? bedroomsSelect.value : '';
+      
+      if(type) {
+        title = type === 'casa' ? 'Casas' : 'Apartamentos';
       } else {
-        title = 'Todas las propiedades';
+        title = 'Propiedades';
+      }
+      
+      if(operation) {
+        title = title + (operation === 'venta' ? ' en venta' : ' en alquiler');
+      }
+
+      if(bedrooms){
+        title += ' con ' + bedrooms + ' dormitorio' + (bedrooms === '1' ? '' : 's');
       }
 
       if(zone){
@@ -184,33 +192,122 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   }
 
+  function getPriceValue(priceString) {
+    // Convierte string de precio a número para comparación
+    return parseInt(priceString.replace(/[^0-9]/g, '')) || 0;
+  }
+
+  function getPriceRange(rangeString) {
+    // Convierte string de rango a array [min, max]
+    if (!rangeString) return [0, Infinity];
+    var parts = rangeString.split('-');
+    var min = parseInt(parts[0]) || 0;
+    var max = parts[1] === 'plus' ? Infinity : (parseInt(parts[1]) || Infinity);
+    return [min, max];
+  }
+
   function applyFilters(){
     var cards = getListingCards();
     if(!cards.length) return;
 
-    var category = (categorySelect ? categorySelect.value : '').toLowerCase();
-    var zone = (zoneSelect ? zoneSelect.value : '').toLowerCase();
-    var search = (searchInput ? searchInput.value : '').toLowerCase();
+    // Obtener valores de los filtros
+    var propertyType = propertyTypeSelect ? propertyTypeSelect.value.trim() : '';
+    var operation = operationSelect ? operationSelect.value.trim() : '';
+    var zone = zoneSelect ? zoneSelect.value.trim() : '';
+    var bedrooms = bedroomsSelect ? bedroomsSelect.value.trim() : '';
+    var priceRange = getPriceRange(priceSelect ? priceSelect.value.trim() : '');
 
-    var filtered = cards.map(function(card){
-      var cardType = (card.getAttribute('data-type') || '').toLowerCase();
-      var cardZone = (card.getAttribute('data-zone') || '').toLowerCase();
-      var cardContent = card.textContent.toLowerCase();
-      
-      var matchCategory = !category || cardType === category;
-      var matchZone = !zone || cardZone === zone;
-      var matchSearch = !search || cardContent.indexOf(search) !== -1;
+    // Contar propiedades por tipo antes de filtrar
+    var countByType = {
+      casa: 0,
+      apartamento: 0,
+      total: cards.length
+    };
 
-      return matchCategory && matchZone && matchSearch;
+    cards.forEach(function(card) {
+      var type = card.getAttribute('data-type');
+      if (type === 'casa') countByType.casa++;
+      if (type === 'apartamento') countByType.apartamento++;
     });
 
-    updateResults(cards, filtered);
+    console.log('Conteo inicial:', countByType); // Para debugging
+
+    // Aplicar filtros
+    var filtered = cards.map(function(card){
+      var cardType = card.getAttribute('data-type') || '';
+      var cardOperation = card.getAttribute('data-operation') || '';
+      var cardZone = card.getAttribute('data-zone') || '';
+      var cardBedrooms = card.getAttribute('data-bedrooms') || '';
+      var cardPrice = getPriceValue(card.querySelector('.price').textContent);
+
+      console.log('Evaluando card:', { cardType, propertyType }); // Para debugging
+
+      // Comprobar cada filtro
+      var matchType = propertyType === '' || cardType === propertyType;
+      var matchOperation = operation === '' || cardOperation === operation;
+      var matchZone = zone === '' || cardZone === zone;
+      var matchBedrooms = bedrooms === '' || cardBedrooms === bedrooms;
+      var matchPrice = cardPrice >= priceRange[0] && cardPrice <= priceRange[1];
+
+      // Para debugging
+      console.log('Matches:', {
+        type: matchType,
+        operation: matchOperation,
+        zone: matchZone,
+        bedrooms: matchBedrooms,
+        price: matchPrice
+      });
+
+      var isVisible = matchType && matchOperation && matchZone && matchBedrooms && matchPrice;
+      
+      // Aplicar visibilidad
+      if (isVisible) {
+        card.style.display = '';
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      } else {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(10px)';
+        setTimeout(function() {
+          if (!isVisible) {
+            card.style.display = 'none';
+          }
+        }, 300);
+      }
+
+      return isVisible;
+    });
+
+    // Actualizar título y contador
+    var visibleCount = filtered.filter(Boolean).length;
+    
+    // Actualizar título
+    if (listingTitle) {
+      var title = 'Propiedades';
+      if (propertyType) {
+        title = propertyType === 'casa' ? 'Casas' : 'Apartamentos';
+      }
+      if (operation) {
+        title += operation === 'venta' ? ' en venta' : ' en alquiler';
+      }
+      listingTitle.textContent = title;
+    }
+
+    // Actualizar contador
+    if (resultsCount) {
+      resultsCount.textContent = 'Mostrando ' + visibleCount + ' propiedade' + (visibleCount === 1 ? '' : 's');
+    }
+
+    console.log('Resultados filtrados:', visibleCount); // Para debugging
 
     // Update URL without reloading
     var params = new URLSearchParams();
-    if(category) params.set('type', category);
+    if(propertyType) params.set('type', propertyType);
+    if(operation) params.set('operation', operation);
     if(zone) params.set('zone', zone);
-    if(search) params.set('q', search);
+    if(bedrooms) params.set('bedrooms', bedrooms);
+    if(priceSelect && priceSelect.value) params.set('price', priceSelect.value);
+    if(sortSelect && sortSelect.value) params.set('sort', sortSelect.value);
     
     var newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
     window.history.replaceState({}, '', newUrl);
@@ -246,13 +343,26 @@ document.addEventListener('DOMContentLoaded', function(){
 
   // Wire up filter change handlers
   function handleFilterChange(e) {
+    console.log('Filtro cambiado:', e.target.id, 'Nuevo valor:', e.target.value); // Para debugging
     applyFilters();
     updateFilterHighlights();
   }
 
-  if(categorySelect) categorySelect.addEventListener('change', handleFilterChange);
-  if(zoneSelect) zoneSelect.addEventListener('change', handleFilterChange);
-  if(searchInput) searchInput.addEventListener('input', handleFilterChange);
+  // Asegurar que los selectores existan y añadir listeners
+  [
+    { id: 'propertyType', element: propertyTypeSelect },
+    { id: 'operation', element: operationSelect },
+    { id: 'zone', element: zoneSelect },
+    { id: 'bedrooms', element: bedroomsSelect },
+    { id: 'price', element: priceSelect }
+  ].forEach(function(filter) {
+    if (filter.element) {
+      console.log('Añadiendo listener a:', filter.id); // Para debugging
+      filter.element.addEventListener('change', handleFilterChange);
+    } else {
+      console.warn('Elemento no encontrado:', filter.id); // Para debugging
+    }
+  });
   
   // Añadir animación suave al cambiar filtros
   document.querySelectorAll('.card').forEach(function(card) {
@@ -263,14 +373,18 @@ document.addEventListener('DOMContentLoaded', function(){
   function applyFiltersFromUrl(){
     var params = new URLSearchParams(window.location.search);
     var type = params.get('type');
-    var zone = params.get('zone');
-    var q = params.get('q');
+    
+    // Establecer valores de los filtros
+    if(propertyTypeSelect) propertyTypeSelect.value = type || '';
+    if(operationSelect) operationSelect.value = params.get('operation') || '';
+    if(zoneSelect) zoneSelect.value = params.get('zone') || '';
+    if(bedroomsSelect) bedroomsSelect.value = params.get('bedrooms') || '';
+    if(priceSelect) priceSelect.value = params.get('price') || '';
+    if(sortSelect) sortSelect.value = params.get('sort') || 'destacados';
 
-    if(categorySelect && type) categorySelect.value = type;
-    if(zoneSelect && zone) zoneSelect.value = zone;
-    if(searchInput && q) searchInput.value = q;
-
+    // Aplicar filtros y actualizar UI
     applyFilters();
+    updateFilterHighlights();
   }
 
   // Run filter on load for listings page
