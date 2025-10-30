@@ -525,4 +525,146 @@ document.addEventListener('DOMContentLoaded', function(){
       this.reset();
     });
   }
+
+  // ===========================
+  // LIGHTBOX GALLERY
+  // ===========================
+  
+  // Solo ejecutar si estamos en una página de detalle de propiedad
+  if (document.querySelector('.property-gallery')) {
+    initGallery();
+  }
+  
+  function initGallery() {
+    const images = [
+      '../../../assets/placeholder.svg',
+      '../../../assets/placeholder.svg',
+      '../../../assets/placeholder.svg',
+      '../../../assets/placeholder.svg',
+      '../../../assets/placeholder.svg',
+      '../../../assets/placeholder.svg'
+    ];
+    
+    let currentIndex = 0;
+    
+    // Crear estructura del lightbox
+    const lightbox = document.createElement('div');
+    lightbox.className = 'lightbox';
+    lightbox.innerHTML = `
+      <div class="lightbox-content">
+        <div class="lightbox-counter"><span id="current">1</span> / <span id="total">${images.length}</span></div>
+        <button class="lightbox-close" aria-label="Cerrar galería">&times;</button>
+        <div class="lightbox-main">
+          <button class="lightbox-nav prev" aria-label="Imagen anterior">‹</button>
+          <img id="lightbox-img" src="${images[0]}" alt="Imagen de propiedad">
+          <button class="lightbox-nav next" aria-label="Imagen siguiente">›</button>
+        </div>
+        <div class="lightbox-thumbnails" id="thumbnails"></div>
+      </div>
+    `;
+    document.body.appendChild(lightbox);
+    
+    // Crear miniaturas
+    const thumbnailsContainer = document.getElementById('thumbnails');
+    images.forEach((src, index) => {
+      const thumb = document.createElement('img');
+      thumb.src = src;
+      thumb.alt = `Miniatura ${index + 1}`;
+      thumb.className = index === 0 ? 'active' : '';
+      thumb.addEventListener('click', () => showImage(index));
+      thumbnailsContainer.appendChild(thumb);
+    });
+    
+    // Agregar botón de "Ver galería" sobre la imagen principal
+    const gallery = document.querySelector('.property-gallery');
+    const mainImage = gallery.querySelector('.main-image');
+    
+    const trigger = document.createElement('button');
+    trigger.className = 'gallery-trigger';
+    trigger.innerHTML = `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <circle cx="8.5" cy="8.5" r="1.5"/>
+        <path d="M21 15l-5-5L5 21"/>
+      </svg>
+      Ver galería completa
+    `;
+    gallery.appendChild(trigger);
+    
+    // Event listeners
+    mainImage.addEventListener('click', openLightbox);
+    trigger.addEventListener('click', openLightbox);
+    
+    lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+    lightbox.querySelector('.prev').addEventListener('click', () => navigate(-1));
+    lightbox.querySelector('.next').addEventListener('click', () => navigate(1));
+    
+    // Cerrar al hacer clic fuera de la imagen
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+    
+    // Navegación con teclado
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+      
+      switch(e.key) {
+        case 'Escape':
+          closeLightbox();
+          break;
+        case 'ArrowLeft':
+          navigate(-1);
+          break;
+        case 'ArrowRight':
+          navigate(1);
+          break;
+      }
+    });
+    
+    function openLightbox() {
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      showImage(0);
+    }
+    
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    
+    function navigate(direction) {
+      currentIndex += direction;
+      if (currentIndex < 0) currentIndex = images.length - 1;
+      if (currentIndex >= images.length) currentIndex = 0;
+      showImage(currentIndex);
+    }
+    
+    function showImage(index) {
+      currentIndex = index;
+      const img = document.getElementById('lightbox-img');
+      const counter = document.getElementById('current');
+      
+      // Actualizar imagen
+      img.style.opacity = '0';
+      setTimeout(() => {
+        img.src = images[index];
+        img.style.opacity = '1';
+      }, 150);
+      
+      // Actualizar contador
+      counter.textContent = index + 1;
+      
+      // Actualizar miniaturas activas
+      const thumbs = thumbnailsContainer.querySelectorAll('img');
+      thumbs.forEach((thumb, i) => {
+        thumb.classList.toggle('active', i === index);
+      });
+      
+      // Scroll a la miniatura activa
+      const activeThumb = thumbs[index];
+      if (activeThumb) {
+        activeThumb.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
+    }
+  }
 });
