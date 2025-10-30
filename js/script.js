@@ -93,19 +93,87 @@ document.addEventListener('DOMContentLoaded', function(){
       var name = document.getElementById('name');
       var email = document.getElementById('email');
       var message = document.getElementById('message');
+      var interest = document.getElementById('interest');
       var msg = document.getElementById('formMsg');
+      
+      // Reset previous messages
+      msg.className = 'form-message';
+      msg.textContent = '';
 
-      if(!name.value.trim() || !email.value.trim() || !message.value.trim()){
-        msg.textContent = 'Por favor completa los campos obligatorios.';
-        msg.style.color = 'crimson';
+      // Validación básica
+      if(!name.value.trim()){
+        showMessage('Por favor ingresa tu nombre completo.', 'error');
+        name.focus();
         return;
       }
 
-      // En una implementación real, aquí harías fetch a un endpoint.
-      msg.textContent = 'Gracias — tu mensaje ha sido enviado (simulado).';
-      msg.style.color = 'green';
-      form.reset();
+      if(!email.value.trim()){
+        showMessage('Por favor ingresa tu email.', 'error');
+        email.focus();
+        return;
+      }
+
+      // Validación de email con regex simple
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if(!emailRegex.test(email.value.trim())){
+        showMessage('Por favor ingresa un email válido.', 'error');
+        email.focus();
+        return;
+      }
+
+      if(interest && !interest.value){
+        showMessage('Por favor selecciona el tipo de consulta.', 'error');
+        interest.focus();
+        return;
+      }
+
+      if(!message.value.trim()){
+        showMessage('Por favor escribe tu mensaje.', 'error');
+        message.focus();
+        return;
+      }
+
+      // Simular envío exitoso
+      // En producción, aquí se haría un fetch() a un endpoint del servidor
+      showMessage('¡Gracias! Tu mensaje ha sido enviado exitosamente. Nos pondremos en contacto contigo pronto.', 'success');
+      
+      // Limpiar formulario después de 2 segundos
+      setTimeout(function(){
+        form.reset();
+        // Remover clases de campos completados para resetear labels
+        var inputs = form.querySelectorAll('input, textarea, select');
+        inputs.forEach(function(input){
+          input.blur();
+        });
+      }, 2000);
     });
+
+    // Helper function para mostrar mensajes
+    function showMessage(text, type){
+      var msg = document.getElementById('formMsg');
+      msg.textContent = text;
+      msg.className = 'form-message ' + type;
+      
+      // Auto-hide error messages después de 5 segundos
+      if(type === 'error'){
+        setTimeout(function(){
+          msg.className = 'form-message';
+          msg.textContent = '';
+        }, 5000);
+      }
+    }
+
+    // Validación en tiempo real (opcional)
+    var emailField = document.getElementById('email');
+    if(emailField){
+      emailField.addEventListener('blur', function(){
+        if(this.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value.trim())){
+          this.style.borderColor = '#dc2626';
+        } else {
+          this.style.borderColor = '';
+        }
+      });
+    }
   }
 
   // Hero search form: build query and navigate to listings.html
