@@ -112,8 +112,8 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
 .nav-toggle .line{transition:transform .25s ease, opacity .2s ease}
 .hero {
   position: relative;
-  padding: 6rem 0;
-  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  padding: 4rem 0;
+  background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
   color: white;
   overflow: hidden;
 }
@@ -127,19 +127,10 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
   right: 0;
   bottom: 0;
   background-image: 
-    linear-gradient(rgba(255,106,0,0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,106,0,0.1) 1px, transparent 1px);
-  background-size: 20px 20px;
-  animation: grid-move 20s linear infinite;
-}
-
-@keyframes grid-move {
-  from {
-    transform: perspective(500px) rotateX(20deg) translateY(0);
-  }
-  to {
-    transform: perspective(500px) rotateX(20deg) translateY(20px);
-  }
+    linear-gradient(rgba(237,137,54,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(237,137,54,0.06) 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.4;
 }
 
 .hero::after {
@@ -149,7 +140,7 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(45deg, rgba(255,106,0,0.2) 0%, rgba(26,26,26,0.1) 100%);
+  background: radial-gradient(circle at top right, rgba(237,137,54,0.15) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -158,103 +149,65 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
   z-index: 1;
 }
 
-.hero h2 {
-  margin: 0 0 0.5rem;
-  font-size: 3.5rem;
-  line-height: 1.1;
-  background: linear-gradient(90deg, #fff, #ff6a00);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-.btn{display:inline-block;background:var(--accent);color:white;padding:.6rem 1rem;border-radius:6px;text-decoration:none}
-.btn:hover{filter:brightness(.96)}
-
-/* Brand banner inside hero */
-.brand-banner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+/* Hero content - todo integrado */
+.hero-content {
   max-width: 800px;
   margin: 0 auto;
-  padding: 2rem;
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.1);
-  animation: banner-fade 0.6s ease both;
+  text-align: center;
 }
 
-.brand-banner .brand-logo {
-  width: 120px;
-  height: 120px;
+.hero-logo {
+  width: 100px;
+  height: 100px;
   object-fit: contain;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.1);
-  padding: 12px;
-  margin-bottom: 2rem;
-  box-shadow: 
-    0 8px 32px rgba(0,0,0,0.1),
-    0 0 0 1px rgba(255,255,255,0.1);
-  animation: float 6s ease-in-out infinite;
+  margin: 0 auto 2rem;
+  display: block;
+  filter: drop-shadow(0 4px 20px rgba(0,0,0,0.3));
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-.brand-banner .brand-text {
-  margin-bottom: 2rem;
-}
-
-.brand-banner h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  background: linear-gradient(135deg, #fff 0%, #ff6a00 100%);
+.hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 1rem 0;
+  background: linear-gradient(135deg, #ffffff 0%, #ed8936 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.brand-banner p {
+.hero-subtitle {
   font-size: 1.2rem;
-  color: rgba(255,255,255,0.8);
+  color: rgba(255,255,255,0.9);
   line-height: 1.6;
+  margin: 0 0 2.5rem 0;
   max-width: 600px;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.brand-banner .btn {
-  font-size: 1.1rem;
-  padding: 1rem 2rem;
-  background: linear-gradient(135deg, #ff6a00 0%, #ff4500 100%);
-  border: none;
-  border-radius: 30px;
+.btn{display:inline-block;background:var(--accent);color:white;padding:.6rem 1rem;border-radius:6px;text-decoration:none}
+.btn:hover{filter:brightness(.96)}
+
+.btn-secondary {
+  margin-top: 1.5rem;
+  padding: 0.875rem 2rem;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255,255,255,0.2);
   color: white;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 15px rgba(255,106,0,0.3);
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
 }
 
-.brand-banner .btn:hover {
+.btn-secondary:hover {
+  background: rgba(255,255,255,0.15);
+  border-color: rgba(237,137,54,0.5);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255,106,0,0.4);
+  filter: none;
 }
 
-@keyframes banner-fade{
-  from{transform:translateY(6px);opacity:0}
-  to{transform:translateY(0);opacity:1}
-}
-
-@media (max-width:700px){
-  .brand-banner{flex-direction:column;align-items:flex-start}
-  .brand-banner .btn{align-self:stretch;text-align:center}
-}
-
-/* Hero search form */
 /* Hero search form */
 .hero-search {
   width: 100%;
@@ -300,7 +253,8 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
 .hero-search select:focus,
 .hero-search input:focus {
   background: rgba(255,255,255,0.2);
-  border-color: var(--accent);
+  border-color: #ed8936;
+  box-shadow: 0 0 0 3px rgba(237,137,54,0.2);
 }
 
 .hero-search select option {
@@ -326,18 +280,20 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
   align-items: center;
   gap: 0.5rem;
   padding: 1rem 2rem;
-  background: var(--accent);
+  background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
   color: white;
   border: none;
   border-radius: 10px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(237,137,54,0.3);
 }
 
 .hero-search .btn:hover {
-  background: #ff4500;
   transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(237,137,54,0.4);
+  filter: brightness(1.1);
 }
 
 .search-icon {
@@ -348,61 +304,38 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
   transform: scale(1.1);
 }
 
-.btn.secondary {
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.2);
-  margin-top: 1rem;
-}
-
-.btn.secondary:hover {
-  background: rgba(255,255,255,0.1);
-  border-color: rgba(255,255,255,0.3);
-}
-.hero-search select:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(255,106,0,0.15);
-}
-.hero-search .custom-arrow {
-  position: absolute;
-  right: 1em;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-}
-.hero-search input {
-  font-size: 1rem;
-  padding: 0.7em 1em;
-  border-radius: 0.5em;
-  border: 1px solid var(--muted);
-  background: var(--bg);
-  color: var(--text);
-  outline: none;
-  transition: border-color 0.2s;
-}
-.hero-search input:focus {
-  border-color: var(--accent);
-}
-.hero-search button {
-  font-size: 1rem;
-  padding: 0.7em 1.2em;
-  border-radius: 0.5em;
-  border: none;
-  background: var(--accent);
-  color: #fff;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.hero-search button:hover {
-  background: #e65c00;
-}
-@media (max-width:700px){
-  .hero-search{flex-direction:column;align-items:stretch}
+@media (max-width:768px){
+  .search-group {
+    flex-direction: column;
+  }
   .hero-search .select-wrapper,
   .hero-search select,
   .hero-search input{width:100%}
+  
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+  
+  .hero-logo {
+    width: 80px;
+    height: 80px;
+  }
 }
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 3rem 0;
+  }
+  
+  .hero-title {
+    font-size: 1.75rem;
+  }
+}
+
 .featured{padding:3rem 0}
 .featured h3, .listings h3 {
   font-size: 2rem;
