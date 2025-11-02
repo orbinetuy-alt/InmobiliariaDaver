@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function(){
   if(siteSearch){
     siteSearch.addEventListener('submit', function(e){
       e.preventDefault();
-      var type = document.getElementById('searchType').value || '';
+      var type = document.getElementById('searchType').value.trim() || '';
       var zone = document.getElementById('searchZone').value.trim() || '';
       var params = new URLSearchParams();
       if(type) params.set('type', type);

@@ -61,7 +61,7 @@
           <form id="siteSearchForm" class="hero-search" role="search" aria-label="Buscar propiedades">
             <div class="search-group">
               <div class="select-wrapper">
-                <select id="searchType" name="type" required>
+                <select id="searchType" name="type">
                   <option value="">Tipo de propiedad</option>
                   <option value="apartamento">Apartamento</option>
                   <option value="casa">Casa</option>
@@ -75,7 +75,30 @@
                 </span>
               </div>
 
-              <input id="searchZone" name="zone" type="search" placeholder="¿En qué zona buscas?">
+              <div class="select-wrapper">
+                <select id="searchZone" name="zone">
+                  <option value="">Todas las zonas</option>
+                  <option value="aguada">Aguada</option>
+                  <option value="capurro">Capurro</option>
+                  <option value="carrasco">Carrasco</option>
+                  <option value="centro">Centro</option>
+                  <option value="ciudad-vieja">Ciudad Vieja</option>
+                  <option value="cordon">Cordón</option>
+                  <option value="la-blanqueada">La Blanqueada</option>
+                  <option value="la-comercial">La Comercial</option>
+                  <option value="la-figurita">La Figurita</option>
+                  <option value="palermo">Palermo</option>
+                  <option value="pocitos">Pocitos</option>
+                  <option value="punta-carretas">Punta Carretas</option>
+                  <option value="tres-cruces">Tres Cruces</option>
+                  <option value="union">Unión</option>
+                </select>
+                <span class="custom-arrow" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M5 8L10 13L15 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </span>
+              </div>
               
               <button class="btn" type="submit">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="search-icon">
