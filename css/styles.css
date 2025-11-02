@@ -1161,6 +1161,228 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
   box-shadow: 0 8px 16px rgba(255,106,0,0.3);
 }
 
+/* ===================================
+   LOCATION PAGE STYLES
+   =================================== */
+
+.location-page {
+  padding: 4rem 0;
+  min-height: calc(100vh - 80px - 60px);
+}
+
+.location-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.location-subtitle {
+  color: var(--muted);
+  font-size: 1.15rem;
+  margin: 0 auto;
+  max-width: 700px;
+  line-height: 1.6;
+}
+
+/* Map Section */
+.map-section {
+  margin-bottom: 4rem;
+}
+
+.map-container {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.map-container:hover {
+  box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+  transform: translateY(-2px);
+}
+
+.map-container iframe {
+  display: block;
+  width: 100%;
+  min-height: 500px;
+}
+
+/* Location Info Grid */
+.location-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.location-info-card {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.location-info-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+}
+
+.location-icon {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 16px rgba(237, 137, 54, 0.3);
+}
+
+.location-info-card h3 {
+  font-size: 1.4rem;
+  margin: 0 0 1rem 0;
+  color: #2d3748;
+  font-weight: 700;
+}
+
+.location-info-card p {
+  color: var(--muted);
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.postal-code {
+  font-weight: 600;
+  color: var(--accent);
+  margin-top: 1rem !important;
+}
+
+/* Schedule */
+.schedule {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.schedule-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: #f7fafc;
+  border-radius: 10px;
+  border-left: 3px solid var(--accent);
+}
+
+.schedule-row .day {
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.schedule-row .hours {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* Transport List */
+.transport-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0 0;
+}
+
+.transport-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  color: var(--muted);
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.transport-list li:last-child {
+  border-bottom: none;
+}
+
+.transport-list li svg {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+/* Contact Details */
+.contact-details {
+  margin-bottom: 1.5rem;
+}
+
+.contact-details p {
+  margin: 0.75rem 0;
+}
+
+.contact-details a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.contact-details a:hover {
+  color: #dd6b20;
+  text-decoration: underline;
+}
+
+.btn-small {
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+/* Responsive Location Page */
+@media (max-width: 768px) {
+  .location-page {
+    padding: 2rem 0;
+  }
+  
+  .location-header {
+    margin-bottom: 2rem;
+  }
+  
+  .location-subtitle {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+  
+  .map-container iframe {
+    min-height: 350px;
+    border-radius: 12px;
+  }
+  
+  .location-info-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  
+  .location-info-card {
+    padding: 2rem;
+  }
+  
+  .location-icon {
+    width: 56px;
+    height: 56px;
+  }
+  
+  .schedule-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+}
+
 /* Animations */
 @keyframes fadeInDown {
   from {
@@ -2208,3 +2430,4 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
     padding: 1rem;
   }
 }
+
