@@ -2284,6 +2284,53 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
   margin-bottom: 0;
 }
 
+/* Property location section */
+.property-detail .property-location {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.property-detail .property-location h3 {
+  font-size: 1.5rem;
+  margin: 0 0 1.5rem 0;
+  color: #2d3748;
+  font-weight: 700;
+}
+
+.property-detail .location-map {
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.property-detail .location-map iframe {
+  display: block;
+  width: 100%;
+}
+
+.property-detail .location-note {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #718096;
+  font-size: 0.9rem;
+  margin: 0;
+  padding: 1rem;
+  background: #f7fafc;
+  border-radius: 8px;
+  border-left: 3px solid #ed8936;
+}
+
+.property-detail .location-note svg {
+  color: #ed8936;
+  flex-shrink: 0;
+}
+
 /* Sidebar with sticky positioning */
 .property-detail .property-sidebar {
   position: sticky;
