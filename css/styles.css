@@ -51,114 +51,57 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
   color: var(--muted);
   cursor: pointer;
   transition: all 0.3s ease;
-  position: relative;
-  z-index: 51;
 }
 
 .nav-toggle:hover {
-  background: rgba(255,106,0,0.12);
+  background: rgba(255,106,0,0.1);
   color: var(--accent);
-  transform: scale(1.05);
-}
-
-.nav-toggle:active {
-  transform: scale(0.95);
 }
 
 .main-nav {
-  position: fixed;
-  top: 0;
+  position: absolute;
+  top: 100%;
   left: 0;
-  bottom: 0;
-  width: 320px;
-  max-width: 85vw;
-  background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
-  padding: 0;
-  box-shadow: 2px 0 20px rgba(0,0,0,0.15);
-  transform: translateX(-100%);
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 50;
-  overflow-y: auto;
-  overflow-x: hidden;
+  background: white;
+  padding: 1rem;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform-origin: top left;
+  transform: scaleY(0);
+  opacity: 0;
+  transition: all 0.3s ease;
 }
 
 .main-nav.open {
-  transform: translateX(0);
-}
-
-/* Header del menú lateral */
-.main-nav::before {
-  content: '';
-  display: block;
-  height: 120px;
-  background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
-  margin-bottom: 1rem;
+  transform: scaleY(1);
+  opacity: 1;
 }
 
 .main-nav a {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  padding: 1.25rem 2rem;
-  color: #2d3748;
+  display: block;
+  padding: 0.75rem 1.5rem;
+  color: var(--muted);
   text-decoration: none;
-  transition: all 0.25s ease;
-  font-size: 1.05rem;
-  font-weight: 500;
-  border-left: 4px solid transparent;
-  position: relative;
+  border-radius: 6px;
+  transition: all 0.2s ease;
 }
 
 .main-nav a:hover {
   color: var(--accent);
-  background: rgba(255,106,0,0.08);
-  border-left-color: var(--accent);
-  padding-left: 2.25rem;
-}
-
-.main-nav a:active {
-  background: rgba(255,106,0,0.15);
+  background: rgba(255,106,0,0.1);
 }
 
 .main-nav a svg {
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-  opacity: 0.8;
-  transition: opacity 0.2s ease;
-}
-
-.main-nav a:hover svg {
-  opacity: 1;
-}
-
-/* Separador entre enlaces */
-.main-nav a:not(:last-child) {
-  border-bottom: 1px solid rgba(0,0,0,0.06);
-}
-
-/* Scrollbar personalizado para el menú */
-.main-nav::-webkit-scrollbar {
-  width: 6px;
-}
-
-.main-nav::-webkit-scrollbar-track {
-  background: rgba(0,0,0,0.05);
-}
-
-.main-nav::-webkit-scrollbar-thumb {
-  background: rgba(237, 137, 54, 0.4);
-  border-radius: 3px;
-}
-
-.main-nav::-webkit-scrollbar-thumb:hover {
-  background: rgba(237, 137, 54, 0.6);
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+  width: 20px;
+  height: 20px;
 }
 
 /* Animación del ícono del menú */
 .nav-toggle .line {
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
-  transform-origin: center;
+  transition: transform 0.3s ease, opacity 0.2s ease;
 }
 
 .nav-toggle.open .line1 {
@@ -167,49 +110,12 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
 
 .nav-toggle.open .line2 {
   opacity: 0;
-  transform: scale(0);
 }
 
 .nav-toggle.open .line3 {
   transform: rotate(-45deg) translate(5px, -5px);
 }
 .nav-toggle:focus{outline:2px solid rgba(10,102,194,.2);outline-offset:3px}
-
-/* Desktop: menú horizontal */
-@media (min-width: 769px) {
-  .nav-toggle {
-    display: none;
-  }
-  
-  .main-nav {
-    position: static;
-    transform: none;
-    width: auto;
-    padding: 0;
-    box-shadow: none;
-    display: flex;
-    gap: 0.5rem;
-    grid-column: 3;
-    background: transparent;
-  }
-  
-  .main-nav a {
-    padding: 0.5rem 1rem;
-    font-size: 0.95rem;
-  }
-  
-  .main-nav a:hover {
-    padding-left: 1rem;
-  }
-  
-  .site-header .container {
-    grid-template-columns: 1fr auto 1fr;
-  }
-  
-  .brand {
-    grid-column: 2;
-  }
-}
 .nav-toggle svg{display:block}
 .nav-toggle .line{transition:transform .25s ease, opacity .2s ease}
 .hero {
@@ -1806,16 +1712,7 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
   .nav-toggle.open .line3{transform-origin:center;transform:translateY(-6px) rotate(-45deg)}
 
   /* Backdrop shown when menu open */
-  .nav-backdrop{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.6);
-    z-index:40;
-    opacity:0;
-    pointer-events:none;
-    transition:opacity .35s cubic-bezier(0.4, 0, 0.2, 1);
-    backdrop-filter: blur(2px);
-  }
+  .nav-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.28);z-index:40;opacity:0;pointer-events:none;transition:opacity .2s ease}
   .nav-backdrop.show{opacity:1;pointer-events:auto}
 
   /* Ajustes para filtros en móvil */
