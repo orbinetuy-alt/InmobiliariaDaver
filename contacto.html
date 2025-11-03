@@ -67,7 +67,12 @@
       <div class="contact-grid">
         <!-- Formulario -->
         <div class="contact-form-wrapper">
-          <form id="contactForm" class="modern-contact-form" novalidate>
+          <form id="contactForm" class="modern-contact-form" action="https://api.web3forms.com/submit" method="POST">
+            <!-- Web3Forms Access Key -->
+            <input type="hidden" name="access_key" value="78465221-09a4-4110-835c-74106824b8c4">
+            <input type="hidden" name="subject" value="Nueva consulta desde Daver Inmobiliaria">
+            <input type="hidden" name="from_name" value="Formulario Web Daver">
+            
             <div class="form-row">
               <div class="form-group">
                 <svg class="field-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

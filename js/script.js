@@ -88,13 +88,14 @@ document.addEventListener('DOMContentLoaded', function(){
 
   var form = document.getElementById('contactForm');
   if(form){
-    form.addEventListener('submit', function(e){
+    form.addEventListener('submit', async function(e){
       e.preventDefault();
       var name = document.getElementById('name');
       var email = document.getElementById('email');
       var message = document.getElementById('message');
       var interest = document.getElementById('interest');
       var msg = document.getElementById('formMsg');
+      var submitBtn = form.querySelector('button[type="submit"]');
       
       // Reset previous messages
       msg.className = 'form-message';
@@ -133,20 +134,45 @@ document.addEventListener('DOMContentLoaded', function(){
         return;
       }
 
-      // Simular envío exitoso
-      // En producción, aquí se haría un fetch() a un endpoint del servidor
-      showMessage('¡Gracias! Tu mensaje ha sido enviado exitosamente. Nos pondremos en contacto contigo pronto.', 'success');
-      
-      // Limpiar formulario después de 2 segundos
-      setTimeout(function(){
-        form.reset();
-        // Remover clases de campos completados para resetear labels
-        var inputs = form.querySelectorAll('input, textarea, select');
-        inputs.forEach(function(input){
-          input.blur();
+      // Deshabilitar botón mientras se envía
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando...';
+
+      try {
+        // Enviar formulario a Web3Forms
+        const formData = new FormData(form);
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: formData
         });
-      }, 2000);
+
+        const data = await response.json();
+
+        if (data.success) {
+          showMessage('¡Gracias! Tu mensaje ha sido enviado exitosamente. Nos pondremos en contacto contigo pronto.', 'success');
+          
+          // Limpiar formulario después de 2 segundos
+          setTimeout(function(){
+            form.reset();
+            // Remover clases de campos completados para resetear labels
+            var inputs = form.querySelectorAll('input, textarea, select');
+            inputs.forEach(function(input){
+              input.blur();
+            });
+          }, 2000);
+        } else {
+          showMessage('Hubo un error al enviar el mensaje. Por favor intenta nuevamente.', 'error');
+        }
+      } catch (error) {
+        showMessage('Hubo un error al enviar el mensaje. Por favor intenta nuevamente.', 'error');
+        console.error('Error:', error);
+      } finally {
+        // Rehabilitar botón
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Enviar mensaje';
+      }
     });
+
 
     // Helper function para mostrar mensajes
     function showMessage(text, type){
