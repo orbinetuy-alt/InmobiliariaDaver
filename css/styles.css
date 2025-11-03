@@ -1342,11 +1342,32 @@ section.listings:not(.listings-page) .card > * {
    FOOTER - Diseño moderno y completo
    ======================================== */
 .site-footer {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  background: 
+    linear-gradient(135deg, rgba(26,26,46,0.95) 0%, rgba(22,33,62,0.97) 100%),
+    url('../properties/footer-background.jpg') center/cover no-repeat;
+  background-attachment: fixed;
   color: #e0e0e0;
   padding: 4rem 0 0;
   margin-top: 4rem;
   border-top: 3px solid var(--accent);
+  position: relative;
+}
+
+.site-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(26,26,46,0.85) 0%, rgba(22,33,62,0.9) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.site-footer .container {
+  position: relative;
+  z-index: 1;
 }
 
 .footer-content {
@@ -1354,7 +1375,7 @@ section.listings:not(.listings-page) .card > * {
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 3rem;
   padding-bottom: 3rem;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.15);
 }
 
 .footer-section h4 {
@@ -1364,6 +1385,7 @@ section.listings:not(.listings-page) .card > * {
   margin-bottom: 1.5rem;
   position: relative;
   padding-bottom: 0.75rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
 .footer-section h4::after {
@@ -1382,14 +1404,15 @@ section.listings:not(.listings-page) .card > * {
   width: 120px;
   height: auto;
   margin-bottom: 1rem;
-  filter: brightness(1.2);
+  filter: brightness(1.3) drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 }
 
 .footer-description {
-  color: #b0b0b0;
+  color: #d0d0d0;
   line-height: 1.6;
   margin-bottom: 1.5rem;
   font-size: 0.95rem;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 /* Redes sociales */
@@ -1404,17 +1427,18 @@ section.listings:not(.listings-page) .card > * {
   justify-content: center;
   width: 40px;
   height: 40px;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.15);
   border-radius: 50%;
   color: white;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
 .footer-social a:hover {
   background: var(--accent);
   transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(255,106,0,0.4);
+  box-shadow: 0 5px 15px rgba(255,106,0,0.5);
 }
 
 .footer-social svg {
@@ -1474,23 +1498,26 @@ section.listings:not(.listings-page) .card > * {
   align-items: flex-start;
   gap: 0.75rem;
   margin-bottom: 1rem;
-  color: #b0b0b0;
+  color: #d0d0d0;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 .footer-contact svg {
   flex-shrink: 0;
   margin-top: 2px;
   color: var(--accent);
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
 }
 
 .footer-contact a {
-  color: #b0b0b0;
+  color: #d0d0d0;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .footer-contact a:hover {
   color: var(--accent);
+  text-shadow: 0 0 10px rgba(255,106,0,0.5);
 }
 
 /* Horarios */
@@ -1533,8 +1560,9 @@ section.listings:not(.listings-page) .card > * {
 
 .footer-bottom p {
   margin: 0;
-  color: #b0b0b0;
+  color: #d0d0d0;
   font-size: 0.9rem;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 .footer-legal {
@@ -1545,17 +1573,19 @@ section.listings:not(.listings-page) .card > * {
 }
 
 .footer-legal a {
-  color: #b0b0b0;
+  color: #d0d0d0;
   text-decoration: none;
   transition: color 0.3s ease;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 .footer-legal a:hover {
   color: var(--accent);
+  text-shadow: 0 0 10px rgba(255,106,0,0.5);
 }
 
 .footer-legal span {
-  color: rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.4);
 }
 
 /* Responsive footer */
