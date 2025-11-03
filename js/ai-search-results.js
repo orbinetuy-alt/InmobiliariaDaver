@@ -4,18 +4,33 @@
  */
 
 (function() {
+  console.log('🚀 AI Search Results script cargado');
+  
   // Verificar si es una búsqueda IA
   const urlParams = new URLSearchParams(window.location.search);
   const isAISearch = urlParams.get('ai_search') === 'true';
   
-  if (!isAISearch) return;
+  console.log('🔍 ¿Es búsqueda IA?', isAISearch);
+  
+  if (!isAISearch) {
+    console.log('⚠️ No es búsqueda IA, saliendo...');
+    return;
+  }
   
   // Obtener datos de la búsqueda
   const query = sessionStorage.getItem('aiSearchQuery');
   const params = JSON.parse(sessionStorage.getItem('aiSearchParams') || '{}');
   const results = JSON.parse(sessionStorage.getItem('aiSearchResults') || '[]');
   
-  if (!query || !results) return;
+  console.log('📦 Datos de sessionStorage:');
+  console.log('  - Query:', query);
+  console.log('  - Params:', params);
+  console.log('  - Results:', results.length, 'propiedades');
+  
+  if (!query || !results) {
+    console.error('❌ Faltan datos en sessionStorage');
+    return;
+  }
   
   // Esperar a que el DOM esté listo
   if (document.readyState === 'loading') {
@@ -25,8 +40,11 @@
   }
   
   function displayAIResults() {
+    console.log('📊 Mostrando resultados IA:', results.length, 'propiedades');
+    console.log('🔍 Parámetros de búsqueda:', params);
+    
     // Actualizar el título de la página
-    const pageTitle = document.querySelector('.listings-header h2');
+    const pageTitle = document.querySelector('.listing-header h2') || document.getElementById('listingTitle');
     if (pageTitle) {
       pageTitle.innerHTML = `
         <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
@@ -41,7 +59,7 @@
     }
     
     // Agregar banner con la búsqueda y explicación
-    const listingsHeader = document.querySelector('.listings-header');
+    const listingsHeader = document.querySelector('.listing-header');
     if (listingsHeader) {
       const banner = document.createElement('div');
       banner.className = 'ai-search-banner';
@@ -78,13 +96,19 @@
     }
     
     // Ocultar filtros normales (ya que estamos mostrando resultados IA)
-    const filtersSection = document.querySelector('.filters');
+    const filtersSection = document.querySelector('.filter-bar');
     if (filtersSection) {
       filtersSection.style.display = 'none';
     }
     
-    // Reemplazar las tarjetas de propiedades
-    const grid = document.querySelector('.listings-grid');
+    // Ocultar el selector de ordenamiento también
+    const sortSection = document.querySelector('.listing-sort');
+    if (sortSection) {
+      sortSection.style.display = 'none';
+    }
+    
+    // Reemplazar las tarjetas de propiedades (selector correcto)
+    const grid = document.querySelector('.grid.listings') || document.getElementById('listings');
     if (grid && results.length > 0) {
       grid.innerHTML = '';
       
