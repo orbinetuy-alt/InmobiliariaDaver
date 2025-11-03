@@ -456,6 +456,26 @@ function initAISearch() {
   const loading = document.getElementById('aiSearchLoading');
   const suggestionsChips = document.querySelectorAll('.suggestion-chip');
   
+  // Verificar si hay API key configurada
+  if (!OPENAI_API_KEY) {
+    console.warn('⚠️ API key de OpenAI no configurada. Usando búsqueda simple.');
+    // Mostrar advertencia visual
+    const badge = document.querySelector('.ai-badge');
+    if (badge) {
+      badge.innerHTML = `
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        Búsqueda Inteligente (modo simple)
+      `;
+      badge.style.background = 'linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(245, 158, 11, 0.15))';
+      badge.style.borderColor = 'rgba(251, 191, 36, 0.3)';
+      badge.style.color = '#f59e0b';
+    }
+  }
+  
   // Manejar clicks en sugerencias
   suggestionsChips.forEach(chip => {
     chip.addEventListener('click', function() {
@@ -471,21 +491,28 @@ function initAISearch() {
     
     const query = input.value.trim();
     if (!query) {
-      alert('Por favor ingresa una búsqueda');
+      showNotification('Por favor ingresa una búsqueda', 'warning');
+      input.focus();
       return;
     }
     
     // Mostrar loading
     loading.style.display = 'flex';
     input.disabled = true;
+    const submitBtn = form.querySelector('.ai-search-btn');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<div class="loading-spinner" style="width: 16px; height: 16px;"></div> Buscando...';
+    }
     
     try {
       // Interpretar búsqueda con IA
       const params = await interpretSearchWithAI(query);
-      console.log('Parámetros extraídos:', params);
+      console.log('✅ Parámetros extraídos:', params);
       
       // Filtrar propiedades
       const results = filterProperties(params);
+      console.log(`✅ Se encontraron ${results.length} propiedades`);
       
       // Guardar en sessionStorage para la página de resultados
       sessionStorage.setItem('aiSearchQuery', query);
@@ -496,12 +523,104 @@ function initAISearch() {
       window.location.href = 'listings.html?ai_search=true';
       
     } catch (error) {
-      console.error('Error en búsqueda:', error);
-      alert('Hubo un error al procesar tu búsqueda. Por favor intenta nuevamente.');
+      console.error('❌ Error en búsqueda:', error);
+      showNotification('Hubo un error al procesar tu búsqueda. Intenta con términos más simples o verifica tu conexión.', 'error');
       loading.style.display = 'none';
       input.disabled = false;
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="22" y1="2" x2="11" y2="13"/>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+          Buscar
+        `;
+      }
     }
   });
+}
+
+/**
+ * Muestra notificación al usuario
+ */
+function showNotification(message, type = 'info') {
+  // Crear elemento de notificación
+  const notification = document.createElement('div');
+  notification.className = `ai-notification ai-notification-${type}`;
+  notification.innerHTML = `
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      ${type === 'error' ? '<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>' : 
+        type === 'warning' ? '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>' :
+        '<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>'}
+    </svg>
+    <span>${message}</span>
+  `;
+  
+  // Agregar estilos
+  const style = document.createElement('style');
+  style.textContent = `
+    .ai-notification {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      max-width: 400px;
+      padding: 1rem 1.5rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      z-index: 9999;
+      animation: slideIn 0.3s ease-out;
+    }
+    
+    .ai-notification-error {
+      border-left: 4px solid #ef4444;
+      color: #dc2626;
+    }
+    
+    .ai-notification-warning {
+      border-left: 4px solid #f59e0b;
+      color: #d97706;
+    }
+    
+    .ai-notification-info {
+      border-left: 4px solid #3b82f6;
+      color: #2563eb;
+    }
+    
+    @keyframes slideIn {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .ai-notification {
+        top: 1rem;
+        right: 1rem;
+        left: 1rem;
+        max-width: none;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+  
+  // Agregar al body
+  document.body.appendChild(notification);
+  
+  // Auto-remover después de 5 segundos
+  setTimeout(() => {
+    notification.style.animation = 'slideIn 0.3s ease-out reverse';
+    setTimeout(() => notification.remove(), 300);
+  }, 5000);
 }
 
 // Inicializar cuando el DOM esté listo

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configuración del Buscador IA - Daver Inmobiliaria</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      color: #1f2937;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 16px;
+      padding: 3rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+    
+    h1 {
+      color: #8b5cf6;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .subtitle {
+      color: #6b7280;
+      font-size: 1.125rem;
+      margin-bottom: 2rem;
+    }
+    
+    .step {
+      background: #f9fafb;
+      border-left: 4px solid #8b5cf6;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: 8px;
+    }
+    
+    .step h2 {
+      color: #8b5cf6;
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .step-number {
+      background: #8b5cf6;
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+    
+    code {
+      background: #1f2937;
+      color: #10b981;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 0.9em;
+    }
+    
+    pre {
+      background: #1f2937;
+      color: #e5e7eb;
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+    
+    pre code {
+      background: none;
+      padding: 0;
+      color: #10b981;
+    }
+    
+    .warning {
+      background: #fef3c7;
+      border-left: 4px solid #f59e0b;
+      padding: 1rem;
+      border-radius: 8px;
+      margin: 1rem 0;
+    }
+    
+    .success {
+      background: #d1fae5;
+      border-left: 4px solid #10b981;
+      padding: 1rem;
+      border-radius: 8px;
+      margin: 1rem 0;
+    }
+    
+    a {
+      color: #8b5cf6;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    a:hover {
+      text-decoration: underline;
+    }
+    
+    .btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #8b5cf6, #6366f1);
+      color: white;
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      margin-top: 1rem;
+      transition: transform 0.3s ease;
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+    
+    ul {
+      margin-left: 1.5rem;
+      margin-top: 0.5rem;
+    }
+    
+    li {
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>
+      🤖
+      Configurar Buscador IA
+    </h1>
+    <p class="subtitle">Sigue estos pasos para activar la búsqueda inteligente con OpenAI</p>
+    
+    <div class="step">
+      <h2>
+        <span class="step-number">1</span>
+        Crear archivo de configuración
+      </h2>
+      <p>Copia el archivo de ejemplo para crear tu configuración personal:</p>
+      <pre><code>cp js/config.example.js js/config.js</code></pre>
+      <p>O crea manualmente el archivo <code>js/config.js</code></p>
+    </div>
+    
+    <div class="step">
+      <h2>
+        <span class="step-number">2</span>
+        Obtener API Key de OpenAI
+      </h2>
+      <p>Si aún no tienes una API key:</p>
+      <ul>
+        <li>Ve a <a href="https://platform.openai.com/" target="_blank">platform.openai.com</a></li>
+        <li>Crea una cuenta o inicia sesión</li>
+        <li>Ve a la sección "API Keys"</li>
+        <li>Haz clic en "Create new secret key"</li>
+        <li>Copia la key (empieza con <code>sk-...</code>)</li>
+      </ul>
+      
+      <div class="warning">
+        <strong>⚠️ Importante:</strong> La API key solo se muestra una vez. Guárdala en un lugar seguro.
+      </div>
+    </div>
+    
+    <div class="step">
+      <h2>
+        <span class="step-number">3</span>
+        Configurar la API Key
+      </h2>
+      <p>Abre <code>js/config.js</code> y pega tu API key:</p>
+      <pre><code>window.OPENAI_CONFIG = {
+  apiKey: 'sk-proj-xxxxxxxxxxxxxxx' // ← Pega tu key aquí
+};</code></pre>
+    </div>
+    
+    <div class="step">
+      <h2>
+        <span class="step-number">4</span>
+        Verificar configuración
+      </h2>
+      <p>Abre la consola del navegador (F12) y ejecuta:</p>
+      <pre><code>// Copiar y pegar en la consola
+fetch('js/diagnostic.js')
+  .then(r => r.text())
+  .then(eval);</code></pre>
+      <p>O carga el archivo directamente:</p>
+      <pre><code>&lt;script src="js/diagnostic.js"&gt;&lt;/script&gt;</code></pre>
+      <p>El diagnóstico te dirá si todo está configurado correctamente.</p>
+    </div>
+    
+    <div class="step">
+      <h2>
+        <span class="step-number">5</span>
+        ¡Prueba el buscador!
+      </h2>
+      <p>Recarga la página y prueba búsquedas como:</p>
+      <ul>
+        <li>"casa en Pocitos por menos de 200 mil"</li>
+        <li>"apartamento 2 dormitorios cerca del mar"</li>
+        <li>"oficina en centro"</li>
+      </ul>
+      
+      <div class="success">
+        <strong>✅ Todo listo!</strong> El buscador ahora puede interpretar búsquedas en lenguaje natural.
+      </div>
+    </div>
+    
+    <div class="warning">
+      <h3>🔒 Nota de Seguridad</h3>
+      <p>Esta configuración es solo para desarrollo/pruebas. Para producción:</p>
+      <ul>
+        <li>La API key debe estar en un backend, NO en el frontend</li>
+        <li>Lee <code>API_SECURITY.md</code> para instrucciones completas</li>
+        <li>Considera usar Vercel Functions, Netlify Functions o similar</li>
+      </ul>
+    </div>
+    
+    <a href="index.html" class="btn">← Volver al sitio</a>
+  </div>
+</body>
+</html>
