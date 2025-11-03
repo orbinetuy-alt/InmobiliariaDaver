@@ -138,6 +138,15 @@
   function createPropertyCard(property, rank) {
     const article = document.createElement('article');
     article.className = 'card';
+    article.style.cursor = 'pointer';
+    
+    // Hacer la card clicable
+    article.addEventListener('click', function(e) {
+      // No navegar si se hizo click en el enlace específico
+      if (e.target.tagName === 'A') return;
+      window.location.href = property.url;
+    });
+    
     article.innerHTML = `
       <div class="ai-rank-badge" title="Relevancia según tu búsqueda">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

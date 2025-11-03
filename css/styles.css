@@ -1072,6 +1072,269 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+/* ========================================
+   FEATURED CARDS - Diseño cuadrado moderno
+   ======================================== */
+/* Cards en index.html (no en listings.html) */
+.featured .card,
+.featured-properties .card,
+section.listings:not(.listings-page) .card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  cursor: pointer;
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border: 1px solid rgba(0,0,0,0.06);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.featured .card:hover,
+.featured-properties .card:hover,
+section.listings:not(.listings-page) .card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+  border-color: rgba(255,106,0,0.3);
+}
+
+/* Imágenes de cards cuadradas */
+.featured .card-img-wrapper,
+.featured-properties .card-img-wrapper,
+section.listings:not(.listings-page) .card-img-wrapper {
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  position: relative;
+}
+
+.featured .card-img-wrapper img,
+.featured-properties .card-img-wrapper img,
+section.listings:not(.listings-page) .card-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.featured .card:hover .card-img-wrapper img,
+.featured-properties .card:hover .card-img-wrapper img,
+section.listings:not(.listings-page) .card:hover .card-img-wrapper img {
+  transform: scale(1.1);
+}
+
+/* Contenido de las cards cuadradas */
+.featured .card-content,
+.featured-properties .card-content,
+section.listings:not(.listings-page) .card-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.featured .card-content h4,
+.featured-properties .card-content h4,
+section.listings:not(.listings-page) .card-content h4 {
+  margin: 0 0 0.75rem;
+  font-size: 1.2rem;
+  color: #1a1a1a;
+  font-weight: 600;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 3.3rem;
+}
+
+.featured .card-location,
+.featured-properties .card-location,
+section.listings:not(.listings-page) .card-location {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #666;
+  font-size: 0.9rem;
+  font-style: normal;
+  margin-bottom: 1rem;
+}
+
+.featured .card-location svg,
+.featured-properties .card-location svg,
+section.listings:not(.listings-page) .card-location svg {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.featured .card-features,
+.featured-properties .card-features,
+section.listings:not(.listings-page) .card-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+.featured .card-features span,
+.featured-properties .card-features span,
+section.listings:not(.listings-page) .card-features span {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: #666;
+  background: rgba(0,0,0,0.03);
+  padding: 0.4rem 0.75rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.featured .card:hover .card-features span,
+.featured-properties .card:hover .card-features span,
+section.listings:not(.listings-page) .card:hover .card-features span {
+  background: rgba(255,106,0,0.08);
+  color: var(--accent);
+}
+
+.featured .card-features svg,
+.featured-properties .card-features svg,
+section.listings:not(.listings-page) .card-features svg {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.featured .card-content .price,
+.featured-properties .card-content .price,
+section.listings:not(.listings-page) .card-content .price {
+  font-weight: 700;
+  font-size: 1.75rem;
+  background: linear-gradient(135deg, var(--accent) 0%, #ff8533 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+}
+
+.featured .card-content .btn,
+.featured-properties .card-content .btn,
+section.listings:not(.listings-page) .card-content .btn {
+  margin-top: auto;
+  width: 100%;
+  text-align: center;
+  padding: 0.85rem 1.5rem;
+  background: linear-gradient(135deg, var(--accent) 0%, #ff8533 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255,106,0,0.2);
+}
+
+.featured .card:hover .btn,
+.featured-properties .card:hover .btn,
+section.listings:not(.listings-page) .card:hover .btn {
+  box-shadow: 0 6px 20px rgba(255,106,0,0.35);
+  transform: translateY(-2px);
+}
+
+/* Tag de estado */
+.featured .card-tag,
+.featured-properties .card-tag,
+section.listings:not(.listings-page) .card-tag {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255,106,0,0.95);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  backdrop-filter: blur(8px);
+  z-index: 2;
+}
+
+/* Grid para cards cuadradas */
+.featured .grid,
+.featured-properties .grid,
+section.listings:not(.listings-page) .grid {
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+/* Efecto de overlay sutil al hover */
+.featured .card::before,
+.featured-properties .card::before,
+section.listings:not(.listings-page) .card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255,106,0,0.03) 0%, rgba(255,133,51,0.03) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  border-radius: 16px;
+  z-index: 1;
+}
+
+.featured .card:hover::before,
+.featured-properties .card:hover::before,
+section.listings:not(.listings-page) .card:hover::before {
+  opacity: 1;
+}
+
+/* Asegurar que el contenido esté sobre el overlay */
+.featured .card > *,
+.featured-properties .card > *,
+section.listings:not(.listings-page) .card > * {
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 768px) {
+  .featured .grid,
+  .featured-properties .grid,
+  section.listings:not(.listings-page) .grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .featured .card-img-wrapper,
+  .featured-properties .card-img-wrapper,
+  section.listings:not(.listings-page) .card-img-wrapper {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .featured .grid,
+  .featured-properties .grid,
+  section.listings:not(.listings-page) .grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .featured .card-content,
+  .featured-properties .card-content,
+  section.listings:not(.listings-page) .card-content {
+    padding: 1.25rem;
+  }
+}
+
 .price{font-weight:700;color:var(--accent)}
 .site-footer{padding:1rem 0;text-align:center;color:var(--muted)}
 .filters{margin:1rem 0}

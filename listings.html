@@ -116,7 +116,7 @@
   </div>
 
   <main class="container">
-    <div class="grid listings" id="listings">
+    <div class="grid listings listings-page" id="listings">
       <!-- Las propiedades se cargarán dinámicamente desde el buscador IA o desde script.js -->
       <!-- Propiedad 6: Casa La Figurita -->
       <article class="card" data-type="casa" data-zone="la-figurita" data-operation="alquiler" data-bedrooms="3">
@@ -770,6 +770,43 @@
   
   <!-- AI Search Results Handler -->
   <script src="js/ai-search-results.js"></script>
+  
+  <!-- Script para hacer las cards clicables -->
+  <script>
+    // Hacer que toda la card sea clicable
+    document.addEventListener('DOMContentLoaded', function() {
+      const cards = document.querySelectorAll('.listings .card');
+      
+      cards.forEach(card => {
+        // Encontrar el enlace dentro de la card
+        const link = card.querySelector('.btn');
+        
+        if (link) {
+          const url = link.getAttribute('href');
+          
+          // Hacer toda la card clicable
+          card.style.cursor = 'pointer';
+          
+          card.addEventListener('click', function(e) {
+            // No navegar si se hizo click en un enlace específico
+            if (e.target.tagName === 'A') return;
+            
+            // Navegar a la página de la propiedad
+            window.location.href = url;
+          });
+          
+          // Agregar efecto visual de que es clicable
+          card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateX(4px)';
+          });
+          
+          card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateX(0)';
+          });
+        }
+      });
+    });
+  </script>
   
   <!-- Chatwoot Widget -->
   <script>
