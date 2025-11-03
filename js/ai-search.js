@@ -9,13 +9,9 @@
 const OPENAI_API_KEY = window.OPENAI_CONFIG?.apiKey || '';
 
 // SheetDB API endpoint para analytics de búsquedas
-// INSTRUCCIONES PARA CONFIGURAR:
-// 1. Ve a https://sheetdb.io/
-// 2. Crea una cuenta gratuita
-// 3. Conecta tu Google Sheet (crea uno con columnas: fecha, hora, busqueda, resultados, tipo, zona, operacion, precio_min, precio_max, dispositivo)
-// 4. Copia el API endpoint que te da SheetDB
-// 5. Reemplaza 'TU_SHEETDB_API_ID' con tu ID real
-const SHEETDB_API_URL = 'https://sheetdb.io/api/v1/TU_SHEETDB_API_ID';
+// ✅ Configurado y listo para usar
+// Los datos de búsqueda se guardan automáticamente en Google Sheets
+const SHEETDB_API_URL = 'https://sheetdb.io/api/v1/j4k7n7ai2cz7p';
 
 /**
  * Registra una búsqueda en Google Sheets para analytics
