@@ -3028,23 +3028,23 @@ section.listings:not(.listings-page) .card > * {
 }
 
 /* Property header con imagen de fondo - Oficina Ciudad Vieja */
-.property-header-oficina-ciudad-vieja {
+.property-detail .property-header-oficina-ciudad-vieja {
   background: 
     linear-gradient(135deg, 
       rgba(255, 106, 0, 0.88) 0%, 
       rgba(230, 90, 0, 0.82) 100%
     ),
-    url('../assets/oficina-ciudad-vieja.jpg') center/cover no-repeat;
+    url('../assets/oficina-ciudad-vieja.jpg') center/cover no-repeat !important;
   background-attachment: fixed;
 }
 
-.property-header-oficina-ciudad-vieja::before {
+.property-detail .property-header-oficina-ciudad-vieja::before {
   background: 
     linear-gradient(135deg, 
       rgba(255, 106, 0, 0.7) 0%, 
       rgba(230, 90, 0, 0.6) 100%
     ),
-    url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="dots-property" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="rgba(255,255,255,0.15)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots-property)"/></svg>');
+    url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="dots-property" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="rgba(255,255,255,0.15)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots-property)"/></svg>') !important;
 }
 
 .property-detail .property-title {
