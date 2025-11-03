@@ -3043,6 +3043,26 @@ section.listings:not(.listings-page) .card > * {
     url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="dots-property" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="rgba(255,255,255,0.15)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots-property)"/></svg>') !important;
 }
 
+/* Property header con imagen de fondo - Casa Carrasco */
+.property-detail .property-header-casa-carrasco {
+  background: 
+    linear-gradient(135deg, 
+      rgba(45, 55, 72, 0.85) 0%, 
+      rgba(26, 32, 44, 0.9) 100%
+    ),
+    url('../assets/casa-carrasco.jpg') center/cover no-repeat !important;
+  background-attachment: fixed;
+}
+
+.property-detail .property-header-casa-carrasco::before {
+  background: 
+    linear-gradient(135deg, 
+      rgba(45, 55, 72, 0.65) 0%, 
+      rgba(26, 32, 44, 0.75) 100%
+    ),
+    url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="dots-carrasco" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="rgba(255,255,255,0.15)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots-carrasco)"/></svg>') !important;
+}
+
 .property-detail .property-title {
   max-width: 1200px;
   margin: 0 auto;
