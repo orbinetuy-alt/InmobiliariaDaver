@@ -8,21 +8,15 @@
 // Ver API_SECURITY.md para instrucciones detalladas
 const OPENAI_API_KEY = window.OPENAI_CONFIG?.apiKey || '';
 
-// SheetDB API endpoint para analytics de búsquedas
-// ✅ Configurado y listo para usar
-// Los datos de búsqueda se guardan automáticamente en Google Sheets
-const SHEETDB_API_URL = 'https://sheetdb.io/api/v1/j4k7n7ai2cz7p';
+// n8n Webhook para analytics de búsquedas
+// ✅ Conectado con n8n para mayor flexibilidad y sin límites
+// Los datos se envían a tu workflow de n8n que luego guarda en Google Sheets
+const ANALYTICS_WEBHOOK_URL = 'https://n8n.srv1035532.hstgr.cloud/webhook-test/búsquedas-daver';
 
 /**
- * Registra una búsqueda en Google Sheets para analytics
+ * Registra una búsqueda en Google Sheets para analytics vía n8n
  */
 async function logSearchAnalytics(query, params, resultsCount) {
-  // Si no está configurado el API, saltar silenciosamente
-  if (SHEETDB_API_URL.includes('TU_SHEETDB_API_ID')) {
-    console.log('📊 Analytics no configurado. Configura SHEETDB_API_URL en ai-search.js');
-    return;
-  }
-
   try {
     const now = new Date();
     const deviceType = /Mobile|Android|iPhone/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop';
@@ -42,15 +36,15 @@ async function logSearchAnalytics(query, params, resultsCount) {
       timestamp: now.toISOString()
     };
 
-    console.log('📊 Enviando datos a SheetDB...', analyticsData);
+    console.log('📊 Enviando datos a n8n...', analyticsData);
     
-    const response = await fetch(SHEETDB_API_URL, {
+    const response = await fetch(ANALYTICS_WEBHOOK_URL, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ data: analyticsData })
+      body: JSON.stringify(analyticsData)
     });
 
     const responseData = await response.json();
@@ -58,7 +52,7 @@ async function logSearchAnalytics(query, params, resultsCount) {
     if (response.ok) {
       console.log('✅ Búsqueda registrada en analytics exitosamente:', responseData);
     } else {
-      console.error('❌ Error al guardar en SheetDB:', responseData);
+      console.error('❌ Error al guardar en n8n:', responseData);
     }
   } catch (error) {
     // Fallar silenciosamente para no interrumpir la experiencia del usuario
