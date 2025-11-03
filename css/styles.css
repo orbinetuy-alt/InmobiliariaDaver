@@ -455,8 +455,8 @@ a {
 /* AI Search Styles */
 .ai-search-container {
   width: 100%;
-  max-width: 800px;
-  margin: 2rem auto;
+  max-width: 900px;
+  margin: 3rem auto;
   position: relative;
 }
 
@@ -464,15 +464,17 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(99, 102, 241, 0.15));
-  border: 1px solid rgba(139, 92, 246, 0.3);
-  border-radius: 20px;
-  color: #8b5cf6;
-  font-size: 0.875rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
+  padding: 0.6rem 1.25rem;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(99, 102, 241, 0.2));
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  border-radius: 25px;
+  color: #a78bfa;
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
   backdrop-filter: blur(10px);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
 .ai-badge svg {
@@ -506,10 +508,12 @@ a {
 
 .ai-search-icon {
   position: absolute;
-  left: 1.5rem;
+  left: 1.75rem;
   color: #9ca3af;
   pointer-events: none;
   transition: color 0.3s ease;
+  width: 26px;
+  height: 26px;
 }
 
 .ai-search-input-wrapper:focus-within .ai-search-icon {
@@ -518,31 +522,34 @@ a {
 
 #aiSearchInput {
   flex: 1;
-  padding: 1.5rem 1.5rem 1.5rem 4rem;
+  padding: 1.75rem 1.75rem 1.75rem 4.5rem;
   border: none;
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: #1f2937;
   background: transparent;
   outline: none;
+  font-weight: 400;
 }
 
 #aiSearchInput::placeholder {
   color: #9ca3af;
+  font-weight: 400;
 }
 
 .ai-search-btn {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 1rem 2rem;
+  gap: 0.6rem;
+  padding: 1.25rem 2.5rem;
   background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
   color: white;
   border: none;
-  font-weight: 600;
-  font-size: 1rem;
+  font-weight: 700;
+  font-size: 1.05rem;
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
+  letter-spacing: 0.01em;
 }
 
 .ai-search-btn:hover {

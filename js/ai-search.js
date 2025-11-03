@@ -8,6 +8,60 @@
 // Ver API_SECURITY.md para instrucciones detalladas
 const OPENAI_API_KEY = window.OPENAI_CONFIG?.apiKey || '';
 
+// SheetDB API endpoint para analytics de búsquedas
+// INSTRUCCIONES PARA CONFIGURAR:
+// 1. Ve a https://sheetdb.io/
+// 2. Crea una cuenta gratuita
+// 3. Conecta tu Google Sheet (crea uno con columnas: fecha, hora, busqueda, resultados, tipo, zona, operacion, precio_min, precio_max, dispositivo)
+// 4. Copia el API endpoint que te da SheetDB
+// 5. Reemplaza 'TU_SHEETDB_API_ID' con tu ID real
+const SHEETDB_API_URL = 'https://sheetdb.io/api/v1/TU_SHEETDB_API_ID';
+
+/**
+ * Registra una búsqueda en Google Sheets para analytics
+ */
+async function logSearchAnalytics(query, params, resultsCount) {
+  // Si no está configurado el API, saltar silenciosamente
+  if (SHEETDB_API_URL.includes('TU_SHEETDB_API_ID')) {
+    console.log('📊 Analytics no configurado. Configura SHEETDB_API_URL en ai-search.js');
+    return;
+  }
+
+  try {
+    const now = new Date();
+    const deviceType = /Mobile|Android|iPhone/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop';
+    
+    const analyticsData = {
+      fecha: now.toLocaleDateString('es-UY'),
+      hora: now.toLocaleTimeString('es-UY'),
+      busqueda: query,
+      resultados: resultsCount,
+      tipo: params.type || 'N/A',
+      zona: params.zone || 'N/A',
+      operacion: params.operation || 'N/A',
+      precio_min: params.priceRange?.min || 'N/A',
+      precio_max: params.priceRange?.max || 'N/A',
+      dormitorios: params.bedrooms || 'N/A',
+      dispositivo: deviceType,
+      timestamp: now.toISOString()
+    };
+
+    await fetch(SHEETDB_API_URL, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ data: analyticsData })
+    });
+
+    console.log('📊 Búsqueda registrada en analytics:', analyticsData);
+  } catch (error) {
+    // Fallar silenciosamente para no interrumpir la experiencia del usuario
+    console.warn('⚠️ No se pudo registrar analytics:', error.message);
+  }
+}
+
 // Base de datos de propiedades (en producción, esto vendría de un servidor)
 const properties = [
   {
@@ -571,6 +625,11 @@ function initAISearch() {
       // Filtrar propiedades
       const results = filterProperties(params);
       console.log(`✅ Se encontraron ${results.length} propiedades`);
+      
+      // 📊 Registrar búsqueda en analytics (Google Sheets)
+      logSearchAnalytics(query, params, results.length).catch(err => {
+        console.warn('Analytics error:', err);
+      });
       
       // Guardar en sessionStorage para la página de resultados
       sessionStorage.setItem('aiSearchQuery', query);
