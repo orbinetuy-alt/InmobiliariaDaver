@@ -118,6 +118,63 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
 .nav-toggle:focus{outline:2px solid rgba(10,102,194,.2);outline-offset:3px}
 .nav-toggle svg{display:block}
 .nav-toggle .line{transition:transform .25s ease, opacity .2s ease}
+
+/* ========================================
+   HEADER DESKTOP - Menú horizontal con iconos
+   ======================================== */
+@media (min-width: 701px) {
+  .nav-toggle {
+    display: none;
+  }
+  
+  .main-nav {
+    position: static;
+    display: flex !important;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+    transform: none;
+    opacity: 1;
+    max-height: none;
+    overflow: visible;
+  }
+  
+  .main-nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    color: var(--text);
+    font-weight: 500;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+  }
+  
+  .main-nav a:hover {
+    color: white;
+    background: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255,106,0,0.3);
+  }
+  
+  .main-nav a svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+  
+  .main-nav a:hover svg {
+    transform: scale(1.1);
+  }
+}
+
 .hero {
   position: relative;
   padding: 4rem 0;
