@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Filtro IA</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      background: #f5f5f5;
+    }
+    .test-section {
+      background: white;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #333;
+      border-bottom: 2px solid #8b5cf6;
+      padding-bottom: 0.5rem;
+    }
+    button {
+      background: #8b5cf6;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    button:hover {
+      background: #7c3aed;
+    }
+    .result {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #f9fafb;
+      border-radius: 6px;
+      font-family: monospace;
+      white-space: pre-wrap;
+      font-size: 0.9rem;
+    }
+    .success {
+      color: #059669;
+      font-weight: bold;
+    }
+    .error {
+      color: #dc2626;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 Test del Filtro de Búsqueda IA</h1>
+  
+  <div class="test-section">
+    <h2>1. Test de Filtrado Manual</h2>
+    <p>Estos tests NO usan la API de OpenAI, solo prueban la lógica de filtrado:</p>
+    <button onclick="testSearch('casa', 'pocitos', null)">Casa en Pocitos</button>
+    <button onclick="testSearch('apartamento', null, 100000)">Apartamento &lt; $100k</button>
+    <button onclick="testSearch('casa', 'carrasco', null)">Casa en Carrasco</button>
+    <button onclick="testSearch('apartamento', 'cordon', null)">Apartamento en Cordón</button>
+    <button onclick="testSearch(null, null, null)">Sin filtros (todas)</button>
+    <div id="result1" class="result"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>2. Propiedades en la Base de Datos</h2>
+    <button onclick="showAllProperties()">Ver todas las propiedades</button>
+    <div id="result2" class="result"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>3. Test de Búsqueda con IA (requiere config.js)</h2>
+    <p>Estos tests SÍ usan OpenAI para interpretar búsquedas naturales:</p>
+    <input type="text" id="naturalSearch" placeholder="Ej: casa en Pocitos menos de 200 mil" 
+           style="width: 100%; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 6px; font-size: 1rem; margin-bottom: 1rem;">
+    <button onclick="testNaturalSearch()">Buscar con IA</button>
+    <div id="result3" class="result"></div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script>
+    // Copiar las propiedades del archivo ai-search.js
+    const properties = [
+      {
+        id: 1,
+        title: "Apartamento 2 Dormitorios",
+        type: "apartamento",
+        zone: "pocitos",
+        zoneName: "Pocitos",
+        price: 250000,
+        currency: "USD",
+        operation: "venta",
+        bedrooms: 2,
+        bathrooms: 2,
+        area: 80,
+        features: ["garaje", "terraza"],
+        description: "Hermoso apartamento en Pocitos con garaje",
+        url: "propiedad/pocitos/apartamento-2-dormitorios/index.html"
+      },
+      {
+        id: 2,
+        title: "Casa 4 Dormitorios",
+        type: "casa",
+        zone: "carrasco",
+        zoneName: "Carrasco",
+        price: 450000,
+        currency: "USD",
+        operation: "venta",
+        bedrooms: 4,
+        bathrooms: 3,
+        area: 250,
+        features: ["piscina", "jardín"],
+        description: "Espectacular casa en Carrasco con piscina",
+        url: "propiedad/carrasco/casa-4-dormitorios/index.html"
+      },
+      {
+        id: 3,
+        title: "Apartamento 1 Dormitorio",
+        type: "apartamento",
+        zone: "punta-carretas",
+        zoneName: "Punta Carretas",
+        price: 180000,
+        currency: "USD",
+        operation: "venta",
+        bedrooms: 1,
+        bathrooms: 1,
+        area: 50,
+        features: ["moderno", "luminoso"],
+        description: "Apartamento moderno en Punta Carretas",
+        url: "propiedad/punta-carretas/apartamento-1-dormitorio/index.html"
+      },
+      {
+        id: 4,
+        title: "Casa 3 Dormitorios",
+        type: "casa",
+        zone: "tres-cruces",
+        zoneName: "Tres Cruces",
+        price: 320000,
+        currency: "USD",
+        operation: "venta",
+        bedrooms: 3,
+        bathrooms: 2,
+        area: 180,
+        features: ["garaje", "patio"],
+        description: "Casa amplia en Tres Cruces",
+        url: "propiedad/tres-cruces/casa-3-dormitorios/index.html"
+      },
+      {
+        id: 5,
+        title: "Apartamento 3 Dormitorios",
+        type: "apartamento",
+        zone: "cordon",
+        zoneName: "Cordón",
+        price: 150000,
+        currency: "USD",
+        operation: "venta",
+        bedrooms: 3,
+        bathrooms: 2,
+        area: 95,
+        features: ["luminoso", "céntrico"],
+        description: "Apartamento céntrico en Cordón",
+        url: "propiedad/cordon/apartamento-3-dormitorios/index.html"
+      },
+      {
+        id: 6,
+        title: "Oficina 40m²",
+        type: "oficina",
+        zone: "cordon",
+        zoneName: "Cordón",
+        price: 45000,
+        currency: "USD",
+        operation: "venta",
+        area: 40,
+        features: ["céntrica", "renovada"],
+        description: "Oficina en Cordón ideal para profesionales",
+        url: "propiedad/cordon/oficina-40m2/index.html"
+      },
+      {
+        id: 7,
+        title: "Oficina 28m²",
+        type: "oficina",
+        zone: "ciudad-vieja",
+        zoneName: "Ciudad Vieja",
+        price: 30000,
+        currency: "USD",
+        operation: "venta",
+        area: 28,
+        features: ["céntrica", "compacta"],
+        description: "Oficina compacta en Ciudad Vieja",
+        url: "propiedad/ciudad-vieja/oficina-28m2/index.html"
+      },
+      {
+        id: 8,
+        title: "Monoambiente a Estrenar",
+        type: "apartamento",
+        zone: "cordon",
+        zoneName: "Cordón",
+        price: 75000,
+        currency: "USD",
+        operation: "venta",
+        bedrooms: 1,
+        bathrooms: 1,
+        area: 35,
+        features: ["estrenar", "moderno"],
+        description: "Monoambiente a estrenar en Cordón",
+        url: "propiedad/cordon/monoambiente-estrenar/index.html"
+      },
+      {
+        id: 9,
+        title: "Monoambiente a Estrenar",
+        type: "apartamento",
+        zone: "union",
+        zoneName: "Unión",
+        price: 78000,
+        currency: "USD",
+        operation: "venta",
+        bedrooms: 1,
+        bathrooms: 1,
+        area: 38,
+        features: ["estrenar", "terraza"],
+        description: "Monoambiente con terraza en Unión",
+        url: "propiedad/union/monoambiente-estrenar/index.html"
+      },
+      {
+        id: 10,
+        title: "Casa 3 Dormitorios",
+        type: "casa",
+        zone: "la-figurita",
+        zoneName: "La Figurita",
+        price: 180000,
+        currency: "USD",
+        operation: "venta",
+        bedrooms: 3,
+        bathrooms: 2,
+        area: 150,
+        features: ["patio", "garaje"],
+        description: "Casa con patio en La Figurita",
+        url: "propiedad/la-figurita/casa-3-dormitorios/index.html"
+      },
+      {
+        id: 11,
+        title: "Terreno 296m²",
+        type: "terreno",
+        zone: "la-comercial",
+        zoneName: "La Comercial",
+        price: 85000,
+        currency: "USD",
+        operation: "venta",
+        area: 296,
+        features: ["amplio", "bien ubicado"],
+        description: "Terreno amplio en La Comercial",
+        url: "propiedad/la-comercial/terreno-296m2/index.html"
+      },
+      {
+        id: 12,
+        title: "Casa 1 Dormitorio",
+        type: "casa",
+        zone: "la-comercial",
+        zoneName: "La Comercial",
+        price: 95000,
+        currency: "USD",
+        operation: "venta",
+        bedrooms: 1,
+        bathrooms: 1,
+        area: 50,
+        features: ["patio", "compacta"],
+        description: "Casa compacta con patio en La Comercial",
+        url: "propiedad/la-comercial/casa-1-dormitorio/index.html"
+      },
+      {
+        id: 13,
+        title: "Apartamento 2 Dormitorios",
+        type: "apartamento",
+        zone: "capurro",
+        zoneName: "Capurro",
+        price: 95000,
+        currency: "USD",
+        operation: "venta",
+        bedrooms: 2,
+        bathrooms: 1,
+        area: 60,
+        features: ["luminoso", "balcón"],
+        description: "Apartamento con balcón en Capurro",
+        url: "propiedad/capurro/apartamento-2-dormitorios/index.html"
+      },
+      {
+        id: 14,
+        title: "Apartamento 2 Dormitorios",
+        type: "apartamento",
+        zone: "palermo",
+        zoneName: "Palermo",
+        price: 140000,
+        currency: "USD",
+        operation: "venta",
+        bedrooms: 2,
+        bathrooms: 1,
+        area: 70,
+        features: ["luminoso", "balcón"],
+        description: "Apartamento luminoso en Palermo",
+        url: "propiedad/palermo/apartamento-2-dormitorios/index.html"
+      },
+      {
+        id: 15,
+        title: "Casa 3 Dormitorios",
+        type: "casa",
+        zone: "palermo",
+        zoneName: "Palermo",
+        price: 285000,
+        currency: "USD",
+        operation: "venta",
+        bedrooms: 3,
+        bathrooms: 2,
+        area: 180,
+        features: ["patio", "garaje", "amplia"],
+        description: "Casa amplia con patio en Palermo",
+        url: "propiedad/palermo/casa-3-dormitorios/index.html"
+      }
+    ];
+
+    // Función de filtrado (copiada del ai-search.js)
+    function filterProperties(params) {
+      console.log('🔍 Filtrando con parámetros:', params);
+      
+      let results = [...properties];
+      let scores = new Map();
+      
+      results = results.filter(prop => {
+        let score = 100;
+        
+        // Tipo
+        if (params.type) {
+          if (prop.type === params.type) {
+            score += 30;
+            console.log(`  ✓ ${prop.title}: Tipo coincide`);
+          } else {
+            console.log(`  ✗ ${prop.title}: Tipo no coincide (busca "${params.type}", tiene "${prop.type}")`);
+            return false;
+          }
+        }
+        
+        // Zona
+        if (params.zone) {
+          if (prop.zone === params.zone) {
+            score += 30;
+            console.log(`  ✓ ${prop.title}: Zona coincide`);
+          } else {
+            console.log(`  ✗ ${prop.title}: Zona no coincide (busca "${params.zone}", tiene "${prop.zone}")`);
+            return false;
+          }
+        }
+        
+        // Precio máximo
+        if (params.maxPrice) {
+          if (prop.price <= params.maxPrice) {
+            score += 20;
+            console.log(`  ✓ ${prop.title}: Dentro de presupuesto ($${prop.price} <= $${params.maxPrice})`);
+          } else {
+            console.log(`  ✗ ${prop.title}: Fuera de presupuesto ($${prop.price} > $${params.maxPrice})`);
+            return false;
+          }
+        }
+        
+        scores.set(prop.id, score);
+        return true;
+      });
+      
+      console.log(`\n📊 Resultados: ${results.length} propiedades`);
+      
+      return results;
+    }
+
+    // Test manual
+    function testSearch(type, zone, maxPrice) {
+      const params = { type, zone, maxPrice };
+      const results = filterProperties(params);
+      
+      const resultDiv = document.getElementById('result1');
+      resultDiv.innerHTML = `<div class="success">✅ Encontradas ${results.length} propiedades</div>\n\n`;
+      resultDiv.innerHTML += `Parámetros: ${JSON.stringify(params, null, 2)}\n\n`;
+      resultDiv.innerHTML += 'Resultados:\n';
+      results.forEach((prop, i) => {
+        resultDiv.innerHTML += `${i + 1}. ${prop.title} - ${prop.zoneName} - $${prop.price.toLocaleString()}\n`;
+      });
+    }
+
+    // Mostrar todas
+    function showAllProperties() {
+      const resultDiv = document.getElementById('result2');
+      resultDiv.innerHTML = `Total: ${properties.length} propiedades\n\n`;
+      
+      const byType = {};
+      properties.forEach(prop => {
+        if (!byType[prop.type]) byType[prop.type] = [];
+        byType[prop.type].push(prop);
+      });
+      
+      Object.keys(byType).forEach(type => {
+        resultDiv.innerHTML += `\n${type.toUpperCase()} (${byType[type].length}):\n`;
+        byType[type].forEach(prop => {
+          resultDiv.innerHTML += `  - ${prop.title} (${prop.zoneName}, $${prop.price.toLocaleString()})\n`;
+        });
+      });
+    }
+
+    // Test con IA
+    async function testNaturalSearch() {
+      const input = document.getElementById('naturalSearch');
+      const query = input.value.trim();
+      const resultDiv = document.getElementById('result3');
+      
+      if (!query) {
+        resultDiv.innerHTML = '<div class="error">❌ Ingresa una búsqueda</div>';
+        return;
+      }
+      
+      resultDiv.innerHTML = '⏳ Consultando a la IA...\n';
+      
+      try {
+        // Verificar API key
+        if (!window.OPENAI_CONFIG || !window.OPENAI_CONFIG.apiKey) {
+          throw new Error('No se encontró config.js o API key');
+        }
+        
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${window.OPENAI_CONFIG.apiKey}`
+          },
+          body: JSON.stringify({
+            model: 'gpt-3.5-turbo',
+            messages: [{
+              role: 'system',
+              content: 'Eres un asistente de inmobiliaria. Extrae parámetros de búsqueda y responde solo con JSON válido.'
+            }, {
+              role: 'user',
+              content: `Analiza esta búsqueda y extrae parámetros: "${query}"\n\nBarrios válidos: pocitos, carrasco, punta-carretas, tres-cruces, cordon, palermo, union, la-comercial, la-figurita, capurro, ciudad-vieja\n\nTipos: casa, apartamento, oficina, terreno\n\nResponde JSON: {"type": "...", "zone": "...", "maxPrice": 123, "explanation": "..."}`
+            }],
+            temperature: 0.3,
+            max_tokens: 200
+          })
+        });
+        
+        if (!response.ok) {
+          throw new Error(`API error: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        const content = data.choices[0].message.content;
+        const jsonMatch = content.match(/\{[\s\S]*\}/);
+        const params = JSON.parse(jsonMatch[0]);
+        
+        resultDiv.innerHTML = '<div class="success">✅ IA interpretó la búsqueda</div>\n\n';
+        resultDiv.innerHTML += `Parámetros extraídos:\n${JSON.stringify(params, null, 2)}\n\n`;
+        
+        // Filtrar
+        const results = filterProperties(params);
+        resultDiv.innerHTML += `\n<div class="success">📊 ${results.length} propiedades encontradas</div>\n\n`;
+        results.forEach((prop, i) => {
+          resultDiv.innerHTML += `${i + 1}. ${prop.title} - ${prop.zoneName} - $${prop.price.toLocaleString()}\n`;
+        });
+        
+      } catch (error) {
+        resultDiv.innerHTML = `<div class="error">❌ Error: ${error.message}</div>\n\n`;
+        resultDiv.innerHTML += 'Verifica:\n';
+        resultDiv.innerHTML += '1. ¿Existe el archivo js/config.js?\n';
+        resultDiv.innerHTML += '2. ¿Tiene el formato correcto: window.OPENAI_CONFIG = { apiKey: "sk-..." }?\n';
+        resultDiv.innerHTML += '3. ¿La API key es válida?\n';
+      }
+    }
+  </script>
+</body>
+</html>
