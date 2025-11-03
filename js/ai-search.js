@@ -42,7 +42,9 @@ async function logSearchAnalytics(query, params, resultsCount) {
       timestamp: now.toISOString()
     };
 
-    await fetch(SHEETDB_API_URL, {
+    console.log('📊 Enviando datos a SheetDB...', analyticsData);
+    
+    const response = await fetch(SHEETDB_API_URL, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -51,10 +53,16 @@ async function logSearchAnalytics(query, params, resultsCount) {
       body: JSON.stringify({ data: analyticsData })
     });
 
-    console.log('📊 Búsqueda registrada en analytics:', analyticsData);
+    const responseData = await response.json();
+    
+    if (response.ok) {
+      console.log('✅ Búsqueda registrada en analytics exitosamente:', responseData);
+    } else {
+      console.error('❌ Error al guardar en SheetDB:', responseData);
+    }
   } catch (error) {
     // Fallar silenciosamente para no interrumpir la experiencia del usuario
-    console.warn('⚠️ No se pudo registrar analytics:', error.message);
+    console.error('⚠️ No se pudo registrar analytics:', error);
   }
 }
 
