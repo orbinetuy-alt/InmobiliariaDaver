@@ -248,6 +248,14 @@ const properties = [
  * Interpreta búsqueda en lenguaje natural usando OpenAI
  */
 async function interpretSearchWithAI(query) {
+  console.log(`🤖 Interpretando búsqueda: "${query}"`);
+  
+  // Si no hay API key, usar fallback directamente
+  if (!OPENAI_API_KEY) {
+    console.warn('⚠️ No hay API key, usando búsqueda simple');
+    return extractParametersSimple(query);
+  }
+  
   const prompt = `Eres un asistente de una inmobiliaria en Montevideo, Uruguay. Analiza la siguiente búsqueda de un cliente y extrae los parámetros en formato JSON.
 
 Búsqueda del cliente: "${query}"
@@ -270,6 +278,7 @@ Responde SOLO con un objeto JSON válido con esta estructura:
 }`;
 
   try {
+    console.log('📡 Enviando petición a OpenAI...');
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -294,24 +303,35 @@ Responde SOLO con un objeto JSON válido con esta estructura:
     });
 
     if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`❌ Error API ${response.status}:`, errorText);
       throw new Error(`API Error: ${response.status}`);
     }
 
     const data = await response.json();
+    console.log('✅ Respuesta de OpenAI recibida');
+    
     const content = data.choices[0].message.content.trim();
+    console.log('📝 Respuesta raw:', content);
     
     // Limpiar el contenido para extraer solo el JSON
     const jsonMatch = content.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
+      console.error('❌ No se pudo extraer JSON de la respuesta');
       throw new Error('No se pudo extraer JSON de la respuesta');
     }
     
     const parsedParams = JSON.parse(jsonMatch[0]);
+    console.log('✅ Parámetros interpretados por IA:', parsedParams);
     return parsedParams;
+    
   } catch (error) {
-    console.error('Error al interpretar con IA:', error);
+    console.error('❌ Error al interpretar con IA:', error.message);
+    console.log('⚙️ Usando búsqueda simple como fallback...');
     // Fallback: extracción simple si falla la IA
-    return extractParametersSimple(query);
+    const simpleParams = extractParametersSimple(query);
+    console.log('✅ Parámetros (búsqueda simple):', simpleParams);
+    return simpleParams;
   }
 }
 
@@ -386,63 +406,101 @@ function extractParametersSimple(query) {
  * Filtra propiedades basándose en los parámetros extraídos
  */
 function filterProperties(params) {
+  console.log('🔍 Filtrando propiedades con parámetros:', params);
+  
   let results = [...properties];
   let scores = new Map();
   
-  results.forEach(prop => {
-    let score = 0;
+  // Primero filtrar por criterios obligatorios
+  results = results.filter(prop => {
+    let score = 100; // Score base
+    let shouldInclude = true;
     
-    // Tipo (peso: 30)
-    if (params.type && prop.type === params.type) {
-      score += 30;
-    } else if (params.type) {
-      return; // Si se especificó tipo y no coincide, descartar
+    // Tipo (OBLIGATORIO si se especificó)
+    if (params.type) {
+      if (prop.type === params.type) {
+        score += 30;
+        console.log(`  ✓ ${prop.title}: Coincide tipo "${params.type}"`);
+      } else {
+        console.log(`  ✗ ${prop.title}: No coincide tipo (busca "${params.type}", es "${prop.type}")`);
+        return false; // DESCARTAR
+      }
     }
     
-    // Zona (peso: 30)
-    if (params.zone && prop.zone === params.zone) {
-      score += 30;
-    } else if (params.zone) {
-      return; // Si se especificó zona y no coincide, descartar
+    // Zona (OBLIGATORIO si se especificó)
+    if (params.zone) {
+      if (prop.zone === params.zone) {
+        score += 30;
+        console.log(`  ✓ ${prop.title}: Coincide zona "${params.zone}"`);
+      } else {
+        console.log(`  ✗ ${prop.title}: No coincide zona (busca "${params.zone}", es "${prop.zone}")`);
+        return false; // DESCARTAR
+      }
     }
     
-    // Precio (peso: 20)
-    if (params.maxPrice && prop.price <= params.maxPrice) {
-      score += 20;
-    } else if (params.maxPrice && prop.price > params.maxPrice) {
-      return; // Fuera de presupuesto
+    // Precio máximo (OBLIGATORIO si se especificó)
+    if (params.maxPrice) {
+      if (prop.price <= params.maxPrice) {
+        score += 20;
+        console.log(`  ✓ ${prop.title}: Dentro de presupuesto ($${prop.price} <= $${params.maxPrice})`);
+      } else {
+        console.log(`  ✗ ${prop.title}: Fuera de presupuesto ($${prop.price} > $${params.maxPrice})`);
+        return false; // DESCARTAR
+      }
     }
     
+    // Precio mínimo (opcional)
     if (params.minPrice && prop.price >= params.minPrice) {
       score += 10;
     }
     
-    // Dormitorios (peso: 15)
-    if (params.bedrooms && prop.bedrooms === params.bedrooms) {
-      score += 15;
-    } else if (params.bedrooms && prop.bedrooms) {
-      // Dar puntos parciales si está cerca
-      const diff = Math.abs(prop.bedrooms - params.bedrooms);
-      if (diff === 1) score += 7;
+    // Dormitorios (preferencia, no obligatorio)
+    if (params.bedrooms && prop.bedrooms) {
+      if (prop.bedrooms === params.bedrooms) {
+        score += 15;
+        console.log(`  ✓ ${prop.title}: Coincide dormitorios (${params.bedrooms})`);
+      } else {
+        // Dar puntos parciales si está cerca
+        const diff = Math.abs(prop.bedrooms - params.bedrooms);
+        if (diff === 1) {
+          score += 7;
+          console.log(`  ~ ${prop.title}: Dormitorios cercanos (${prop.bedrooms} vs ${params.bedrooms})`);
+        }
+      }
     }
     
-    // Características (peso: 5)
-    if (params.features && params.features.length > 0) {
+    // Características (preferencia, no obligatorio)
+    if (params.features && params.features.length > 0 && prop.features) {
       params.features.forEach(feature => {
-        if (prop.features && prop.features.some(f => f.toLowerCase().includes(feature.toLowerCase()))) {
+        if (prop.features.some(f => f.toLowerCase().includes(feature.toLowerCase()))) {
           score += 5;
+          console.log(`  ✓ ${prop.title}: Tiene característica "${feature}"`);
         }
       });
     }
     
     scores.set(prop.id, score);
+    return true; // INCLUIR
   });
   
-  // Filtrar propiedades que no cumplieron criterios obligatorios
-  results = results.filter(prop => scores.has(prop.id));
+  console.log(`\n📊 Propiedades después del filtrado: ${results.length}`);
+  
+  // Si no hay criterios específicos, mostrar todas
+  if (!params.type && !params.zone && !params.maxPrice && !params.bedrooms) {
+    console.log('⚠️ No hay criterios específicos, mostrando todas las propiedades');
+  }
   
   // Ordenar por score descendente
-  results.sort((a, b) => scores.get(b.id) - scores.get(a.id));
+  results.sort((a, b) => {
+    const scoreA = scores.get(a.id) || 0;
+    const scoreB = scores.get(b.id) || 0;
+    return scoreB - scoreA;
+  });
+  
+  // Log de resultados finales
+  results.forEach((prop, index) => {
+    console.log(`  ${index + 1}. ${prop.title} - Score: ${scores.get(prop.id)}`);
+  });
   
   return results.slice(0, 9); // Máximo 9 resultados
 }
