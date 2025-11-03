@@ -146,7 +146,13 @@
       <aside class="property-sidebar">
         <div class="contact-card">
           <h3>Consultá por esta propiedad</h3>
-          <form class="contact-form" id="contactForm">
+          <form class="contact-form" id="propertyContactForm" action="https://api.web3forms.com/submit" method="POST">
+            <!-- Web3Forms Access Key -->
+            <input type="hidden" name="access_key" value="78465221-09a4-4110-835c-74106824b8c4">
+            <input type="hidden" name="subject" value="Consulta por Casa en La Comercial">
+            <input type="hidden" name="from_name" value="Formulario Propiedad - Daver">
+            <input type="hidden" name="redirect" value="https://web3forms.com/success">
+            
             <input type="text" id="name" name="name" placeholder="Nombre" required>
             <input type="email" id="email" name="email" placeholder="Email" required>
             <input type="tel" id="phone" name="phone" placeholder="Teléfono">

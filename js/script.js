@@ -531,13 +531,18 @@ document.addEventListener('DOMContentLoaded', function(){
   // Property contact form
   var propertyForm = document.getElementById('propertyContactForm');
   if(propertyForm){
-    propertyForm.addEventListener('submit', function(e){
+    propertyForm.addEventListener('submit', async function(e){
       e.preventDefault();
       var name = this.querySelector('[name="name"]');
       var email = this.querySelector('[name="email"]');
       var phone = this.querySelector('[name="phone"]');
       var message = this.querySelector('[name="message"]');
       var msg = document.getElementById('formMsg');
+      var submitBtn = this.querySelector('button[type="submit"]');
+
+      // Reset previous messages
+      msg.textContent = '';
+      msg.style.color = '';
 
       if(!name.value.trim() || !email.value.trim() || !message.value.trim()){
         msg.textContent = 'Por favor completa los campos obligatorios.';
@@ -545,10 +550,51 @@ document.addEventListener('DOMContentLoaded', function(){
         return;
       }
 
-      // Simulamos envío exitoso (en producción harías fetch a un endpoint)
-      msg.textContent = 'Gracias — tu consulta ha sido enviada (simulado).';
-      msg.style.color = 'green';
-      this.reset();
+      // Validación de email
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if(!emailRegex.test(email.value.trim())){
+        msg.textContent = 'Por favor ingresa un email válido.';
+        msg.style.color = 'crimson';
+        email.focus();
+        return;
+      }
+
+      // Deshabilitar botón mientras se envía
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando...';
+
+      try {
+        // Enviar formulario a Web3Forms
+        const formData = new FormData(this);
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: formData
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          msg.textContent = '¡Gracias! Tu consulta ha sido enviada exitosamente. Nos pondremos en contacto contigo pronto.';
+          msg.style.color = 'green';
+          
+          // Limpiar formulario después de 2 segundos
+          setTimeout(function(){
+            propertyForm.reset();
+            msg.textContent = '';
+          }, 3000);
+        } else {
+          msg.textContent = 'Hubo un error al enviar la consulta. Por favor intenta nuevamente.';
+          msg.style.color = 'crimson';
+        }
+      } catch (error) {
+        msg.textContent = 'Hubo un error al enviar la consulta. Por favor intenta nuevamente.';
+        msg.style.color = 'crimson';
+        console.error('Error:', error);
+      } finally {
+        // Rehabilitar botón
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Enviar consulta';
+      }
     });
   }
 
