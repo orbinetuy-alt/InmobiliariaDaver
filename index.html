@@ -64,57 +64,49 @@
           <h1 class="hero-title">Creemos en hogares que abrazan</h1>
           <p class="hero-subtitle">Tu próximo hogar te está esperando. Descubrí propiedades únicas que se adaptan a tu estilo de vida.</p>
           
-          <!-- Search form integrated -->
-          <form id="siteSearchForm" class="hero-search" role="search" aria-label="Buscar propiedades">
-            <div class="search-group">
-              <div class="select-wrapper">
-                <select id="searchType" name="type">
-                  <option value="">Tipo de propiedad</option>
-                  <option value="apartamento">Apartamento</option>
-                  <option value="casa">Casa</option>
-                  <option value="oficina">Oficina</option>
-                  <option value="terreno">Terreno</option>
-                </select>
-                <span class="custom-arrow" aria-hidden="true">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path d="M5 8L10 13L15 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  </svg>
-                </span>
-              </div>
-
-              <div class="select-wrapper">
-                <select id="searchZone" name="zone">
-                  <option value="">Todas las zonas</option>
-                  <option value="aguada">Aguada</option>
-                  <option value="capurro">Capurro</option>
-                  <option value="carrasco">Carrasco</option>
-                  <option value="centro">Centro</option>
-                  <option value="ciudad-vieja">Ciudad Vieja</option>
-                  <option value="cordon">Cordón</option>
-                  <option value="la-blanqueada">La Blanqueada</option>
-                  <option value="la-comercial">La Comercial</option>
-                  <option value="la-figurita">La Figurita</option>
-                  <option value="palermo">Palermo</option>
-                  <option value="pocitos">Pocitos</option>
-                  <option value="punta-carretas">Punta Carretas</option>
-                  <option value="tres-cruces">Tres Cruces</option>
-                  <option value="union">Unión</option>
-                </select>
-                <span class="custom-arrow" aria-hidden="true">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path d="M5 8L10 13L15 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  </svg>
-                </span>
-              </div>
-              
-              <button class="btn" type="submit">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="search-icon">
-                  <path d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16zM19 19l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Buscar
-              </button>
+          <!-- AI Search form -->
+          <div class="ai-search-container">
+            <div class="ai-badge">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                <path d="M2 17l10 5 10-5"/>
+                <path d="M2 12l10 5 10-5"/>
+              </svg>
+              Búsqueda con IA
             </div>
-          </form>
+            <form id="aiSearchForm" class="ai-search-form" role="search" aria-label="Buscar propiedades con inteligencia artificial">
+              <div class="ai-search-input-wrapper">
+                <svg class="ai-search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"/>
+                  <path d="M21 21l-4.35-4.35"/>
+                </svg>
+                <input 
+                  type="text" 
+                  id="aiSearchInput" 
+                  placeholder='Ej: "casa en Pocitos por menos de 200 mil" o "apartamento 2 dormitorios cerca del mar"'
+                  aria-label="Búsqueda inteligente de propiedades"
+                  autocomplete="off"
+                />
+                <button type="submit" class="ai-search-btn" aria-label="Buscar">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="22" y1="2" x2="11" y2="13"/>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                  </svg>
+                  Buscar
+                </button>
+              </div>
+              <div id="aiSearchLoading" class="ai-search-loading" style="display: none;">
+                <div class="loading-spinner"></div>
+                <span>Analizando tu búsqueda con IA...</span>
+              </div>
+              <div id="aiSearchSuggestions" class="ai-search-suggestions">
+                <div class="suggestion-label">Búsquedas populares:</div>
+                <button type="button" class="suggestion-chip" data-query="casa en Carrasco con piscina">Casa en Carrasco con piscina</button>
+                <button type="button" class="suggestion-chip" data-query="apartamento 2 dormitorios en Pocitos">Apartamento 2 dorm. Pocitos</button>
+                <button type="button" class="suggestion-chip" data-query="oficina en centro menos de 100 mil">Oficina en Centro</button>
+              </div>
+            </form>
+          </div>
 
           <a class="btn btn-secondary" href="listings.html">Ver todas las propiedades</a>
         </div>
@@ -563,5 +555,11 @@
       }
     })(document,"script");
   </script>
+  
+  <!-- AI Search Configuration (create from config.example.js) -->
+  <script src="js/config.js"></script>
+  
+  <!-- AI Search Script -->
+  <script src="js/ai-search.js"></script>
 </body>
 </html>

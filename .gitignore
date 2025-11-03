@@ -14,6 +14,11 @@ yarn-error.log*
 .env
 .env.local
 
+# API Keys and Config
+js/config.js
+config.js
+*.key
+
 # Build outputs
 dist/
 build/
