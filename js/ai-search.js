@@ -11,7 +11,7 @@ const OPENAI_API_KEY = window.OPENAI_CONFIG?.apiKey || '';
 // n8n Webhook para analytics de búsquedas
 // ✅ Conectado con n8n para mayor flexibilidad y sin límites
 // Los datos se envían a tu workflow de n8n que luego guarda en Google Sheets
-const ANALYTICS_WEBHOOK_URL = 'https://n8n.srv1035532.hstgr.cloud/webhook-test/búsquedas-daver';
+const ANALYTICS_WEBHOOK_URL = 'https://n8n.srv1035532.hstgr.cloud/webhook-test/busquedas-daver';
 
 /**
  * Registra una búsqueda en Google Sheets para analytics vía n8n
@@ -36,7 +36,8 @@ async function logSearchAnalytics(query, params, resultsCount) {
       timestamp: now.toISOString()
     };
 
-    console.log('📊 Enviando datos a n8n...', analyticsData);
+    console.log('� [ANALYTICS] Webhook URL:', ANALYTICS_WEBHOOK_URL);
+    console.log('�📊 [ANALYTICS] Enviando datos a n8n...', analyticsData);
     
     const response = await fetch(ANALYTICS_WEBHOOK_URL, {
       method: 'POST',
@@ -47,16 +48,26 @@ async function logSearchAnalytics(query, params, resultsCount) {
       body: JSON.stringify(analyticsData)
     });
 
-    const responseData = await response.json();
+    console.log('📡 [ANALYTICS] Response status:', response.status, response.statusText);
+    
+    const responseText = await response.text();
+    console.log('📡 [ANALYTICS] Response body:', responseText);
+    
+    let responseData;
+    try {
+      responseData = JSON.parse(responseText);
+    } catch (e) {
+      responseData = responseText;
+    }
     
     if (response.ok) {
-      console.log('✅ Búsqueda registrada en analytics exitosamente:', responseData);
+      console.log('✅ [ANALYTICS] Búsqueda registrada exitosamente!');
     } else {
-      console.error('❌ Error al guardar en n8n:', responseData);
+      console.error('❌ [ANALYTICS] Error al guardar:', response.status, responseData);
     }
   } catch (error) {
-    // Fallar silenciosamente para no interrumpir la experiencia del usuario
-    console.error('⚠️ No se pudo registrar analytics:', error);
+    console.error('⚠️ [ANALYTICS] Error completo:', error);
+    console.error('⚠️ [ANALYTICS] Error stack:', error.stack);
   }
 }
 
@@ -624,10 +635,8 @@ function initAISearch() {
       const results = filterProperties(params);
       console.log(`✅ Se encontraron ${results.length} propiedades`);
       
-      // 📊 Registrar búsqueda en analytics (Google Sheets)
-      logSearchAnalytics(query, params, results.length).catch(err => {
-        console.warn('Analytics error:', err);
-      });
+      // 📊 Registrar búsqueda en analytics (n8n)
+      await logSearchAnalytics(query, params, results.length);
       
       // Guardar en sessionStorage para la página de resultados
       sessionStorage.setItem('aiSearchQuery', query);
