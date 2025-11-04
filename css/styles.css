@@ -2,7 +2,7 @@
   /* Palette: gray + orange */
   --accent:#ff6a00; /* naranja */
   --muted:#6b6b6b;   /* gris oscuro */
-  --bg:#f4f4f4;      /* fondo suave */
+  --bg:#fafaf8;      /* fondo cálido suave (gris con toque beige) */
   --muted-light:#9a9a9a;
   --max-width:1100px;
   
@@ -22,6 +22,14 @@ body{
   margin:0;
   color:#222;
   background:var(--bg);
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.01) 2px,
+      rgba(0, 0, 0, 0.01) 4px
+    );
   line-height:1.6;
   font-size: 16px;
   font-weight: 400;
