@@ -139,6 +139,13 @@
     const article = document.createElement('article');
     article.className = 'card';
     article.style.cursor = 'pointer';
+    article.style.position = 'relative'; // Para el badge de ranking
+    
+    // Agregar data attributes como las cards originales
+    article.setAttribute('data-type', property.type);
+    article.setAttribute('data-zone', property.zone);
+    article.setAttribute('data-operation', property.operation);
+    article.setAttribute('data-bedrooms', property.bedrooms || '');
     
     // Hacer la card clicable
     article.addEventListener('click', function(e) {
@@ -146,6 +153,9 @@
       if (e.target.tagName === 'A') return;
       window.location.href = property.url;
     });
+    
+    // Determinar la etiqueta de operación
+    const operationTag = property.operation === 'alquiler' ? 'En alquiler' : 'En venta';
     
     article.innerHTML = `
       <div class="ai-rank-badge" title="Relevancia según tu búsqueda">
@@ -157,33 +167,31 @@
         #${rank}
       </div>
       <div class="card-img-wrapper">
-        <img src="assets/placeholder.svg" alt="${property.title}" loading="lazy">
+        <img src="${property.image || 'assets/placeholder.svg'}" alt="${property.title}" loading="lazy">
+        <span class="card-tag">${operationTag}</span>
       </div>
-      <div class="card-body">
-        <span class="property-type">${formatPropertyType(property.type)}</span>
-        <h3 class="card-title">${property.title}</h3>
-        <p class="location">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-            <circle cx="12" cy="10" r="3"/>
+      <div class="card-content">
+        <h4>${property.title}</h4>
+        <address class="card-location">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+            <circle cx="12" cy="9" r="2.5"/>
           </svg>
           ${property.zoneName}
-        </h3>
+        </address>
         <div class="card-features">
           ${property.bedrooms ? `
           <span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M3 9v12h18V9M3 9l9-7 9 7"/>
-              <path d="M9 22V12h6v10"/>
+              <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
             </svg>
-            ${property.bedrooms} dorm.
+            ${property.bedrooms} dorm
           </span>
           ` : ''}
           ${property.bathrooms ? `
           <span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="8" r="3"/>
-              <path d="M12 14c-4 0-8 2-8 6v2h16v-2c0-4-4-6-8-6z"/>
+              <path d="M21 12h-3m3 0v7h-18v-7M21 12V5h-18v7m18 0h-18"/>
             </svg>
             ${property.bathrooms} baño${property.bathrooms !== 1 ? 's' : ''}
           </span>

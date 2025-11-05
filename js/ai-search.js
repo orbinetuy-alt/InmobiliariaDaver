@@ -87,7 +87,8 @@ const properties = [
     area: 120,
     features: ["garaje", "terraza", "luminoso"],
     description: "Apartamento luminoso en Pocitos con hermosa terraza",
-    url: "propiedad/pocitos/apartamento-3-dormitorios/index.html"
+    url: "propiedad/pocitos/apartamento-3-dormitorios/index.html",
+    image: "assets/apartamento-pocitos.jpg"
   },
   {
     id: 2,
@@ -103,7 +104,8 @@ const properties = [
     area: 280,
     features: ["piscina", "jardín", "garaje doble", "barbacoa"],
     description: "Espectacular casa en Punta Carretas con piscina",
-    url: "propiedad/punta-carretas/casa-4-dormitorios/index.html"
+    url: "propiedad/punta-carretas/casa-4-dormitorios/index.html",
+    image: "assets/placeholder.svg"
   },
   {
     id: 3,
@@ -119,7 +121,8 @@ const properties = [
     area: 220,
     features: ["garaje", "jardín", "cerca del mar"],
     description: "Hermosa casa en Carrasco cerca del mar",
-    url: "propiedad/carrasco/casa-3-dormitorios/index.html"
+    url: "propiedad/carrasco/casa-3-dormitorios/index.html",
+    image: "assets/casa-carrasco.jpg"
   },
   {
     id: 4,
@@ -135,7 +138,8 @@ const properties = [
     area: 95,
     features: ["garaje", "balcón"],
     description: "Apartamento en Tres Cruces con excelente ubicación",
-    url: "propiedad/tres-cruces/apartamento-3-dormitorios/index.html"
+    url: "propiedad/tres-cruces/apartamento-3-dormitorios/index.html",
+    image: "assets/apartamento-tres-cruces.jpg"
   },
   {
     id: 5,
@@ -149,7 +153,8 @@ const properties = [
     area: 170,
     features: ["amplia", "luminosa", "céntrica"],
     description: "Amplia oficina en Ciudad Vieja",
-    url: "propiedad/ciudad-vieja/oficina-170m2/index.html"
+    url: "propiedad/ciudad-vieja/oficina-170m2/index.html",
+    image: "assets/oficina-ciudad-vieja-170m2.jpg"
   },
   {
     id: 6,
@@ -163,7 +168,8 @@ const properties = [
     area: 40,
     features: ["céntrica", "renovada"],
     description: "Oficina en Cordón ideal para profesionales",
-    url: "propiedad/cordon/oficina-40m2/index.html"
+    url: "propiedad/cordon/oficina-40m2/index.html",
+    image: "assets/oficina-cordon.jpg"
   },
   {
     id: 7,
@@ -177,7 +183,8 @@ const properties = [
     area: 28,
     features: ["céntrica", "compacta"],
     description: "Oficina compacta en Ciudad Vieja",
-    url: "propiedad/ciudad-vieja/oficina-28m2/index.html"
+    url: "propiedad/ciudad-vieja/oficina-28m2/index.html",
+    image: "assets/oficina-ciudad-vieja.jpg"
   },
   {
     id: 8,
@@ -193,7 +200,8 @@ const properties = [
     area: 35,
     features: ["estrenar", "moderno"],
     description: "Monoambiente a estrenar en Cordón",
-    url: "propiedad/cordon/monoambiente-estrenar/index.html"
+    url: "propiedad/cordon/monoambiente-estrenar/index.html",
+    image: "assets/apartamento-cordon.jpg"
   },
   {
     id: 9,
@@ -209,7 +217,8 @@ const properties = [
     area: 38,
     features: ["estrenar", "terraza"],
     description: "Monoambiente con terraza en Unión",
-    url: "propiedad/union/monoambiente-estrenar/index.html"
+    url: "propiedad/union/monoambiente-estrenar/index.html",
+    image: "assets/apartamento-union.jpg"
   },
   {
     id: 10,
@@ -239,7 +248,8 @@ const properties = [
     area: 296,
     features: ["amplio", "bien ubicado"],
     description: "Terreno amplio en La Comercial",
-    url: "propiedad/la-comercial/terreno-296m2/index.html"
+    url: "propiedad/la-comercial/terreno-296m2/index.html",
+    image: "assets/terreno-la-comercial.jpg"
   },
   {
     id: 12,
@@ -271,7 +281,8 @@ const properties = [
     area: 60,
     features: ["luminoso", "balcón"],
     description: "Apartamento con balcón en Capurro",
-    url: "propiedad/capurro/apartamento-2-dormitorios/index.html"
+    url: "propiedad/capurro/apartamento-2-dormitorios/index.html",
+    image: "assets/apartamento-capurro.jpg"
   },
   {
     id: 14,
@@ -287,7 +298,8 @@ const properties = [
     area: 70,
     features: ["luminoso", "balcón"],
     description: "Apartamento luminoso en Palermo",
-    url: "propiedad/palermo/apartamento-2-dormitorios/index.html"
+    url: "propiedad/palermo/apartamento-2-dormitorios/index.html",
+    image: "assets/apartamento-palermo.jpg"
   },
   {
     id: 15,
@@ -303,7 +315,8 @@ const properties = [
     area: 180,
     features: ["patio", "garaje", "amplia"],
     description: "Casa amplia con patio en Palermo",
-    url: "propiedad/palermo/casa-3-dormitorios/index.html"
+    url: "propiedad/palermo/casa-3-dormitorios/index.html",
+    image: "assets/casa-palermo.jpg"
   }
 ];
 
