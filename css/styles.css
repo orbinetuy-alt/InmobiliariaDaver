@@ -2606,7 +2606,7 @@ section.listings:not(.listings-page) .card > * {
   .main-nav{display:none;position:absolute;left:0;right:0;top:100%;background:white;padding:1rem;border-radius:0 0 8px 8px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
   /* animated open/close using transform + opacity for smoother transitions */
   .main-nav{display:block;max-height:0;overflow:hidden;transform-origin:top;transition:max-height .28s ease,opacity .25s ease;opacity:0}
-  .main-nav.open{max-height:240px;opacity:1}
+  .main-nav.open{max-height:320px;opacity:1}
   .main-nav a{display:block;margin:0.5rem 0;color:var(--muted)}
 
   /* Toggle button animation -> X */
