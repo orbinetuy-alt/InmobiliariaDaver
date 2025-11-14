@@ -133,7 +133,7 @@ npx vercel
 ## 📧 Contacto
 
 Daver Inmobiliaria
-- Email: info@daverinmobiliaria.com
+- Email: inmobiliariadavercrm@gmail.com
 - Instagram: [@daverinmobiliaria](https://www.instagram.com/daverinmobiliaria)
 - Dirección: Bv. Gral Artigas 1443, Montevideo
 
