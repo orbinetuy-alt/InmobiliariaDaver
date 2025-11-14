@@ -11,7 +11,7 @@ const OPENAI_API_KEY = window.OPENAI_CONFIG?.apiKey || '';
 // n8n Webhook para analytics de búsquedas
 // ✅ Conectado con n8n para mayor flexibilidad y sin límites
 // Los datos se envían a tu workflow de n8n que luego guarda en Google Sheets
-const ANALYTICS_WEBHOOK_URL = 'https://n8n.srv1035532.hstgr.cloud/webhook-test/búsquedas-daver';
+const ANALYTICS_WEBHOOK_URL = 'https://n8n.srv1035532.hstgr.cloud/webhook/búsquedas-daver';
 
 /**
  * Registra una búsqueda en Google Sheets para analytics vía n8n
