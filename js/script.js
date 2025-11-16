@@ -603,12 +603,19 @@ document.addEventListener('DOMContentLoaded', function(){
   // ===========================
   
   // Solo ejecutar si estamos en una página de detalle de propiedad
+  // Usar DOMContentLoaded para asegurar que window.propertyGalleryImages ya esté definido
   if (document.querySelector('.property-gallery')) {
-    initGallery();
+    // Ejecutar después de que el DOM y todos los scripts inline se hayan cargado
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initGallery);
+    } else {
+      initGallery();
+    }
   }
   
   function initGallery() {
-    const images = [
+    // Usar imágenes específicas de la propiedad si están definidas, sino usar placeholders
+    const images = window.propertyGalleryImages || [
       '../../../assets/placeholder.svg',
       '../../../assets/placeholder.svg',
       '../../../assets/placeholder.svg',
@@ -616,6 +623,8 @@ document.addEventListener('DOMContentLoaded', function(){
       '../../../assets/placeholder.svg',
       '../../../assets/placeholder.svg'
     ];
+    
+    console.log('🖼️ Galería inicializada con', images.length, 'imágenes:', images);
     
     let currentIndex = 0;
     

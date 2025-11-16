@@ -88,7 +88,7 @@ const properties = [
     features: ["estrenar", "terraza"],
     description: "Monoambiente a estrenar con terraza en Unión",
     url: "propiedad/union/monoambiente-estrenar/index.html",
-    image: "assets/apartamento-union.jpg"
+    image: "assets/properties/union-apartamento/foto-1.jpeg"
   },
   {
     id: 8,
@@ -137,7 +137,7 @@ const properties = [
     features: ["garaje", "terraza", "luminoso"],
     description: "Apartamento luminoso en Pocitos con terraza",
     url: "propiedad/pocitos/apartamento-3-dormitorios/index.html",
-    image: "assets/apartamento-pocitos.jpg"
+    image: "assets/properties/pocitos-apartamento/foto-1.jpeg"
   },
   {
     id: 12,
@@ -218,7 +218,7 @@ const properties = [
     features: ["consultorio", "céntrica"],
     description: "Oficina consultorio en Cordón",
     url: "propiedad/cordon/oficina-40m2/index.html",
-    image: "assets/oficina-cordon.jpg"
+    image: "assets/properties/cordon-oficina/foto-1.jpeg"
   },
   {
     id: 18,
@@ -301,7 +301,175 @@ const properties = [
     features: ["entrada independiente", "aire acondicionado", "patio exclusivo", "buena ubicación"],
     description: "Apartamento en planta baja con entrada independiente. Sobre calle Maldonado esquina Andes, excelente ubicación en pleno centro de Montevideo y a metros de la rambla Sur. Living comedor al frente, amplio dormitorio, baño completo y cocina con salida a patio de 8 m² de uso exclusivo. Queda instalado equipo de aire acondicionado. Muy buen estado.",
     url: "propiedad/barrio-sur/apartamento-1-dormitorio/index.html",
-    image: "assets/apartamento-barrio-sur.jpg"
+    image: "assets/properties/barrio-sur-apartamento-venta/foto-1.jpeg"
+  },
+  {
+    id: 23,
+    title: "Apartamento en Alquiler en Barrio Sur",
+    type: "apartamento",
+    zone: "barrio-sur",
+    zoneName: "Barrio Sur",
+    price: 23000,
+    currency: "UYU",
+    operation: "alquiler",
+    bedrooms: 1,
+    bathrooms: 1,
+    area: 38,
+    features: ["planta baja", "entrada independiente", "patio exclusivo", "cerca rambla"],
+    description: "Apartamento en planta baja con entrada independiente. Amplio living comedor y dormitorio al frente con doble ventana. Baño completo con conexiones para lavarropa. Cocina con salida a patio de uso exclusivo. A metros de la rambla sur.",
+    url: "propiedad/barrio-sur/apartamento-alquiler/index.html",
+    image: "assets/properties/barrio-sur-apartamento-alquiler/foto-1.jpeg"
+  },
+  {
+    id: 24,
+    title: "Apartamento 2 Dormitorios en Tres Cruces",
+    type: "apartamento",
+    zone: "tres-cruces",
+    zoneName: "Tres Cruces",
+    price: 33500,
+    currency: "UYU",
+    operation: "alquiler",
+    bedrooms: 2,
+    bathrooms: 1,
+    area: 55,
+    features: ["garage", "gimnasio", "barbacoa", "portería", "terraza"],
+    description: "Apartamento con 2 dormitorios, living comedor, cocina y baño. Amplia terraza estar. Edificio con portería 9-21hs, gimnasio, barbacoa y lavadero. Garage en lugar fijo incluido. Excelente ubicación en Tres Cruces.",
+    url: "propiedad/tres-cruces/apartamento-2-dormitorios-alquiler/index.html",
+    image: "assets/placeholder.svg"
+  },
+  {
+    id: 25,
+    title: "Apartamento 1 Dormitorio en Centro",
+    type: "apartamento",
+    zone: "centro",
+    zoneName: "Centro",
+    price: 84000,
+    currency: "USD",
+    operation: "venta",
+    bedrooms: 1,
+    bathrooms: 1,
+    area: 38,
+    features: ["luminoso", "balcón", "céntrico"],
+    description: "Apartamento en primer piso interno con balcón al patio. Living comedor con ventana, cocina, baño completo y dormitorio. Muy luminoso. Excelente ubicación en pleno centro de Montevideo.",
+    url: "propiedad/centro/apartamento-1-dormitorio/index.html",
+    image: "assets/placeholder.svg"
+  },
+  {
+    id: 26,
+    title: "Casa 2 Dormitorios en Aguada",
+    type: "casa",
+    zone: "aguada",
+    zoneName: "Aguada",
+    price: 99000,
+    currency: "USD",
+    operation: "venta",
+    bedrooms: 2,
+    bathrooms: 1,
+    area: 46,
+    features: ["con renta", "inversión", "patio"],
+    description: "Casa con renta actual de $22.500. Living comedor, cocina, 2 dormitorios, baño completo y patio. Excelente oportunidad de inversión en barrio tradicional con todos los servicios.",
+    url: "propiedad/aguada/casa-2-dormitorios/index.html",
+    image: "assets/placeholder.svg"
+  },
+  {
+    id: 27,
+    title: "Casa 1 Dormitorio en La Blanqueada",
+    type: "casa",
+    zone: "la-blanqueada",
+    zoneName: "La Blanqueada",
+    price: 38000,
+    currency: "UYU",
+    operation: "alquiler",
+    bedrooms: 1,
+    bathrooms: 1,
+    area: 65,
+    features: ["patio", "garage opcional", "tranquila"],
+    description: "Casa con living, dormitorio amplio, cocina, baño completo y patio al fondo. Garage disponible opcional. Ubicación tranquila en barrio consolidado con todos los servicios.",
+    url: "propiedad/la-blanqueada/casa-1-dormitorio/index.html",
+    image: "assets/properties/la-blanqueada-casa/foto-1.jpeg"
+  },
+  {
+    id: 28,
+    title: "Apartamento 1 Dormitorio en La Blanqueada",
+    type: "apartamento",
+    zone: "la-blanqueada",
+    zoneName: "La Blanqueada",
+    price: 38000,
+    currency: "UYU",
+    operation: "alquiler",
+    bedrooms: 1,
+    bathrooms: 1,
+    area: 65,
+    features: ["balcón", "luminoso", "garage opcional"],
+    description: "Apartamento con living, dormitorio, cocina, baño completo y balcón. Muy luminoso y en buen estado. Garage opcional consultar precio. Excelente ubicación en La Blanqueada.",
+    url: "propiedad/la-blanqueada/apartamento-1-dormitorio/index.html",
+    image: "assets/properties/la-blanqueada-apartamento/foto-1.jpeg"
+  },
+  {
+    id: 29,
+    title: "Apartamento 4 Dormitorios en Punta Carretas",
+    type: "apartamento",
+    zone: "punta-carretas",
+    zoneName: "Punta Carretas",
+    price: 220000,
+    currency: "USD",
+    operation: "venta",
+    bedrooms: 4,
+    bathrooms: 2,
+    area: 110,
+    features: ["amplio", "zona premium", "alto potencial"],
+    description: "Amplio apartamento de 110m² con 4 dormitorios y 2 baños completos. Ubicación premium en Punta Carretas. Alto potencial para proyecto comercial o profesional. Gran oportunidad de inversión.",
+    url: "propiedad/punta-carretas/apartamento-4-dormitorios/index.html",
+    image: "assets/placeholder.svg"
+  },
+  {
+    id: 30,
+    title: "Casa 4 Dormitorios en Punta Carretas",
+    type: "casa",
+    zone: "punta-carretas",
+    zoneName: "Punta Carretas",
+    price: 220000,
+    currency: "USD",
+    operation: "venta",
+    bedrooms: 4,
+    bathrooms: 2,
+    area: 110,
+    features: ["amplia", "zona premium", "alto potencial"],
+    description: "Casa de 110m² con 4 dormitorios y 2 baños completos. Ubicación premium en Punta Carretas. Alto potencial para proyecto comercial o profesional. Gran oportunidad de inversión.",
+    url: "propiedad/punta-carretas/casa-4-dormitorios/index.html",
+    image: "assets/placeholder.svg"
+  },
+  {
+    id: 31,
+    title: "Oficina 170m² en Ciudad Vieja",
+    type: "oficina",
+    zone: "ciudad-vieja",
+    zoneName: "Ciudad Vieja",
+    price: 165000,
+    currency: "USD",
+    operation: "venta",
+    area: 170,
+    features: ["8 oficinas", "céntrica", "amplia", "baños completos"],
+    description: "Oficina de 170m² con 8 espacios independientes, 2 baños completos y cocina. Ubicación premium en Ciudad Vieja sobre calle peatonal. Ideal para establecer empresa en el corazón de Montevideo.",
+    url: "propiedad/ciudad-vieja/oficina-venta/index.html",
+    image: "assets/placeholder.svg"
+  },
+  {
+    id: 32,
+    title: "Apartamento 1 Dormitorio en Tres Cruces",
+    type: "apartamento",
+    zone: "tres-cruces",
+    zoneName: "Tres Cruces",
+    price: 18000,
+    currency: "UYU",
+    operation: "alquiler",
+    bedrooms: 1,
+    bathrooms: 1,
+    area: 43,
+    features: ["luminoso", "balcón", "céntrico", "laundry"],
+    description: "Apartamento con dormitorio, living comedor, cocina, baño completo y balcón. Incluye área de laundry con conexiones. Muy luminoso con ventanas en todos los ambientes. Excelente ubicación en el corazón de Montevideo.",
+    url: "propiedad/tres-cruces/apartamento-1-dormitorio-alquiler/index.html",
+    image: "assets/properties/tres-cruces-apartamento-18000/foto-1.jpeg"
   }
 ];
 
@@ -431,7 +599,10 @@ function extractParametersSimple(query) {
     'union': ['unión', 'union'],
     'la-comercial': ['la comercial', 'comercial'],
     'la-figurita': ['la figurita', 'figurita'],
-    'capurro': ['capurro']
+    'capurro': ['capurro'],
+    'aguada': ['aguada'],
+    'la-blanqueada': ['la blanqueada', 'blanqueada'],
+    'barrio-sur': ['barrio sur']
   };
   
   for (const [zone, keywords] of Object.entries(zones)) {
