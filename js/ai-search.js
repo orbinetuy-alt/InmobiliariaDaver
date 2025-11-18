@@ -120,7 +120,7 @@ const properties = [
     features: ["balcón", "luminoso"],
     description: "Apartamento luminoso en Tres Cruces",
     url: "propiedad/tres-cruces/apartamento-3-dormitorios/index.html",
-    image: "assets/apartamento-tres-cruces.jpg"
+    image: "assets/properties/tres-cruces-apartamento-3dorm/foto-1.jpeg"
   },
   {
     id: 11,
@@ -171,7 +171,7 @@ const properties = [
     features: ["luminoso", "balcón"],
     description: "Apartamento luminoso en Palermo",
     url: "propiedad/palermo/apartamento-2-dormitorios/index.html",
-    image: "assets/apartamento-palermo.jpg"
+    image: "assets/properties/palermo-apartamento/foto-1.jpeg"
   },
   {
     id: 14,
@@ -335,7 +335,7 @@ const properties = [
     features: ["garage", "gimnasio", "barbacoa", "portería", "terraza"],
     description: "Apartamento con 2 dormitorios, living comedor, cocina y baño. Amplia terraza estar. Edificio con portería 9-21hs, gimnasio, barbacoa y lavadero. Garage en lugar fijo incluido. Excelente ubicación en Tres Cruces.",
     url: "propiedad/tres-cruces/apartamento-2-dormitorios-alquiler/index.html",
-    image: "assets/placeholder.svg"
+    image: "assets/properties/tres-cruces-apartamento-2dorm/foto-1.jpeg"
   },
   {
     id: 25,
@@ -352,7 +352,7 @@ const properties = [
     features: ["luminoso", "balcón", "céntrico"],
     description: "Apartamento en primer piso interno con balcón al patio. Living comedor con ventana, cocina, baño completo y dormitorio. Muy luminoso. Excelente ubicación en pleno centro de Montevideo.",
     url: "propiedad/centro/apartamento-1-dormitorio/index.html",
-    image: "assets/placeholder.svg"
+    image: "assets/properties/centro-apartamento/foto-1.jpeg"
   },
   {
     id: 26,
@@ -420,7 +420,7 @@ const properties = [
     features: ["amplio", "zona premium", "alto potencial"],
     description: "Amplio apartamento de 110m² con 4 dormitorios y 2 baños completos. Ubicación premium en Punta Carretas. Alto potencial para proyecto comercial o profesional. Gran oportunidad de inversión.",
     url: "propiedad/punta-carretas/apartamento-4-dormitorios/index.html",
-    image: "assets/placeholder.svg"
+    image: "assets/properties/punta-carretas-apartamento/foto-1.jpeg"
   },
   {
     id: 30,
@@ -437,7 +437,7 @@ const properties = [
     features: ["amplia", "zona premium", "alto potencial"],
     description: "Casa de 110m² con 4 dormitorios y 2 baños completos. Ubicación premium en Punta Carretas. Alto potencial para proyecto comercial o profesional. Gran oportunidad de inversión.",
     url: "propiedad/punta-carretas/casa-4-dormitorios/index.html",
-    image: "assets/placeholder.svg"
+    image: "assets/properties/punta-carretas-casa/foto-1.jpeg"
   },
   {
     id: 31,
