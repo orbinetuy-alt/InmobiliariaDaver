@@ -103,7 +103,7 @@ const properties = [
     features: ["céntrica", "compacta"],
     description: "Oficina compacta en Ciudad Vieja",
     url: "propiedad/ciudad-vieja/oficina-28m2/index.html",
-    image: "assets/oficina-ciudad-vieja.jpg"
+    image: "assets/properties/ciudad-vieja-oficina-28m2/foto-1.jpeg"
   },
   {
     id: 10,
@@ -154,7 +154,7 @@ const properties = [
     features: ["compacta", "patio"],
     description: "Casa compacta en La Comercial",
     url: "propiedad/la-comercial/casa-1-dormitorio/index.html",
-    image: "assets/casa-la-comercial.jpg"
+    image: "assets/properties/la-comercial-casa/foto-1.jpeg"
   },
   {
     id: 13,
@@ -188,7 +188,7 @@ const properties = [
     features: ["patio", "amplia"],
     description: "Casa amplia en Palermo",
     url: "propiedad/palermo/casa-3-dormitorios/index.html",
-    image: "assets/casa-palermo.jpg"
+    image: "assets/properties/palermo-casa/foto-1.jpeg"
   },
   {
     id: 15,
@@ -203,7 +203,7 @@ const properties = [
     features: ["amplia", "8 oficinas", "céntrica"],
     description: "Amplia oficina en Ciudad Vieja",
     url: "propiedad/ciudad-vieja/oficina-170m2/index.html",
-    image: "assets/oficina-ciudad-vieja-170m2.jpg"
+    image: "assets/properties/ciudad-vieja-oficina-170m2/foto-1.jpeg"
   },
   {
     id: 16,
@@ -235,7 +235,7 @@ const properties = [
     features: ["amplia", "jardín"],
     description: "Casa amplia en Parque de Carrasco",
     url: "propiedad/carrasco/casa-3-dormitorios/index.html",
-    image: "assets/casa-carrasco.jpg"
+    image: "assets/properties/carrasco-casa/foto-1.jpeg"
   },
   {
     id: 19,
@@ -284,7 +284,7 @@ const properties = [
     features: ["amplio", "FOS 100%"],
     description: "Terreno amplio en La Comercial sobre Bvar Artigas",
     url: "propiedad/la-comercial/terreno-296m2/index.html",
-    image: "assets/terreno-la-comercial.jpg"
+    image: "assets/properties/la-comercial-terreno/foto-1.jpeg"
   },
   {
     id: 22,
@@ -369,7 +369,7 @@ const properties = [
     features: ["con renta", "inversión", "patio"],
     description: "Casa con renta actual de $22.500. Living comedor, cocina, 2 dormitorios, baño completo y patio. Excelente oportunidad de inversión en barrio tradicional con todos los servicios.",
     url: "propiedad/aguada/casa-2-dormitorios/index.html",
-    image: "assets/placeholder.svg"
+    image: "assets/properties/aguada-casa/foto-1.jpeg"
   },
   {
     id: 27,
@@ -452,7 +452,7 @@ const properties = [
     features: ["8 oficinas", "céntrica", "amplia", "baños completos"],
     description: "Oficina de 170m² con 8 espacios independientes, 2 baños completos y cocina. Ubicación premium en Ciudad Vieja sobre calle peatonal. Ideal para establecer empresa en el corazón de Montevideo.",
     url: "propiedad/ciudad-vieja/oficina-venta/index.html",
-    image: "assets/placeholder.svg"
+    image: "assets/properties/ciudad-vieja-oficina-venta/foto-1.jpeg"
   },
   {
     id: 32,
