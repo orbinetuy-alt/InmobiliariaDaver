@@ -119,16 +119,30 @@
     } else if (grid && results.length === 0) {
       grid.innerHTML = `
         <div class="no-results">
-          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <circle cx="11" cy="11" r="8"/>
-            <path d="M21 21l-4.35-4.35"/>
-            <line x1="8" y1="11" x2="14" y2="11"/>
-          </svg>
-          <h3>No se encontraron propiedades</h3>
-          <p>Intenta modificar tu búsqueda o explora todas nuestras propiedades</p>
-          <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
-            <button class="btn" onclick="window.location.href='index.html'">Nueva búsqueda</button>
-            <button class="btn btn-secondary" onclick="window.location.href='listings.html'">Ver todas</button>
+          <div class="no-results-icon">
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="M21 21l-4.35-4.35"/>
+              <line x1="8" y1="11" x2="14" y2="11"/>
+            </svg>
+          </div>
+          <h3 class="no-results-title">No se encontraron propiedades</h3>
+          <p class="no-results-text">No pudimos encontrar propiedades que coincidan con tu búsqueda. Intenta con otros términos o explora todas nuestras opciones disponibles.</p>
+          <div class="no-results-actions">
+            <a href="index.html" class="btn btn-primary-action">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="M21 21l-4.35-4.35"/>
+              </svg>
+              Nueva búsqueda
+            </a>
+            <a href="listings.html" class="btn btn-secondary-action">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                <path d="M9 22V12h6v10"/>
+              </svg>
+              Ver todas las propiedades
+            </a>
           </div>
         </div>
       `;
