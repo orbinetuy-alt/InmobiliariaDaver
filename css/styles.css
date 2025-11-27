@@ -3818,7 +3818,7 @@ section.listings:not(.listings-page) .card > * {
 .property-detail .property-header-apartamento-barrio-sur::before {
   background: 
     linear-gradient(135deg, rgba(45, 55, 72, 0.85) 0%, rgba(26, 32, 44, 0.9) 100%),
-    url('../assets/apartamento-barrio-sur.jpg') center/cover !important;
+    url('../assets/properties/barrio-sur-apartamento-venta/foto-1.jpeg') center/cover !important;
   background-attachment: fixed !important;
   content: '' !important;
   position: absolute !important;
@@ -4267,6 +4267,8 @@ section.listings:not(.listings-page) .card > * {
   .property-detail .property-header-apartamento-capurro,
   .property-detail .property-header-apartamento-union,
   .property-detail .property-header-apartamento-tres-cruces,
+  .property-detail .property-header-apartamento-tres-cruces-2,
+  .property-detail .property-header-apartamento-tres-cruces-2dorm,
   .property-detail .property-header-casa-la-comercial,
   .property-detail .property-header-casa-aguada {
     background-attachment: scroll !important;
@@ -4293,6 +4295,8 @@ section.listings:not(.listings-page) .card > * {
   .property-detail .property-header-apartamento-capurro::before,
   .property-detail .property-header-apartamento-union::before,
   .property-detail .property-header-apartamento-tres-cruces::before,
+  .property-detail .property-header-apartamento-tres-cruces-2::before,
+  .property-detail .property-header-apartamento-tres-cruces-2dorm::before,
   .property-detail .property-header-casa-la-comercial::before,
   .property-detail .property-header-casa-aguada::before {
     background-size: cover !important;
