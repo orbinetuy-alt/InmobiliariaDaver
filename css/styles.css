@@ -4246,6 +4246,58 @@ section.listings:not(.listings-page) .card > * {
   .property-detail .feature-item {
     padding: 1rem;
   }
+  
+  /* FIX: Desactivar background-attachment fixed en móviles */
+  .property-detail .property-header-oficina-ciudad-vieja,
+  .property-detail .property-header-casa-carrasco,
+  .property-detail .property-header-apartamento-cordon,
+  .property-detail .property-header-casa-palermo,
+  .property-detail .property-header-apartamento-pocitos,
+  .property-detail .property-header-terreno-la-comercial,
+  .property-detail .property-header-oficina-ciudad-vieja-170m2,
+  .property-detail .property-header-oficina-ciudad-vieja-28m2,
+  .property-detail .property-header-oficina-cordon,
+  .property-detail .property-header-casa-blanqueada,
+  .property-detail .property-header-apartamento-blanqueada,
+  .property-detail .property-header-apartamento-barrio-sur,
+  .property-detail .property-header-apartamento-palermo,
+  .property-detail .property-header-apartamento-centro,
+  .property-detail .property-header-apartamento-punta-carretas,
+  .property-detail .property-header-casa-punta-carretas,
+  .property-detail .property-header-apartamento-capurro,
+  .property-detail .property-header-apartamento-union,
+  .property-detail .property-header-apartamento-tres-cruces,
+  .property-detail .property-header-casa-la-comercial,
+  .property-detail .property-header-casa-aguada {
+    background-attachment: scroll !important;
+  }
+  
+  /* FIX: Mejor posicionamiento de imagen de fondo en móviles */
+  .property-detail .property-header::before,
+  .property-detail .property-header-oficina-ciudad-vieja::before,
+  .property-detail .property-header-casa-carrasco::before,
+  .property-detail .property-header-apartamento-cordon::before,
+  .property-detail .property-header-casa-palermo::before,
+  .property-detail .property-header-apartamento-pocitos::before,
+  .property-detail .property-header-terreno-la-comercial::before,
+  .property-detail .property-header-oficina-ciudad-vieja-170m2::before,
+  .property-detail .property-header-oficina-ciudad-vieja-28m2::before,
+  .property-detail .property-header-oficina-cordon::before,
+  .property-detail .property-header-casa-blanqueada::before,
+  .property-detail .property-header-apartamento-blanqueada::before,
+  .property-detail .property-header-apartamento-barrio-sur::before,
+  .property-detail .property-header-apartamento-palermo::before,
+  .property-detail .property-header-apartamento-centro::before,
+  .property-detail .property-header-apartamento-punta-carretas::before,
+  .property-detail .property-header-casa-punta-carretas::before,
+  .property-detail .property-header-apartamento-capurro::before,
+  .property-detail .property-header-apartamento-union::before,
+  .property-detail .property-header-apartamento-tres-cruces::before,
+  .property-detail .property-header-casa-la-comercial::before,
+  .property-detail .property-header-casa-aguada::before {
+    background-size: cover !important;
+    background-position: center center !important;
+  }
 }
 
 /* ============================================
