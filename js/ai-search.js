@@ -1,22 +1,6 @@
 /**
  * AI-Powered Search for Daver Inmobiliaria
- * Uses OpenAI GPT to inter  {
-    id: 7,
-    title: "Monoambiente a estrenar",
-    type: "apartamento",
-    zone: "la-blanqueada",
-    zoneName: "La Blanqueada",
-    price: 20000,
-    currency: "UYU",
-    operation: "alquiler",
-    bedrooms: 1,
-    bathrooms: 1,
-    area: 51,
-    features: ["estrenar", "terraza"],
-    description: "Monoambiente a estrenar con terraza en La Blanqueada",
-    url: "propiedad/union/monoambiente-estrenar/index.html",
-    image: "assets/properties/union-apartamento/foto-1.jpeg"
-  },uage property searches
+ * Uses OpenAI GPT to interpret natural language property searches
  */
 
 // IMPORTANTE: Configura tu API key en el archivo config.js (no incluido en git)
@@ -93,16 +77,16 @@ const properties = [
     id: 7,
     title: "Monoambiente a Estrenar",
     type: "apartamento",
-    zone: "union",
-    zoneName: "Unión",
-    price: 21000,
+    zone: "la-blanqueada",
+    zoneName: "La Blanqueada",
+    price: 20000,
     currency: "UYU",
     operation: "alquiler",
     bedrooms: 1,
     bathrooms: 1,
     area: 51,
     features: ["estrenar", "terraza"],
-    description: "Monoambiente a estrenar con terraza en Unión",
+    description: "Monoambiente a estrenar con terraza en La Blanqueada",
     url: "propiedad/union/monoambiente-estrenar/index.html",
     image: "assets/properties/union-apartamento/foto-1.jpeg"
   },
