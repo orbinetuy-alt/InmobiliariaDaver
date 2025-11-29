@@ -82,7 +82,7 @@ const properties = [
     price: 20000,
     currency: "UYU",
     operation: "alquiler",
-    bedrooms: 1,
+    bedrooms: 0,
     bathrooms: 1,
     area: 51,
     features: ["estrenar", "terraza"],
@@ -246,7 +246,7 @@ const properties = [
     price: 20000,
     currency: "UYU",
     operation: "alquiler",
-    bedrooms: 1,
+    bedrooms: 0,
     bathrooms: 1,
     area: 37,
     features: ["estrenar", "moderno"],
@@ -489,7 +489,14 @@ async function interpretSearchWithAI(query) {
 
 Búsqueda del cliente: "${query}"
 
-Extrae SOLO los parámetros mencionados explícitamente. Si algo no se menciona, deja el campo en null.
+REGLAS IMPORTANTES:
+- Extrae SOLO los parámetros mencionados explícitamente
+- Si algo no se menciona, deja el campo en null
+- "monoambiente" = 0 dormitorios (muy importante)
+- "1 dormitorio" o "un dormitorio" = 1 dormitorio
+- "2 dormitorios" o "dos dormitorios" = 2 dormitorios
+- Si dice "apartamento" sin especificar dormitorios, NO pongas bedrooms (déjalo en null)
+- Si dice "apartamento de 2 dormitorios", entonces bedrooms = 2
 
 Barrios de Montevideo válidos: pocitos, carrasco, punta-carretas, tres-cruces, centro, ciudad-vieja, cordon, palermo, union, la-comercial, la-figurita, capurro, aguada, barrio-sur, la-blanqueada
 
@@ -626,9 +633,14 @@ function extractParametersSimple(query) {
   }
   
   // Detectar dormitorios
-  const bedroomsMatch = lowerQuery.match(/(\d+)\s*(dormitorio|dorm|habitación|habitacion)/i);
-  if (bedroomsMatch) {
-    params.bedrooms = parseInt(bedroomsMatch[1]);
+  if (lowerQuery.includes('monoambiente') || lowerQuery.includes('mono ambiente')) {
+    params.bedrooms = 0;
+    params.type = 'apartamento'; // monoambiente es tipo apartamento
+  } else {
+    const bedroomsMatch = lowerQuery.match(/(\d+)\s*(dormitorio|dorm|habitación|habitacion)/i);
+    if (bedroomsMatch) {
+      params.bedrooms = parseInt(bedroomsMatch[1]);
+    }
   }
   
   return params;
@@ -686,18 +698,14 @@ function filterProperties(params) {
       score += 10;
     }
     
-    // Dormitorios (preferencia, no obligatorio)
-    if (params.bedrooms && prop.bedrooms) {
+    // Dormitorios (OBLIGATORIO si se especificó)
+    if (params.bedrooms !== null && params.bedrooms !== undefined) {
       if (prop.bedrooms === params.bedrooms) {
         score += 15;
         console.log(`  ✓ ${prop.title}: Coincide dormitorios (${params.bedrooms})`);
       } else {
-        // Dar puntos parciales si está cerca
-        const diff = Math.abs(prop.bedrooms - params.bedrooms);
-        if (diff === 1) {
-          score += 7;
-          console.log(`  ~ ${prop.title}: Dormitorios cercanos (${prop.bedrooms} vs ${params.bedrooms})`);
-        }
+        console.log(`  ✗ ${prop.title}: No coincide dormitorios (busca ${params.bedrooms}, tiene ${prop.bedrooms})`);
+        return false; // DESCARTAR si no coinciden los dormitorios
       }
     }
     
