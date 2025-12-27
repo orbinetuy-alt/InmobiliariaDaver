@@ -436,6 +436,24 @@ const properties = [
     description: "Apartamento con dormitorio, living comedor, cocina, baño completo y balcón. Incluye área de laundry con conexiones. Muy luminoso con ventanas en todos los ambientes. Excelente ubicación en el corazón de Montevideo.",
     url: "propiedad/tres-cruces/apartamento-1-dormitorio-alquiler/index.html",
     image: "assets/properties/tres-cruces-apartamento-18000/foto-1.jpeg"
+  },
+  {
+    id: 33,
+    title: "Casa 3 Dormitorios en Lomas de Solymar",
+    type: "casa",
+    zone: "lomas-de-solymar",
+    zoneName: "Lomas de Solymar",
+    price: 195000,
+    currency: "USD",
+    operation: "venta",
+    bedrooms: 3,
+    bathrooms: 1,
+    area: 70,
+    landArea: 770,
+    features: ["gran parque", "cerca rambla", "parrillero", "estufa a leña", "terreno amplio"],
+    description: "Casa en una planta con 3 dormitorios, gran parque de 770m². A 300 metros de la rambla. Living comedor con estufa a leña, 2 dormitorios con placares, baño completo y parrillero cubierto. Frente de 17 metros. Excelente ubicación en zona consolidada.",
+    url: "propiedad/lomas-de-solymar/casa-3-dormitorios/index.html",
+    image: "assets/properties/lomas-de-solymar-casa/foto-1.jpg"
   }
 ];
 
