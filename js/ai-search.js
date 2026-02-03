@@ -443,7 +443,7 @@ const properties = [
     type: "casa",
     zone: "lomas-de-solymar",
     zoneName: "Lomas de Solymar",
-    price: 195000,
+    price: 215000,
     currency: "USD",
     operation: "venta",
     bedrooms: 3,
