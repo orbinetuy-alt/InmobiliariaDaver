@@ -1,0 +1,522 @@
+/* Property Detail Page - Dynamic Firebase Properties */
+/* Matches static page design exactly */
+
+/* Loading state */
+#loadingState {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #ff6a00;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Error state */
+#errorState {
+  display: none;
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.error-message {
+  background: #fee;
+  color: #c00;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+/* Content visibility */
+#propertyContent {
+  display: none;
+}
+
+/* ============================================
+   PROPERTY HEADER
+   ============================================ */
+
+/* Property header with dynamic background */
+.property-detail .property-header {
+  position: relative;
+  padding: 4rem 2rem;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: white;
+  min-height: 400px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.property-detail .property-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(45, 55, 72, 0.85) 0%, rgba(26, 32, 44, 0.9) 100%);
+  z-index: 0;
+}
+
+.property-detail .property-header .container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 2rem;
+}
+
+.property-detail .property-type {
+  display: inline-block;
+  padding: 0.6rem 1.5rem;
+  background: #ff6a00;
+  backdrop-filter: blur(10px);
+  border: none;
+  color: white;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.property-detail .property-title h2 {
+  font-size: 2.8rem;
+  margin: 1.5rem 0;
+  font-weight: 800;
+  color: white;
+  line-height: 1.2;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.25);
+  letter-spacing: -0.02em;
+}
+
+.property-detail .property-title address {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-style: normal;
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0;
+  font-weight: 400;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+}
+
+.property-detail .property-title address svg {
+  opacity: 0.8;
+  width: 20px;
+  height: 20px;
+}
+
+.property-detail .property-price {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  text-align: right;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem 2rem;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  z-index: 2;
+}
+
+.property-detail .price-label {
+  display: block;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+}
+
+.property-detail .price {
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: white;
+  text-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
+  letter-spacing: -0.02em;
+  display: block;
+}
+
+.property-detail .common-expenses {
+  display: block;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+
+/* ============================================
+   CONTENT LAYOUT
+   ============================================ */
+
+.property-detail .property-content {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 3rem;
+  padding: 3rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+.property-detail .property-main {
+  width: 100%;
+}
+
+/* ============================================
+   MAIN IMAGE GALLERY
+   ============================================ */
+
+.property-detail .property-gallery {
+  margin-bottom: 3rem;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.property-detail .property-gallery .main-image {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  display: block;
+  border-radius: 16px;
+}
+
+/* ============================================
+   FEATURES SECTION
+   ============================================ */
+
+.property-detail .property-features {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.property-detail .property-features h3 {
+  font-size: 1.5rem;
+  margin: 0 0 1.5rem 0;
+  color: #2d3748;
+  font-weight: 700;
+}
+
+.property-detail .features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+}
+
+.property-detail .feature-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: linear-gradient(135deg, #f6f8fb 0%, #ffffff 100%);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+.property-detail .feature-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(237, 137, 54, 0.2);
+  border-color: rgba(237, 137, 54, 0.4);
+}
+
+.property-detail .feature-item svg {
+  width: 32px;
+  height: 32px;
+  color: #ed8936;
+  flex-shrink: 0;
+}
+
+.property-detail .feature-item div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.property-detail .feature-item strong {
+  font-size: 0.8rem;
+  color: #718096;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.property-detail .feature-item span {
+  font-size: 1.25rem;
+  color: #2d3748;
+  font-weight: 700;
+}
+
+/* ============================================
+   DESCRIPTION SECTION
+   ============================================ */
+
+.property-detail .property-description {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.property-detail .property-description h3 {
+  font-size: 1.5rem;
+  margin: 0 0 1.5rem 0;
+  color: #2d3748;
+  font-weight: 700;
+}
+
+.property-detail .property-description p {
+  line-height: 1.8;
+  color: #4a5568;
+  margin-bottom: 1rem;
+  font-size: 1.05rem;
+}
+
+.property-detail .property-description p:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================
+   LOCATION/MAP SECTION
+   ============================================ */
+
+.property-detail .property-location {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.property-detail .property-location h3 {
+  font-size: 1.5rem;
+  margin: 0 0 1.5rem 0;
+  color: #2d3748;
+  font-weight: 700;
+}
+
+.property-detail .location-map {
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.property-detail .location-map iframe {
+  display: block;
+  width: 100%;
+}
+
+/* ============================================
+   SIDEBAR - CONTACT FORM
+   ============================================ */
+
+.property-detail .property-sidebar {
+  position: sticky;
+  top: 2rem;
+}
+
+.property-detail .contact-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.property-detail .contact-card h3 {
+  font-size: 1.4rem;
+  margin: 0 0 1.5rem 0;
+  color: #2d3748;
+  font-weight: 700;
+}
+
+.property-detail .contact-form input,
+.property-detail .contact-form textarea {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: #f7fafc;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+}
+
+.property-detail .contact-form input:focus,
+.property-detail .contact-form textarea:focus {
+  outline: none;
+  border-color: #ed8936;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(237, 137, 54, 0.1);
+}
+
+.property-detail .contact-form textarea {
+  resize: vertical;
+  min-height: 120px;
+  font-family: inherit;
+}
+
+.property-detail .contact-form .btn {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(237, 137, 54, 0.4);
+}
+
+.property-detail .contact-form .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(237, 137, 54, 0.5);
+}
+
+.property-detail .contact-form .btn:active {
+  transform: translateY(0);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .property-detail .property-content {
+    grid-template-columns: 1fr 320px;
+    gap: 2rem;
+    padding: 2rem 1.5rem;
+  }
+  
+  .property-detail .property-header {
+    padding: 3rem 1.5rem;
+  }
+  
+  .property-detail .property-title h2 {
+    font-size: 2.2rem;
+  }
+  
+  .property-detail .price {
+    font-size: 2.8rem;
+  }
+  
+  .property-detail .property-price {
+    padding: 1.25rem 1.5rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .property-detail .property-header {
+    padding: 2.5rem 1.25rem;
+    background-attachment: scroll !important;
+  }
+  
+  .property-detail .property-header::before {
+    background-size: cover !important;
+    background-position: center center !important;
+  }
+  
+  .property-detail .property-header .container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+  
+  .property-detail .property-title h2 {
+    font-size: 1.85rem;
+  }
+  
+  .property-detail .property-price {
+    text-align: left;
+    margin-top: 2rem;
+    padding: 1.25rem 1.5rem;
+    width: 100%;
+  }
+  
+  .property-detail .price {
+    font-size: 2.2rem;
+  }
+  
+  .property-detail .property-type {
+    padding: 0.5rem 1.25rem;
+    font-size: 0.85rem;
+    margin-bottom: 1.25rem;
+  }
+  
+  .property-detail .property-title address {
+    font-size: 1.05rem;
+  }
+  
+  .property-detail .price-label {
+    font-size: 0.9rem;
+  }
+  
+  .property-detail .property-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 2rem 1rem;
+  }
+  
+  .property-detail .property-sidebar {
+    position: static;
+  }
+  
+  .property-detail .property-gallery .main-image {
+    height: 350px;
+    border-radius: 12px;
+  }
+  
+  .property-detail .property-features,
+  .property-detail .property-description,
+  .property-detail .contact-card {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+  
+  .property-detail .features-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .property-detail .feature-item {
+    padding: 1rem;
+  }
+}

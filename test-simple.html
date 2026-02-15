@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Test Super Simple</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    .card { border: 1px solid #ccc; padding: 10px; margin: 10px 0; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <h1>Test de Filtrado Simple</h1>
+  
+  <select id="propertyType">
+    <option value="">Todas</option>
+    <option value="apartamento">Apartamentos</option>
+    <option value="casa">Casas</option>
+  </select>
+  
+  <div id="listings"></div>
+  
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+    import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCj6nyM8iqeXLEPNp46M_j-CW7aCTYM60A",
+      authDomain: "daver-inmobiliaria-65e82.firebaseapp.com",
+      projectId: "daver-inmobiliaria-65e82",
+      storageBucket: "daver-inmobiliaria-65e82.firebasestorage.app",
+      messagingSenderId: "936144386163",
+      appId: "1:936144386163:web:10b999ab6dcc9456bcd206"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function loadProperties() {
+      const querySnapshot = await getDocs(collection(db, 'properties'));
+      const container = document.getElementById('listings');
+      
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.setAttribute('data-type', data.type || '');
+        card.innerHTML = `
+          <strong>${data.title}</strong><br>
+          data-type: "${data.type}"<br>
+          Tipo en Firebase: "${data.type}"
+        `;
+        container.appendChild(card);
+      });
+      
+      console.log('Total de tarjetas creadas:', document.querySelectorAll('.card').length);
+    }
+
+    function applyFilters() {
+      const cards = document.querySelectorAll('.card');
+      const propertyType = document.getElementById('propertyType').value.trim();
+      
+      console.clear();
+      console.log('═══════════════════════════════════');
+      console.log('Filtro seleccionado:', `"${propertyType}"`);
+      console.log('Total de tarjetas:', cards.length);
+      console.log('═══════════════════════════════════');
+      
+      let visibleCount = 0;
+      
+      cards.forEach((card, i) => {
+        const cardType = card.getAttribute('data-type') || '';
+        const matches = propertyType === '' || cardType === propertyType;
+        
+        console.log(`Tarjeta ${i + 1}:`);
+        console.log(`  data-type en DOM: "${cardType}"`);
+        console.log(`  ¿Coincide con "${propertyType}"? ${matches ? '✅ SÍ' : '❌ NO'}`);
+        console.log(`  propertyType === '': ${propertyType === ''}`);
+        console.log(`  cardType === propertyType: ${cardType === propertyType}`);
+        console.log('');
+        
+        if (matches) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+      
+      console.log('═══════════════════════════════════');
+      console.log(`RESULTADO: ${visibleCount} de ${cards.length} visibles`);
+      console.log('═══════════════════════════════════');
+    }
+
+    // Cargar propiedades
+    loadProperties();
+    
+    // Event listener
+    document.getElementById('propertyType').addEventListener('change', applyFilters);
+  </script>
+</body>
+</html>

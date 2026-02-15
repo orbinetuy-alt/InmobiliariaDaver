@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Gestionar Propiedad | Panel Admin</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/admin-styles.css">
+  <link rel="icon" href="assets/logo.png" type="image/png">
+</head>
+<body>
+  <div class="form-container">
+    <div class="form-header">
+      <h1 id="formTitle">Nueva Propiedad</h1>
+      <a href="admin-panel.html" class="btn-back">← Volver al Panel</a>
+    </div>
+    
+    <form id="propertyForm">
+      <!-- Información básica -->
+      <div class="form-card">
+        <h2 class="form-section-title">Información Básica</h2>
+        
+        <div class="form-group">
+          <label for="title">Título de la propiedad <span class="required">*</span></label>
+          <input type="text" id="title" required placeholder="Ej: Hermoso apartamento en Pocitos">
+          <small>Este será el título principal que verán los visitantes</small>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="type">Tipo de propiedad <span class="required">*</span></label>
+            <select id="type" required>
+              <option value="">Seleccionar...</option>
+              <option value="apartamento">Apartamento</option>
+              <option value="casa">Casa</option>
+              <option value="oficina">Oficina</option>
+              <option value="terreno">Terreno</option>
+              <option value="local">Local Comercial</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="operation">Tipo de operación <span class="required">*</span></label>
+            <select id="operation" required>
+              <option value="">Seleccionar...</option>
+              <option value="venta">En Venta</option>
+              <option value="alquiler">En Alquiler</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="price">Precio (USD) <span class="required">*</span></label>
+            <input type="number" id="price" required placeholder="112000" min="0" step="1">
+            <small>Precio en dólares estadounidenses</small>
+          </div>
+          
+          <div class="form-group">
+            <label for="currency">Moneda</label>
+            <select id="currency">
+              <option value="USD">USD - Dólares</option>
+              <option value="UYU">UYU - Pesos uruguayos</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Ubicación -->
+      <div class="form-card">
+        <h2 class="form-section-title">Ubicación</h2>
+        
+        <div class="form-group">
+          <label for="address">Dirección completa <span class="required">*</span></label>
+          <input type="text" id="address" required placeholder="Av. Brasil 2354">
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="neighborhood">Barrio <span class="required">*</span></label>
+            <select id="neighborhood" required>
+              <option value="">Seleccionar...</option>
+              <option value="aguada">Aguada</option>
+              <option value="barrio-sur">Barrio Sur</option>
+              <option value="capurro">Capurro Bella Vista</option>
+              <option value="carrasco">Carrasco</option>
+              <option value="centro">Centro</option>
+              <option value="ciudad-vieja">Ciudad Vieja</option>
+              <option value="cordon">Cordón</option>
+              <option value="la-blanqueada">La Blanqueada</option>
+              <option value="la-comercial">La Comercial</option>
+              <option value="la-figurita">La Figurita</option>
+              <option value="lomas-de-solymar">Lomas de Solymar</option>
+              <option value="palermo">Palermo</option>
+              <option value="parque-posadas">Parque Posadas</option>
+              <option value="pocitos">Pocitos</option>
+              <option value="punta-carretas">Punta Carretas</option>
+              <option value="tres-cruces">Tres Cruces</option>
+              <option value="union">Unión</option>
+              <option value="villa-munoz">Villa Muñoz</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="city">Ciudad</label>
+            <input type="text" id="city" placeholder="Montevideo" value="Montevideo">
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="latitude">Latitud</label>
+            <input type="text" id="latitude" placeholder="-34.9059">
+            <small>Para mostrar en el mapa (opcional)</small>
+          </div>
+          
+          <div class="form-group">
+            <label for="longitude">Longitud</label>
+            <input type="text" id="longitude" placeholder="-56.1913">
+            <small>Para mostrar en el mapa (opcional)</small>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Características -->
+      <div class="form-card">
+        <h2 class="form-section-title">Características</h2>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="bedrooms">Dormitorios</label>
+            <input type="number" id="bedrooms" min="0" placeholder="3">
+          </div>
+          
+          <div class="form-group">
+            <label for="bathrooms">Baños</label>
+            <input type="number" id="bathrooms" min="0" placeholder="2">
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="area">Superficie (m²)</label>
+            <input type="number" id="area" min="0" placeholder="85">
+          </div>
+          
+          <div class="form-group">
+            <label for="garages">Garajes</label>
+            <input type="number" id="garages" min="0" placeholder="1">
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="commonExpenses">Gastos Comunes (UYU)</label>
+            <input type="number" id="commonExpenses" min="0" placeholder="8000" step="100">
+            <small>Gastos comunes mensuales en pesos uruguayos (opcional)</small>
+          </div>
+          
+          <div class="form-group">
+            <!-- Espacio para mantener el diseño -->
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Características adicionales</label>
+          <div class="features-grid">
+            <div class="feature-checkbox">
+              <input type="checkbox" id="feature-piscina" value="Piscina">
+              <label for="feature-piscina">Piscina</label>
+            </div>
+            <div class="feature-checkbox">
+              <input type="checkbox" id="feature-jardin" value="Jardín">
+              <label for="feature-jardin">Jardín</label>
+            </div>
+            <div class="feature-checkbox">
+              <input type="checkbox" id="feature-terraza" value="Terraza">
+              <label for="feature-terraza">Terraza</label>
+            </div>
+            <div class="feature-checkbox">
+              <input type="checkbox" id="feature-balcon" value="Balcón">
+              <label for="feature-balcon">Balcón</label>
+            </div>
+            <div class="feature-checkbox">
+              <input type="checkbox" id="feature-parrillero" value="Parrillero">
+              <label for="feature-parrillero">Parrillero</label>
+            </div>
+            <div class="feature-checkbox">
+              <input type="checkbox" id="feature-seguridad" value="Seguridad 24hs">
+              <label for="feature-seguridad">Seguridad 24hs</label>
+            </div>
+            <div class="feature-checkbox">
+              <input type="checkbox" id="feature-gimnasio" value="Gimnasio">
+              <label for="feature-gimnasio">Gimnasio</label>
+            </div>
+            <div class="feature-checkbox">
+              <input type="checkbox" id="feature-laundry" value="Lavadero">
+              <label for="feature-laundry">Lavadero</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Descripción -->
+      <div class="form-card">
+        <h2 class="form-section-title">Descripción</h2>
+        
+        <div class="form-group">
+          <label for="description">Descripción detallada <span class="required">*</span></label>
+          <textarea id="description" required placeholder="Describe la propiedad en detalle..."></textarea>
+          <small>Incluye información relevante que pueda interesar a los compradores/inquilinos</small>
+        </div>
+      </div>
+      
+      <!-- Imágenes -->
+      <div class="form-card">
+        <h2 class="form-section-title">Imágenes</h2>
+        
+        <div class="image-upload-area" id="uploadArea">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+          </svg>
+          <h3>Arrastra imágenes aquí o haz clic para seleccionar</h3>
+          <p>Soporta JPG, PNG, WebP (máx. 5MB por imagen)</p>
+        </div>
+        <input type="file" id="imageInput" multiple accept="image/*">
+        
+        <div class="upload-progress" id="uploadProgress">
+          <div class="upload-progress-bar" id="progressBar"></div>
+        </div>
+        
+        <div class="image-preview-grid" id="imagePreview"></div>
+      </div>
+      
+      <!-- Botones -->
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" onclick="window.location.href='admin-panel.html'">
+          Cancelar
+        </button>
+        <button type="submit" class="btn btn-primary" id="submitBtn">
+          Guardar Propiedad
+        </button>
+      </div>
+    </form>
+  </div>
+  
+  <!-- Loading overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-content">
+      <div class="loading-spinner"></div>
+      <p id="loadingText">Guardando propiedad...</p>
+    </div>
+  </div>
+
+  <script type="module" src="js/admin-property-form.js"></script>
+</body>
+</html>

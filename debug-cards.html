@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Debug Cards - Data Attributes</title>
+  <style>
+    body {
+      font-family: monospace;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .card-debug {
+      background: white;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .card-debug h3 {
+      margin: 0 0 10px 0;
+      color: #333;
+      font-size: 14px;
+    }
+    .attribute {
+      padding: 5px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .attr-name {
+      font-weight: bold;
+      color: #667eea;
+      display: inline-block;
+      width: 150px;
+    }
+    .attr-value {
+      color: #333;
+    }
+    .empty {
+      color: red;
+      font-weight: bold;
+    }
+    .warning {
+      background: #fff3cd;
+      padding: 10px;
+      margin: 20px 0;
+      border-left: 4px solid #ffd700;
+    }
+    button {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 10px 0;
+    }
+    button:hover {
+      background: #5568d3;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔍 Debug de Data Attributes en Cards</h1>
+  <div class="warning">
+    <strong>Este archivo analiza los atributos data-* de cada tarjeta en listings.html</strong><br>
+    Verifica: data-type, data-operation, data-zone, data-bedrooms, data-price
+  </div>
+  
+  <button onclick="window.open('http://localhost:8000/listings.html', '_blank')">
+    Abrir listings.html en nueva pestaña
+  </button>
+  <button onclick="analyzeCards()">Recargar análisis</button>
+  
+  <div id="cards-container">
+    <p>Carga listings.html en otra pestaña, luego haz click en "Recargar análisis"</p>
+  </div>
+
+  <script>
+    function analyzeCards() {
+      // Este script debe ejecutarse en listings.html
+      // Por ahora voy a dar instrucciones de cómo ejecutarlo
+      const container = document.getElementById('cards-container');
+      
+      container.innerHTML = `
+        <div style="background: #e3f2fd; padding: 20px; border-radius: 8px; margin: 20px 0;">
+          <h3 style="margin-top: 0;">📋 Instrucciones para depurar:</h3>
+          <ol style="font-family: sans-serif; line-height: 1.8;">
+            <li>Abre <strong>listings.html</strong> en otra pestaña del navegador</li>
+            <li>Abre las <strong>Herramientas de desarrollo</strong> (Cmd + Option + I en Safari)</li>
+            <li>Ve a la pestaña <strong>Console</strong></li>
+            <li>Pega este código y presiona Enter:</li>
+          </ol>
+          <pre style="background: #333; color: #0f0; padding: 15px; border-radius: 5px; overflow-x: auto; font-size: 12px;">
+// Esperar a que se carguen las tarjetas
+setTimeout(() => {
+  const cards = document.querySelectorAll('.listings .card');
+  
+  console.log('═══════════════════════════════════════');
+  console.log('🔍 ANÁLISIS DE DATA ATTRIBUTES');
+  console.log('═══════════════════════════════════════');
+  console.log('Total de tarjetas encontradas:', cards.length);
+  console.log('');
+  
+  if (cards.length === 0) {
+    console.error('❌ NO SE ENCONTRARON TARJETAS');
+    console.log('Verifica que las propiedades se hayan cargado desde Firebase');
+  } else {
+    cards.forEach((card, index) => {
+      console.log(\`\n🏠 TARJETA #\${index + 1}\`);
+      console.log('─────────────────────');
+      
+      const title = card.querySelector('h4')?.textContent || 'Sin título';
+      console.log('Título:', title);
+      
+      const dataType = card.getAttribute('data-type');
+      const dataOperation = card.getAttribute('data-operation');
+      const dataZone = card.getAttribute('data-zone');
+      const dataBedrooms = card.getAttribute('data-bedrooms');
+      const dataPrice = card.getAttribute('data-price');
+      
+      console.log('data-type:', dataType || '❌ VACÍO');
+      console.log('data-operation:', dataOperation || '❌ VACÍO');
+      console.log('data-zone:', dataZone || '❌ VACÍO');
+      console.log('data-bedrooms:', dataBedrooms || '❌ VACÍO');
+      console.log('data-price:', dataPrice || '❌ VACÍO');
+      
+      // Verificar problemas
+      const problems = [];
+      if (!dataType) problems.push('type vacío');
+      if (!dataOperation) problems.push('operation vacío');
+      if (!dataZone) problems.push('zone vacío');
+      
+      if (problems.length > 0) {
+        console.warn('⚠️ PROBLEMAS:', problems.join(', '));
+      }
+    });
+    
+    console.log('\n═══════════════════════════════════════');
+    console.log('✅ ANÁLISIS COMPLETADO');
+    console.log('═══════════════════════════════════════\n');
+  }
+}, 2000);
+          </pre>
+          <p style="font-family: sans-serif; background: #fff3cd; padding: 10px; border-radius: 5px; margin-top: 15px;">
+            💡 <strong>Tip:</strong> Si ves que algún atributo está VACÍO, eso significa que los datos no se están 
+            guardando correctamente en Firebase o no se están leyendo bien.
+          </p>
+        </div>
+      `;
+    }
+    
+    // Ejecutar al cargar
+    analyzeCards();
+  </script>
+</body>
+</html>

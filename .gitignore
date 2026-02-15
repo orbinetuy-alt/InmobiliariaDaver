@@ -26,3 +26,9 @@ build/
 # Misc
 *.log
 thumbs.db
+
+# Firebase Admin Credentials
+*firebase-adminsdk*.json
+
+# Admin Vercel Folder
+admin-vercel/

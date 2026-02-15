@@ -219,14 +219,17 @@ document.addEventListener('DOMContentLoaded', function(){
 
   // Listings page: Filter properties
   var listings = document.getElementById('listings');
-  var listingTitle = document.getElementById('listingTitle');
-  var resultsCount = document.getElementById('resultsCount');
-  var propertyTypeSelect = document.getElementById('propertyType');
-  var operationSelect = document.getElementById('operation');
-  var zoneSelect = document.getElementById('zone');
-  var bedroomsSelect = document.getElementById('bedrooms');
-  var priceSelect = document.getElementById('price');
-  var sortSelect = document.getElementById('sort');
+  
+  // Solo ejecutar código de filtros si estamos en la página de listings
+  if (listings) {
+    var listingTitle = document.getElementById('listingTitle');
+    var resultsCount = document.getElementById('resultsCount');
+    var propertyTypeSelect = document.getElementById('propertyType');
+    var operationSelect = document.getElementById('operation');
+    var zoneSelect = document.getElementById('zone');
+    var bedroomsSelect = document.getElementById('bedrooms');
+    var priceSelect = document.getElementById('price');
+    var sortSelect = document.getElementById('sort');
 
   function getListingCards(){
     return listings ? Array.prototype.slice.call(listings.querySelectorAll('.card')) : [];
@@ -414,20 +417,29 @@ document.addEventListener('DOMContentLoaded', function(){
 
     // Primero removemos todas las clases active
     filterBar.classList.remove('active');
-    filterBar.querySelectorAll('.filter-group').forEach(function(group) {
-      group.classList.remove('active');
-    });
+    var filterGroups = filterBar.querySelectorAll('.filter-group');
+    if (filterGroups) {
+      filterGroups.forEach(function(group) {
+        if (group) {
+          group.classList.remove('active');
+        }
+      });
+    }
 
     // Verificamos si algún filtro está activo
     var hasActiveFilter = false;
 
-    document.querySelectorAll('.filter-select').forEach(function(select) {
-      var group = select.closest('.filter-group');
-      if (select.value) {
-        group.classList.add('active');
-        hasActiveFilter = true;
-      }
-    });
+    var filterSelects = filterBar.querySelectorAll('.filter-select');
+    if (filterSelects) {
+      filterSelects.forEach(function(select) {
+        if (!select) return;
+        var group = select.closest('.filter-group');
+        if (select.value && group) {
+          group.classList.add('active');
+          hasActiveFilter = true;
+        }
+      });
+    }
 
     // Si hay algún filtro activo, destacamos toda la barra
     if (hasActiveFilter) {
@@ -482,7 +494,8 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 
   // Run filter on load for listings page
-  if(listings) applyFiltersFromUrl();
+  applyFiltersFromUrl();
+  } // fin del bloque if(listings)
 
   // Property page: gallery lightbox and contact form
   var galleryGrid = document.querySelector('.gallery-grid');
@@ -603,8 +616,9 @@ document.addEventListener('DOMContentLoaded', function(){
   // ===========================
   
   // Solo ejecutar si estamos en una página de detalle de propiedad
-  // Usar DOMContentLoaded para asegurar que window.propertyGalleryImages ya esté definido
-  if (document.querySelector('.property-gallery')) {
+  // Y si window.propertyGalleryImages ya está definido (páginas estáticas)
+  // Para páginas dinámicas (Firebase), property-detail.js inicializa la galería
+  if (document.querySelector('.property-gallery') && window.propertyGalleryImages) {
     // Ejecutar después de que el DOM y todos los scripts inline se hayan cargado
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', initGallery);
@@ -614,17 +628,24 @@ document.addEventListener('DOMContentLoaded', function(){
   }
   
   function initGallery() {
-    // Usar imágenes específicas de la propiedad si están definidas, sino usar placeholders
-    const images = window.propertyGalleryImages || [
-      '../../../assets/placeholder.svg',
-      '../../../assets/placeholder.svg',
-      '../../../assets/placeholder.svg',
-      '../../../assets/placeholder.svg',
-      '../../../assets/placeholder.svg',
-      '../../../assets/placeholder.svg'
-    ];
+    // Verificar si la galería ya fue inicializada (evitar duplicados con property-detail.js)
+    if (window.galleryInitialized) {
+      console.log('⚠️ Galería ya inicializada por otra fuente, saltando...');
+      return;
+    }
+    
+    // Usar imágenes específicas de la propiedad (deben estar definidas en este punto)
+    const images = window.propertyGalleryImages;
+    
+    if (!images || images.length === 0) {
+      console.log('⚠️ No hay imágenes para mostrar en la galería');
+      return;
+    }
     
     console.log('🖼️ Galería inicializada con', images.length, 'imágenes:', images);
+    
+    // Marcar como inicializada
+    window.galleryInitialized = true;
     
     let currentIndex = 0;
     

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Banner - Property Detail</title>
+  <link rel="stylesheet" href="css/styles.css?v=103">
+  <style>
+    /* Test específico para ver si el flexbox funciona */
+    .test-info {
+      background: #f0f0f0;
+      padding: 20px;
+      margin: 20px;
+      border: 2px solid #333;
+    }
+    .test-success {
+      background: #d4edda;
+      color: #155724;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #c3e6cb;
+    }
+  </style>
+</head>
+<body>
+  <div class="test-info">
+    <h1>🧪 Test de Banner - Property Detail</h1>
+    <p><strong>Propósito:</strong> Verificar que el CSS se carga correctamente y el flexbox funciona</p>
+    <div class="test-success">
+      ✅ Si ves este mensaje, el HTML está cargando correctamente
+    </div>
+  </div>
+
+  <!-- Banner de prueba con la estructura exacta -->
+  <main class="container property-detail">
+    <div class="property-header" style="--property-bg-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200');">
+      <div class="property-title">
+        <span class="property-type">Apartamento</span>
+        <h2>Test - Apartamento en Barrio Sur</h2>
+        <address>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+            <circle cx="12" cy="9" r="2.5"/>
+          </svg>
+          Barrio Sur, Montevideo
+        </address>
+      </div>
+      <div class="property-price">
+        <span class="price-label">Alquiler</span>
+        <span class="price">$23.000</span><span class="price-detail">+ $2.600 GC</span>
+      </div>
+    </div>
+  </main>
+
+  <div class="test-info">
+    <h2>✅ Checklist Visual:</h2>
+    <ul>
+      <li>Tag "APARTAMENTO" alineado a la IZQUIERDA</li>
+      <li>El título "Test - Apartamento..." debería estar ARRIBA a la IZQUIERDA</li>
+      <li>Ubicación "Barrio Sur, Montevideo" con mayúscula inicial</li>
+      <li>El precio "$23.000" y "+ $2.600 GC" en la MISMA LÍNEA</li>
+      <li>La caja del precio debería ocupar TODO EL ANCHO (como en producción)</li>
+      <li>Banner con PUNTITOS visibles sobre la imagen</li>
+    </ul>
+    
+    <h3>🔍 Instrucciones para Inspector:</h3>
+    <ol>
+      <li>Click derecho en el banner → Inspeccionar elemento</li>
+      <li>Busca <code>.property-header</code> en los estilos</li>
+      <li>Verifica que tenga: <code>display: flex</code></li>
+      <li>Verifica que tenga: <code>flex-wrap: wrap</code></li>
+      <li>Verifica que tenga un <code>::before</code> con la imagen (z-index: 0)</li>
+      <li>Verifica que tenga un <code>::after</code> con puntitos (z-index: 1)</li>
+      <li>Verifica que al inicio del archivo CSS diga: <strong>"VERSIÓN 103"</strong></li>
+    </ol>
+
+    <div id="cssCheck" style="background: #fff3cd; padding: 10px; margin: 10px 0; border: 1px solid #ffc107;">
+      ⚠️ Verificando CSS... Abre el Inspector para confirmar
+    </div>
+  </div>
+
+  <script>
+    // Verificar que el CSS se cargó
+    const header = document.querySelector('.property-header');
+    const styles = window.getComputedStyle(header);
+    const display = styles.getPropertyValue('display');
+    const flexWrap = styles.getPropertyValue('flex-wrap');
+    const priceBox = document.querySelector('.property-price');
+    const priceWidth = window.getComputedStyle(priceBox).getPropertyValue('width');
+    
+    const checkDiv = document.getElementById('cssCheck');
+    if (display === 'flex' && flexWrap === 'wrap') {
+      checkDiv.style.background = '#d4edda';
+      checkDiv.style.borderColor = '#c3e6cb';
+      checkDiv.style.color = '#155724';
+      checkDiv.innerHTML = `
+        ✅ <strong>CSS CORRECTO:</strong><br>
+        • display: ${display}<br>
+        • flex-wrap: ${flexWrap}<br>
+        • Price width: ${priceWidth}<br>
+        <strong>El precio debería estar ABAJO ocupando todo el ancho (como producción).</strong>
+      `;
+    } else {
+      checkDiv.style.background = '#f8d7da';
+      checkDiv.style.borderColor = '#f5c6cb';
+      checkDiv.style.color = '#721c24';
+      checkDiv.innerHTML = `
+        ❌ <strong>CSS NO SE CARGÓ:</strong><br>
+        • display: ${display} (esperado: flex)<br>
+        • flex-wrap: ${flexWrap} (esperado: wrap)<br>
+        <strong>Safari está usando una versión antigua del CSS en cache.</strong>
+      `;
+    }
+  </script>
+</body>
+</html>

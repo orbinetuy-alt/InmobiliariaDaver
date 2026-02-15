@@ -1,3 +1,4 @@
+/* VERSIÓN 104 - 10 FEB 2026 - EXACTO de producción: título alineado izquierda */
 :root{
   /* Palette: gray + orange */
   --accent:#ff6a00; /* naranja */
@@ -1011,10 +1012,6 @@ a {
   -webkit-text-fill-color: transparent;
   margin: 0.5rem 0 0;
   letter-spacing: -0.5px;
-}
-
-.card .btn {
-  display: none; /* Ocultar botón en cards horizontales, click en toda la card */
 }
 
 /* Grid layout - Una columna para cards horizontales */
@@ -3171,7 +3168,9 @@ section.listings:not(.listings-page) .card > * {
 }
 
 /* Modern property header - Warm and Professional */
+/* Property detail header - Banner principal */
 .property-detail .property-header {
+  --property-bg-image: none; /* Variable para imagen dinámica de Firebase */
   background: linear-gradient(135deg, rgba(45, 55, 72, 0.85) 0%, rgba(26, 32, 44, 0.9) 100%);
   color: white;
   padding: 4rem 2rem;
@@ -3181,6 +3180,10 @@ section.listings:not(.listings-page) .card > * {
   position: relative;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  min-height: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
 }
 
 .property-detail .property-header::before {
@@ -3192,16 +3195,30 @@ section.listings:not(.listings-page) .card > * {
   bottom: 0;
   background: 
     linear-gradient(135deg, 
-      rgba(45, 55, 72, 0.65) 0%, 
-      rgba(26, 32, 44, 0.75) 100%
+      rgba(45, 55, 72, 0.85) 0%, 
+      rgba(26, 32, 44, 0.9) 100%
     ),
-    url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
-  opacity: 1;
+    var(--property-bg-image, none);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  z-index: 0;
+}
+
+.property-detail .property-header::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="dots-firebase" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="rgba(255,255,255,0.15)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots-firebase)"/></svg>');
 }
 
 .property-detail .property-header > * {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 /* Property header con imagen de fondo - Oficina Ciudad Vieja */
@@ -3347,7 +3364,6 @@ section.listings:not(.listings-page) .card > * {
 
 .property-detail .property-title {
   max-width: 1200px;
-  margin: 0 auto;
 }
 
 /* Banner: Oficina Ciudad Vieja 170m² */
@@ -3958,15 +3974,18 @@ section.listings:not(.listings-page) .card > * {
   margin: 0;
   font-weight: 400;
   text-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+  text-transform: capitalize;
 }
 
 .property-detail .property-title address svg {
   opacity: 0.8;
 }
 
+/* Price box con glassmorphism */
 .property-detail .property-price {
   text-align: right;
   margin-top: 2rem;
+  width: 100%;
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
   padding: 1.5rem 2rem;
@@ -3990,6 +4009,15 @@ section.listings:not(.listings-page) .card > * {
   color: white;
   text-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
   letter-spacing: -0.02em;
+  display: inline;
+}
+
+.property-detail .price-detail {
+  display: inline;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-left: 0.5rem;
+  font-weight: 500;
 }
 
 /* Property content layout */
@@ -4267,6 +4295,8 @@ section.listings:not(.listings-page) .card > * {
 @media (max-width: 768px) {
   .property-detail .property-header {
     padding: 2.5rem 1.25rem;
+    flex-direction: column;
+    align-items: flex-start;
   }
   
   .property-detail .property-title h2 {
