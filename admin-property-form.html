@@ -140,13 +140,27 @@
         
         <div class="form-row">
           <div class="form-group">
-            <label for="area">Superficie (m²)</label>
-            <input type="number" id="area" min="0" placeholder="85">
+            <label for="area">Superficie edificada (m²) <span class="required">*</span></label>
+            <input type="number" id="area" min="0" placeholder="85" required>
           </div>
           
           <div class="form-group">
             <label for="garages">Garajes</label>
             <input type="number" id="garages" min="0" placeholder="1">
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="landArea">Superficie del terreno (m²) (opcional)</label>
+            <input type="number" id="landArea" min="0" placeholder="500">
+            <small>Solo para propiedades con terreno</small>
+          </div>
+          
+          <div class="form-group">
+            <label for="age">Antigüedad (opcional)</label>
+            <input type="text" id="age" placeholder="5 años" maxlength="20">
+            <small>Ej: "5 años", "A estrenar", "1990"</small>
           </div>
         </div>
         

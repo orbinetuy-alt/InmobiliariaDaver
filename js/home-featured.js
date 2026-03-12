@@ -67,7 +67,7 @@ function createPropertyCard(property) {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M4 4h16v16H4z"/>
               </svg>
-              ${property.area} m²
+              ${property.area} m²${property.landArea ? ` / ${property.landArea} m² terreno` : ''}
             </span>
           ` : ''}
         </div>

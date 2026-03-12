@@ -111,8 +111,19 @@ function renderProperty(property) {
       icon: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h16v16H4z"/>
       </svg>`,
-      label: 'Superficie',
+      label: 'Superficie edificada',
       value: `${property.area} m²`
+    });
+  }
+  
+  if (property.landArea) {
+    featuresGrid.push({
+      icon: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h18v18H3V3zm2 2v14h14V5H5z"/>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 8h8v8H8V8z"/>
+      </svg>`,
+      label: 'Superficie terreno',
+      value: `${property.landArea} m²`
     });
   }
   
@@ -123,6 +134,16 @@ function renderProperty(property) {
       </svg>`,
       label: 'Garajes',
       value: property.garages
+    });
+  }
+  
+  if (property.age) {
+    featuresGrid.push({
+      icon: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>`,
+      label: 'Antigüedad',
+      value: property.age
     });
   }
 

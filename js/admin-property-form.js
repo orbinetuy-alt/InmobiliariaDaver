@@ -73,6 +73,8 @@ function fillFormWithData(data) {
   document.getElementById('bedrooms').value = data.bedrooms || '';
   document.getElementById('bathrooms').value = data.bathrooms || '';
   document.getElementById('area').value = data.area || '';
+  document.getElementById('landArea').value = data.landArea || '';
+  document.getElementById('age').value = data.age || '';
   document.getElementById('garages').value = data.garages || '';
   document.getElementById('commonExpenses').value = data.commonExpenses || '';
   document.getElementById('description').value = data.description || '';
@@ -329,6 +331,8 @@ document.getElementById('propertyForm').addEventListener('submit', async (e) => 
       bedrooms: parseInt(document.getElementById('bedrooms').value) || 0,
       bathrooms: parseInt(document.getElementById('bathrooms').value) || 0,
       area: parseFloat(document.getElementById('area').value) || 0,
+      landArea: parseFloat(document.getElementById('landArea').value) || null,
+      age: document.getElementById('age').value.trim() || null,
       garages: parseInt(document.getElementById('garages').value) || 0,
       commonExpenses: parseInt(document.getElementById('commonExpenses').value) || null,
       description: document.getElementById('description').value.trim(),
